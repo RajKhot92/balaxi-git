@@ -1,0 +1,14 @@
+.theme-menu{
+	background-color: #343a40 !important;
+	opacity: 0.6 !important;
+}
+
+.theme-menu:hover{
+	background-color: #343a40 !important;
+	opacity: 1 !important;
+}
+
+.active-menu{
+	background-color: #f0840a !important;
+	opacity: 1 !important;
+}

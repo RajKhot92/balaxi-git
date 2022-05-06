@@ -1,0 +1,192 @@
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Process Master</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Process Master
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <form class="form-horizontal">
+            <div class="card-body">
+              <h4 class="card-title text-center">Add Process</h4>
+              <div class="form-group row">
+                <label
+                  for="fname"
+                  class="col-sm-3 text-end control-label col-form-label"
+                  >Process Name</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fname"
+                    placeholder="Enter Process Name Here"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  &nbsp;
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-check mr-sm-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      checked="true"
+                      onchange="toggleProcessStructure()"
+                      id="isMainProcess"
+                    />
+                    <label
+                      class="form-check-label mb-0"
+                      for="isMainProcess"
+                      >Is Main Process</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row parent-process" style="display: none;">
+                <label
+                  for="parentProcess"
+                  class="col-sm-3 text-end control-label col-form-label"
+                  >Parent Process</label
+                >
+                <div class="col-sm-9">
+                  <select class="select2 form-select shadow-none form-control"
+                    id="parentProcess">
+                    <option value="">Select Parent Process</option>
+                    <option value="1">Requirements Gathering</option>
+                    <option value="2">Specifications</option>
+                    <option value="3">Design</option>
+                    <option value="4">Coding</option>
+                    <option value="5">Testing</option>
+                    <option value="6">Debugging</option>
+                    <option value="7">Maintainance</option>  
+                  </select>
+                </div>
+              </div>
+                  
+              <!-- <div class="form-group row">
+                <label
+                  for="lname"
+                  class="col-sm-3 text-end control-label col-form-label"
+                  >Last Name</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lname"
+                    placeholder="Last Name Here"
+                  />
+                </div>
+              </div>    
+              
+              <div class="form-group row">
+                <label
+                  for="lname"
+                  class="col-sm-3 text-end control-label col-form-label"
+                  >Password</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="lname"
+                    placeholder="Password Here"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label
+                  for="email1"
+                  class="col-sm-3 text-end control-label col-form-label"
+                  >Company</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email1"
+                    placeholder="Company Name Here"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label
+                  for="cono1"
+                  class="col-sm-3 text-end control-label col-form-label"
+                  >Contact No</label
+                >
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cono1"
+                    placeholder="Contact No Here"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label
+                  for="cono1"
+                  class="col-sm-3 text-end control-label col-form-label"
+                  >Message</label
+                >
+                <div class="col-sm-9">
+                  <textarea class="form-control"></textarea>
+                </div>
+              </div> -->
+            </div>
+            <div class="border-top">
+              <div class="card-body text-center">
+                <button type="button" class="btn btn-primary">
+                  <i class="fas fa-check-circle"></i>&nbsp;Submit
+                </button>
+                <button type="button" class="btn btn-danger">
+                  <i class="fas fa-ban"></i>&nbsp;Reset
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+
+  });
+
+  function toggleProcessStructure(){
+    if($("#isMainProcess").prop("checked")){
+      $(".parent-process").hide();
+    }else{
+      $(".parent-process").show();
+    }
+  }
+</script>
