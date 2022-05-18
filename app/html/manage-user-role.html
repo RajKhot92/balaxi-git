@@ -1,0 +1,226 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">User Role Master</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            User Role Master
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" id="frmUserRole" name="frmUserRole">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Add User Role</h4>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-6 text-end control-label col-form-label"
+                                  >User Role</label
+                                >
+                                <div class="col-sm-4">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="role_name"
+                                        name="role_name"
+                                        maxlength="50"
+                                        placeholder="Enter role name"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" onclick="saveUserRole()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetUserRole()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added User Roles</h4>
+                        <div class="card-body" id="divUserRoles" class="table-responsive">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    var existUserList = new Array();
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        loadUserRoles();
+    });
+
+    function loadUserRoles(){
+    	existUserRoleList = new Array();
+        let userRoleResult = getUserRoles();
+        // console.log(userRoleResult);
+        var jsonUserRoleData = JSON.parse(userRoleResult);
+        var userRoleTbody = "";
+        if(jsonUserRoleData.length > 0){
+            for(i=0; i<jsonUserRoleData.length; i++){
+                var counter = jsonUserRoleData[i];
+                userRoleTbody += "<tr>"+
+                                    "<td align=\"center\">"+(i+1)+"</td>"+
+                                    "<td>"+
+                                    	"<span style=\"display:none;\" class=\"editUserRole"+counter.role_id+"\">"+
+                                    	"<input type=\"text\" class=\"form-control\" id=\"edit_user_role"+counter.role_id+"\" name=\"edit_user_role"+counter.role_id+"\" value=\""+counter.role_name+"\"></span>"+
+                                    	"<span class=\"viewUserRole"+counter.role_id+"\">"+counter.role_name+"</span>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+
+                                    	"<span title=\"Click here to edit this user role\" class=\"fas fa-pencil-alt fa-lg text-warning editButton"+counter.role_id+"\" style=\"cursor:pointer;\" onclick=\"updateUserRole("+counter.role_id+")\"></span>"+
+                                    	"<span title=\"Click here to save this user role\" class=\"fas fa-save fa-lg text-success saveButton"+counter.role_id+"\" style=\"cursor:pointer; display:none;\" onclick=\"editUserRole("+counter.role_id+")\"></span>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+
+                                    	"<span title=\"Click here to delete this user role\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteUserRole("+counter.role_id+")\"></span>"+
+                                    "</td>"+
+                                "</tr>";      
+
+                //Adding existing user roles
+                existUserRoleList.push(
+                    {
+                        "user_role":counter.role_name.toLowerCase()
+                    }
+                );
+            }
+        }else{
+            userRoleTbody += "<tr>"+
+                            "<td colspan=\"4\" align=\"center\">No user role details found.</td>"
+                        "</tr>";
+        }
+        $("#divUserRoles").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"userRoleTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>User Role Name</th>"+
+                                        "<th>Edit</th>"+
+                                        "<th>Delete</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    userRoleTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonUserRoleData.length > 0){
+            $("#userRoleTable").DataTable({
+            	"columnDefs": [
+	            	{"targets": 2,"orderable": false},
+	            	{"targets": 3,"orderable": false}
+            	]
+            });
+        }
+    }
+
+    function getUserRoles(){
+    	return callAPIService("get_user_role.php","user_role="+localStorage.getItem("balaxi_user_role")+"&role_id=0");
+    }
+
+    function saveUserRole(){
+    	
+        if($("#role_name").val() == ""){
+    		alert("Please enter valid user role name.");
+    		$("#role_name").focus();
+    		return false;
+    	}
+
+        let existUserRoleName = existUserRoleList.find(e => e.user_role == $("#role_name").val().trim().toLowerCase())
+        if(existUserRoleName !== undefined){
+            alert("Entered user role name is already exists. Please enter another user role name.");
+         $("#role_name").focus();
+         return false;    
+        }
+
+    	let userRoleSaveResult = saveUserRoleData($("#frmUserRole").serialize());
+    	if(userRoleSaveResult != "1"){
+    		alert(userRoleSaveResult);
+    	}else{
+    		resetUserRole();
+    		alert("User role details has been saved successfully.");
+    		loadUserRoles();
+    	}
+    }
+
+    function saveUserRoleData(userRoleData){
+    	return callAPIService("save_user_role.php",userRoleData);
+    }
+
+    function editUserRole(roleId){
+    	if($("#edit_user_role"+roleId).val() == ""){
+    		alert("Please enter valid user role name.");
+    		$("#edit_user_role"+roleId).focus();
+    		return false;
+    	}
+
+    	if(confirm("Are you sure want to update this user role?")){
+			var updateData = "login_id="+localStorage.getItem("balaxi_user_id")+"&role_id="+roleId+"&role_name="+$("#edit_user_role"+roleId).val();
+
+	    	let userRoleUpdateResult = editUserRoleData(updateData);
+	    	if(userRoleUpdateResult != "1"){
+	    		alert(userRoleUpdateResult);
+	    	}else{
+	    		alert("User role details has been updated successfully.");
+	    		loadUserRoles();
+	    	}
+		}
+    }
+
+    function updateUserRole(roleId){
+		$(".viewUserRole"+roleId).hide();
+		$(".editButton"+roleId).hide();
+        $(".editUserRole"+roleId).show();
+    	$(".saveButton"+roleId).show();
+    }
+
+    function editUserRoleData(data){
+    	return callAPIService("update_user_role.php",data);
+    }
+
+    function resetUserRole(){
+    	$("#role_name").val("");
+    }
+
+    function deleteUserRole(roleId) {
+        if(confirm("Are you sure want to delete this user role?")){
+            var deleteData = "login_id="+localStorage.getItem("balaxi_user_id")+"&role_id="+roleId;
+
+            let userRoleDeleteResult = deleteUserRoleData(deleteData);
+            if(userRoleDeleteResult != "1"){
+                alert(userRoleDeleteResult);
+            }else{
+                alert("User role details has been deleted successfully.");
+                loadUserRoles();
+            }
+        }
+    }
+
+    function deleteUserRoleData(data){
+        return callAPIService("delete_user_role.php",data);
+    }
+</script>

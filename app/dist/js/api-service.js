@@ -1,4 +1,13 @@
-// const serverURL = "http://localhost/balaxi/api/";
+let apiResponse = {
+    status_code:'',
+    data:'',
+    error:''
+}
+
+const PRODUCT_OWNER_ROLE = 3;
+const EXECUTIVE_ROLE = 4;
+
+//const serverURL = "http://localhost/balaxi/api/";
 const serverURL = "https://klugerkopf.com/balaxi/api/";
 
 function callAPIService(url, formData){

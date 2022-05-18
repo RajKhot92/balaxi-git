@@ -1,0 +1,300 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Assign product</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Assign Product
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" id="frmProduct" name="frmProduct">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Assign Product</h4>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-6 text-end control-label col-form-label"
+                                  >Product</label
+                                >
+                                <div class="col-sm-4">
+                                    <div id="divProduct" class="choose-product">
+                                        
+                                    </div>
+                                    <div id="spnProduct" style="margin: 8px;" class="assign-product"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row assign-product" style="display: none;">
+                            <div class="col-12">
+                                <h4 class="card-title text-center">Select Users</h4>
+                                <div class="row p-1">
+                                    <div class="col-6"><h5 style="text-align: right;">Data Capture</h5></div>
+                                    <div class="col-3" id="divDataCapture">
+                                        <!-- <select class="form-control" id="cmboDataCapture" name="cmboDataCapture">
+                                            
+                                        </select> -->
+                                    </div>
+                                    <div class="col-3">&nbsp;</div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-6"><h5 style="text-align: right;">Vendor Finalization</h5></div>
+                                    <div class="col-3" id="divVendorFinalize">
+                                        <!-- <select class="form-control" id="cmboVendorFinalize" name="cmboVendorFinalize">
+                                            
+                                        </select> -->
+                                    </div>
+                                    <div class="col-3">&nbsp;</div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-6"><h5 style="text-align: right;">Document & Sample Collection</h5></div>
+                                    <div class="col-3" id="divDocSampleCollection">
+                                        <!-- <select class="form-control" id="cmboDocSampleCollection" name="cmboDocSampleCollection">
+                                            
+                                        </select> -->
+                                    </div>
+                                    <div class="col-3">&nbsp;</div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-6"><h5 style="text-align: right;">Sample Finalization</h5></div>
+                                    <div class="col-3" id="divSampleFinalize">
+                                        <!-- <select class="form-control" id="cmboSampleFinalize" name="cmboSampleFinalize">
+                                            
+                                        </select> -->
+                                    </div>
+                                    <div class="col-3">&nbsp;</div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-6"><h5 style="text-align: right;">Dossier Development</h5></div>
+                                    <div class="col-3" id="divDossier">
+                                        <!-- <select class="form-control" id="cmboDossier" name="cmboDossier">
+                                            
+                                        </select> -->
+                                    </div>
+                                    <div class="col-3">&nbsp;</div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-6"><h5 style="text-align: right;">Shipment</h5></div>
+                                    <div class="col-3" id="divShipment">
+                                        <!-- <select class="form-control" id="cmboShipment" name="cmboShipment">
+                                        
+                                        </select> -->
+                                    </div>
+                                    <div class="col-3">&nbsp;</div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="col-6"><h5 style="text-align: right;">Submission</h5></div>
+                                    <div class="col-3" id="divSubmission">
+                                        <!-- <select class="form-control" id="cmboSubmission" name="cmboSubmission">
+                                            
+                                        </select> -->
+                                    </div>
+                                    <div class="col-3">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top choose-product">
+                            <div class="card-body text-center">
+                                <button type="button" onclick="next()" id="btnNext" name="btnNext" class="btn btn-primary">
+                                    <i class="fas fa-arrow-circle-right"></i>&nbsp;Next
+                                </button>
+                                <button type="button" onclick="resetProduct()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-top assign-product" style="display: none;">
+                            <div class="card-body text-center">
+                                <button type="button" onclick="back()" class="btn btn-warning">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                                <button type="button" onclick="saveSteps()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetSteps()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var optionsProductData ="";
+    var optionsUsersData = "";
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        loadProduct();
+    });
+
+    function loadProduct() {
+        let productResult = getProduct();
+        // console.log(productResult);
+        var jsonProductData = JSON.parse(productResult);
+        if(jsonProductData.length > 0){
+            for(i=0; i<jsonProductData.length; i++){
+                var counter = jsonProductData[i];
+                optionsProductData += "<option value=\""+counter.product_id+"\">"+counter.product_name+" ["+counter.category_name+"] ["+counter.country_name+"]</option>";
+            }
+            $("#divProduct").html("<select id=\"product_id\" name=\"product_id\" class=\"form-control\">"+
+                                       "<option value=\"\">Select Product Category</option>"+
+                                       optionsProductData+
+                                    "</select>");
+        }
+
+        loadExecutives();
+    }
+
+    function getProduct() {
+        return callAPIService("get_product.php","login_id=0&product_id=0&product_owner="+localStorage.getItem("balaxi_user_id"));
+    }
+
+    function resetProduct() {
+        $("#product_id").val("");
+    }
+
+    function next(){
+        if($("#product_id").val() == ""){
+            alert("Please select valid product.");
+            $("#product_id").focus();
+            return false;
+        }
+        $("#spnProduct").html($("#product_id option:selected").text());
+
+        $(".choose-product").hide();
+        $(".assign-product").show();
+    }
+
+    function back() {
+        $(".choose-product").show();
+        $(".assign-product").hide();
+    }
+
+    function loadExecutives() {
+        let userResult = getExecutives();
+        // console.log(userResult);
+        var jsonUserData = JSON.parse(userResult);
+        if(jsonUserData.length > 0){
+            for(i=0; i<jsonUserData.length; i++){
+                var counter = jsonUserData[i];
+                optionsUsersData += "<option value=\""+counter.user_id+"\">"+counter.user_name+"</option>";
+            }
+            $("#divDataCapture").html("<select id=\"cmboDataCapture\" name=\"cmboDataCapture\" class=\"form-control\">"+
+                                       "<option value=\"\">Select User</option>"+
+                                       optionsUsersData+
+                                    "</select>");
+            $("#divVendorFinalize").html("<select id=\"cmboVendorFinalize\" name=\"cmboVendorFinalize\" class=\"form-control\">"+
+                                       "<option value=\"\">Select User</option>"+
+                                       optionsUsersData+
+                                    "</select>");
+            $("#divDocSampleCollection").html("<select id=\"cmboDocSampleCollection\" name=\"cmboDocSampleCollection\" class=\"form-control\">"+
+                                       "<option value=\"\">Select User</option>"+
+                                       optionsUsersData+
+                                    "</select>");
+            $("#divSampleFinalize").html("<select id=\"cmboSampleFinalize\" name=\"cmboSampleFinalize\" class=\"form-control\">"+
+                                       "<option value=\"\">Select User</option>"+
+                                       optionsUsersData+
+                                    "</select>");
+            $("#divDossier").html("<select id=\"cmboDossier\" name=\"cmboDossier\" class=\"form-control\">"+
+                                       "<option value=\"\">Select User</option>"+
+                                       optionsUsersData+
+                                    "</select>");
+            $("#divShipment").html("<select id=\"cmboShipment\" name=\"cmboShipment\" class=\"form-control\">"+
+                                       "<option value=\"\">Select User</option>"+
+                                       optionsUsersData+
+                                    "</select>");
+            $("#divSubmission").html("<select id=\"cmboSubmission\" name=\"cmboSubmission\" class=\"form-control\">"+
+                                       "<option value=\"\">Select User</option>"+
+                                       optionsUsersData+
+                                    "</select>");
+        }else{
+            $("#btnNext").hide();
+            alert("Sorry, no executive users found in system. Kindly add executive users first.");
+            return false;
+        }
+    }
+
+    function getExecutives() {
+        return callAPIService("get_user.php","login_id="+localStorage.getItem("balaxi_user_id")+"&user_id=0&role_id="+EXECUTIVE_ROLE);
+    }
+
+    function saveSteps() {
+        var productArray = new Array();
+        var menuArray = new Array();
+        var userArray = new Array();
+
+        if($("#cmboDataCapture").val() != ""){
+            productArray.push($("#product_id").val());
+            menuArray.push(9);
+            userArray.push($("#cmboDataCapture").val());
+        }
+        if($("#cmboVendorFinalize").val() != ""){
+            productArray.push($("#product_id").val());
+            menuArray.push(10);
+            userArray.push($("#cmboVendorFinalize").val());
+        }
+        if($("#cmboDocSampleCollection").val() != ""){
+            productArray.push($("#product_id").val());
+            menuArray.push(11);
+            userArray.push($("#cmboDocSampleCollection").val());
+        }
+        if($("#cmboSampleFinalize").val() != ""){
+            productArray.push($("#product_id").val());
+            menuArray.push(12);
+            userArray.push($("#cmboSampleFinalize").val());
+        }
+        if($("#cmboDossier").val() != ""){
+            productArray.push($("#product_id").val());
+            menuArray.push(13);
+            userArray.push($("#cmboDossier").val());
+        }
+        if($("#cmboShipment").val() != ""){
+            productArray.push($("#product_id").val());
+            menuArray.push(14);
+            userArray.push($("#cmboShipment").val());
+        }
+        if($("#cmboSubmission").val() != ""){
+            productArray.push($("#product_id").val());
+            menuArray.push(15);
+            userArray.push($("#cmboSubmission").val());
+        }
+
+        let assignStepResult = saveStepsData("login_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+productArray.toString()+"&menu_id="+menuArray.toString()+"&user_id="+userArray.toString());
+        if(assignStepResult != "1"){
+            alert(assignStepResult);
+        }else{
+            // resetProduct();
+            alert("Product steps assigned successfully.");
+        }
+    }
+
+    function saveStepsData(data) {
+        return callAPIService("save_product_step.php",data);
+    }
+
+    function resetSteps() {
+        $("#cmboDataCapture").val("");
+        $("#cmboVendorFinalize").val("");
+        $("#cmboDocSampleCollection").val("");
+        $("#cmboSampleFinalize").val("");
+        $("#cmboDossier").val("");
+        $("#cmboShipment").val("");
+        $("#cmboSubmission").val("");
+    }
+</script>

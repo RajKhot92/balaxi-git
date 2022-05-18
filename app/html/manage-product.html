@@ -1,0 +1,398 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Product Master</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Product Master
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" id="frmProduct" name="frmProduct">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Add Product</h4>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >Product Name</label
+                                >
+                                <div class="col-sm-4">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="product_name"
+                                        name="product_name"
+                                        maxlength="100"
+                                        placeholder="Enter product name"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >Product Category</label
+                                >
+                                <div class="col-sm-4" id="divProductCategory">
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >Product Owner</label
+                                >
+                                <div class="col-sm-4" id="divProductOwner">
+                                    
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >Product Country</label
+                                >
+                                <div class="col-sm-4" id="divProductCountry">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" onclick="saveProduct()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetProduct()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added Products</h4>
+                        <div class="card-body" id="divProducts" class="table-responsive">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<!-- <script type="text/javascript" src="../dist/js/api-service.js"></script> -->
+<script type="text/javascript">
+    var existProductList = new Array();
+    var optionsCategoryData = "";
+    var optionsOwnerData = "";
+    var optionsCountryData = "";
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        loadProductCategory();
+    });
+
+    function loadProducts(){
+    	existProductList = new Array();
+        let productResult = getProducts();
+        // console.log(productResult);
+        var jsonProductData = JSON.parse(productResult);
+        var productTbody = "";
+        if(jsonProductData.length > 0){
+            for(i=0; i<jsonProductData.length; i++){
+                var counter = jsonProductData[i];
+                productTbody += "<tr>"+
+                                    "<td align=\"center\">"+(i+1)+"</td>"+
+                                    "<td>"+
+                                    	"<span style=\"display:none;\" class=\"editProductName"+counter.product_id+"\">"+
+                                    	"<input type=\"text\" class=\"form-control\" id=\"edit_product_name"+counter.product_id+"\" name=\"edit_product_name"+counter.product_id+"\" value=\""+counter.product_name+"\"></span>"+
+                                    	"<span class=\"viewProductName"+counter.product_id+"\">"+counter.product_name+"</span>"+
+                                    "</td>"+
+                                    "<td>"+
+                                        "<span style=\"display:none;\" class=\"editProductCategory"+counter.product_id+"\">"+
+                                        "<div id=\"edit_divProductCategory"+counter.product_id+"\">"+
+                                            "<select id=\"edit_product_category"+counter.product_id+"\" name=\"edit_product_category"+counter.product_id+"\" class=\"form-control\">"+
+                                                "<option value=\"\">Select Role</option>"+
+                                                optionsCategoryData+
+                                            "</select>"+
+                                        "</div>"+
+                                        "</span>"+
+                                        "<span class=\"viewProductCategory"+counter.product_id+"\">"+counter.category_name+"</span>"+
+                                    "</td>"+
+                                    "<td>"+
+                                        "<span style=\"display:none;\" class=\"editProductOwner"+counter.product_id+"\">"+
+                                        "<div id=\"edit_divProductOwner"+counter.product_id+"\">"+
+                                            "<select id=\"edit_product_owner"+counter.product_id+"\" name=\"edit_product_owner"+counter.product_id+"\" class=\"form-control\">"+
+                                                "<option value=\"\">Select Role</option>"+
+                                                optionsOwnerData+
+                                            "</select>"+
+                                        "</div>"+
+                                        "</span>"+
+                                        "<span class=\"viewProductOwner"+counter.product_id+"\">"+counter.user_name+"</span>"+
+                                    "</td>"+
+                                    "<td>"+
+                                        "<span style=\"display:none;\" class=\"editProductCountry"+counter.product_id+"\">"+
+                                        "<div id=\"edit_divProductCountry"+counter.product_id+"\">"+
+                                            "<select id=\"edit_product_country"+counter.product_id+"\" name=\"edit_product_country"+counter.product_id+"\" class=\"form-control\">"+
+                                                "<option value=\"\">Select Role</option>"+
+                                                optionsCountryData+
+                                            "</select>"+
+                                        "</div>"+
+                                        "</span>"+
+                                        "<span class=\"viewProductCountry"+counter.product_id+"\">"+counter.country_name+"</span>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+
+                                    	"<span title=\"Click here to edit this product\" class=\"fas fa-pencil-alt fa-lg text-warning editButton"+counter.product_id+"\" style=\"cursor:pointer;\" onclick=\"updateProduct("+counter.product_id+","+counter.product_category+","+counter.product_owner+","+counter.country_id+")\"></span>"+
+                                    	"<span title=\"Click here to save this product\" class=\"fas fa-save fa-lg text-success saveButton"+counter.product_id+"\" style=\"cursor:pointer; display:none;\" onclick=\"editProduct("+counter.product_id+")\"></span>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+
+                                    	"<span title=\"Click here to delete this product\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteProduct("+counter.product_id+")\"></span>"+
+                                    "</td>"+
+                                "</tr>";      
+
+                //Adding existing categories
+                existProductList.push(
+                    {
+                        "product_name":counter.product_name.toLowerCase(),
+                        "product_category":counter.product_category,
+                        "product_owner":counter.product_owner,
+                        "product_country":counter.country_id,
+                    }
+                );
+            }
+        }else{
+            productTbody += "<tr>"+
+                            "<td colspan=\"7\" align=\"center\">No product details found.</td>"
+                        "</tr>";
+        }
+        $("#divProducts").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"productTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>Product Name</th>"+
+                                        "<th>Product Category</th>"+
+                                        "<th>Product Owner</th>"+
+                                        "<th>Product Country</th>"+
+                                        "<th>Edit</th>"+
+                                        "<th>Delete</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    productTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonProductData.length > 0){
+            $("#productTable").DataTable({
+            	"columnDefs": [
+	            	{"targets": 5,"orderable": false},
+	            	{"targets": 6,"orderable": false}
+            	]
+            });
+        }
+    }
+
+    function loadProductCategory() {
+        let categoryResult = getProductCategory();
+        // console.log(categoryResult);
+        var jsonCategoryData = JSON.parse(categoryResult);
+        if(jsonCategoryData.length > 0){
+            for(i=0; i<jsonCategoryData.length; i++){
+                var counter = jsonCategoryData[i];
+                optionsCategoryData += "<option value=\""+counter.category_id+"\">"+counter.category_name+"</option>";
+            }
+            $("#divProductCategory").html("<select id=\"product_category\" name=\"product_category\" class=\"form-control\">"+
+                                       "<option value=\"\">Select Product Category</option>"+
+                                       optionsCategoryData+
+                                    "</select>");
+        }
+        loadProductOwner();
+    }
+
+    function getProductCategory() {
+        return callAPIService("get_product_category.php","category_id=0");
+    }
+
+    function loadProductOwner() {
+        let ownerResult = getProductOwner();
+        // console.log(ownerResult);
+        var jsonOwnerData = JSON.parse(ownerResult);
+        if(jsonOwnerData.length > 0){
+            for(i=0; i<jsonOwnerData.length; i++){
+                var counter = jsonOwnerData[i];
+                optionsOwnerData += "<option value=\""+counter.user_id+"\">"+counter.user_name+"</option>";
+            }
+            $("#divProductOwner").html("<select id=\"product_owner\" name=\"product_owner\" class=\"form-control\">"+
+                                       "<option value=\"\">Select Owner</option>"+
+                                       optionsOwnerData+
+                                    "</select>");
+        }
+        loadProductCountry();
+    }
+
+    function getProductOwner() {
+        return callAPIService("get_user.php","login_id="+localStorage.getItem("balaxi_user_id")+"&user_id=0&role_id="+PRODUCT_OWNER_ROLE);
+    }
+
+    function loadProductCountry() {
+        let countryResult = getProductCountry();
+        // console.log(countryResult);
+        var jsonCountryData = JSON.parse(countryResult);
+        if(jsonCountryData.length > 0){
+            for(i=0; i<jsonCountryData.length; i++){
+                var counter = jsonCountryData[i];
+                optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
+            }
+            $("#divProductCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\">"+
+                                       "<option value=\"\">Select Country</option>"+
+                                       optionsCountryData+
+                                    "</select>");
+        }
+        loadProducts();
+    }
+
+    function getProductCountry(){
+        return callAPIService("get_country.php","country_id=0");
+    }
+
+    function getProducts(){
+    	return callAPIService("get_product.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id=0&product_owner=0");
+    }
+
+    function saveProduct(){
+    	
+        if($("#product_name").val() == ""){
+    		alert("Please enter valid product name.");
+    		$("#product_name").focus();
+    		return false;
+    	}
+
+        if($("#product_category").val() == ""){
+            alert("Please select product category.");
+            $("#product_category").focus();
+            return false;
+        }
+        
+        if($("#product_owner").val() == ""){
+            alert("Please select product owner.");
+            $("#product_owner").focus();
+            return false;
+        }
+
+        if($("#product_country").val() == ""){
+            alert("Please select product coutry.");
+            $("#product_country").focus();
+            return false;
+        }
+
+        let existProduct = existProductList.find(
+            e => e.product_name == $("#product_name").val().trim().toLowerCase()
+            && e.product_category == $("#product_category").val()
+            && e.product_owner == $("#product_owner").val()
+            && e.product_country == $("#product_country").val()
+            )
+        if(existProduct !== undefined){
+            alert("Entered product details are already exists. Please try another product.");
+            return false;
+        }
+
+    	let productSaveResult = saveProductData($("#frmProduct").serialize());
+    	if(productSaveResult != "1"){
+    		alert(productSaveResult);
+    	}else{
+    		resetProduct();
+    		alert("Product details has been saved successfully.");
+    		loadProducts();
+    	}
+    }
+
+    function saveProductData(productData){
+    	return callAPIService("save_product.php",productData);
+    }
+
+    function editProduct(productId){
+    	if($("#edit_product_name"+productId).val() == ""){
+    		alert("Please enter valid product name.");
+    		$("#edit_product_name"+productId).focus();
+    		return false;
+    	}
+
+        if($("#edit_product_category"+productId).val() == ""){
+            alert("Please select valid product category.");
+            $("#edit_product_category"+productId).focus();
+            return false;
+        }
+
+        if($("#edit_product_owner"+productId).val() == ""){
+            alert("Please select valid product owner.");
+            $("#edit_product_owner"+productId).focus();
+            return false;
+        }
+
+        if($("#edit_product_country"+productId).val() == ""){
+            alert("Please select valid product country.");
+            $("#edit_product_country"+productId).focus();
+            return false;
+        }
+
+    	if(confirm("Are you sure want to update this product?")){
+			var updateData = "login_id="+$("#login_id").val()+"&product_id="+productId+"&product_name="+$("#edit_product_name"+productId).val()+"&product_category="+$("#edit_product_category"+productId).val()+"&product_owner="+$("#edit_product_owner"+productId).val()+"&country_id="+$("#edit_product_country"+productId).val();
+
+	    	let productUpdateResult = editProductData(updateData);
+	    	if(productUpdateResult != "1"){
+	    		alert(productUpdateResult);
+	    	}else{
+	    		alert("Product details has been updated successfully.");
+	    		loadProducts();
+	    	}
+		}
+    }
+
+    function updateProduct(productId,categoryId,userId,countryId){
+		$(".viewProductName"+productId).hide();
+		$(".viewProductCategory"+productId).hide();
+        $(".viewProductOwner"+productId).hide();
+        $(".viewProductCountry"+productId).hide();
+        $(".editButton"+productId).hide();
+        $(".editProductName"+productId).show();
+    	$(".editProductCategory"+productId).show();
+        $(".editProductOwner"+productId).show();
+        $(".editProductCountry"+productId).show();
+
+        $("#edit_product_category"+productId).val(categoryId);
+        $("#edit_product_owner"+productId).val(userId);
+        $("#edit_product_country"+productId).val(countryId);
+        
+        $(".saveButton"+productId).show();
+    }
+
+    function editProductData(data){
+    	return callAPIService("update_product.php",data);
+    }
+
+    function resetProduct(){
+    	$("#product_name").val("");
+        $("#product_category").val("");
+        $("#product_owner").val("");
+        $("#product_country").val("");
+    }
+
+    function deleteProduct(productId){
+        alert("This feature is not yet implemented.");
+    }
+</script>
