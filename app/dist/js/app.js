@@ -1,5 +1,23 @@
+var menu_id = 0, sub_menu_id = 0, retval = 0;
+
 $(document).ready(function(){
 	$("#loggedInPerson").html("Hi, "+localStorage.getItem("balaxi_user_name"));
+
+	// const params = new URLSearchParams(window.location.search);
+	// if(params.has('menu_id')){
+	// 	// console.log(params.get('menu_id'));
+	// 	menu_id = params.get('menu_id');
+	// }
+
+	// if(params.has('sub_menu_id')){
+	// 	// console.log(params.get('sub_menu_id'));
+	// 	sub_menu_id = params.get('sub_menu_id');
+	// }
+
+	// if(params.has('retval')){
+	// 	// console.log(params.get('retval'));
+	// 	retval = params.get('retval');
+	// }
 
 	loadUserMenus();
 });
@@ -26,7 +44,12 @@ function loadUserMenus() {
 	                  		"<i class=\""+menu.menu_icon+"\"></i>&nbsp;"+
 	                  		"<span class=\"hide-menu\">"+menu.menu_name+"</span></a>"+
               			"</li>";
-
+              	
+              	// if(menu_id == 0){
+              	// 	
+              	// }else{
+              	// 	//nothing
+              	// }
               	firstMenuIdToLoad = menu.menu_id;
               	firstPageToLoad = menu.menu_link;
 			}else{
@@ -42,6 +65,11 @@ function loadUserMenus() {
 				                      "<span class=\"hide-menu\">"+sub_menu.menu_name+"</span></a"+
 				                    ">"+
 				                  "</li>";
+				        
+				        // if(menu_id != 0 && menu_id == sub_menu.menu_id ){
+		          //     		firstMenuIdToLoad = sub_menu.menu_id;
+	           //    			firstPageToLoad = sub_menu.menu_link;
+		          //     	}
 	                }
 
 	                menuContent += "<li class=\"sidebar-item\">"+
@@ -54,6 +82,10 @@ function loadUserMenus() {
 	              			subMenuContent+
 	              			"</ul>"+
 	              			"</li>";
+
+	              	// if(menu_id != 0 && menu_id == sub_menu.menu_id ){
+
+	              	// }
 				}else{
 					menuContent += "<li class=\"sidebar-item\">"+
 	                		"<a id=\""+menu.menu_id+"\" class=\"sidebar-link waves-effect waves-dark sidebar-link theme-menu\""+
@@ -70,6 +102,7 @@ function loadUserMenus() {
 		var finalMenuContent = "<ul id=\"sidebarnav\" class=\"pt-4\">"+menuContent+"<ul>";
 		$("#customMenu").html(finalMenuContent);
 
+
 		loadPageContent(firstMenuIdToLoad,firstPageToLoad);
 	}else{
 		alert("It looks like there is no any menu assigned to your role. Please talk with system administrator.");
@@ -83,9 +116,24 @@ function loadPageContent(menuId,menuLink) {
 		window.location.href = "../../app/index.html";
 	}else{
 		$('.sidebar-link').removeClass('active-menu');
-		console.log('.sidebar-link #'+menuId);
+		// console.log('.sidebar-link #'+menuId);
 		$('#'+menuId+'.sidebar-link').addClass('active-menu');
 		$("#pageContent").load(menuLink);
+
+		sessionStorage.setItem("formFlag", 1);
+	}
+}
+
+function loadPageContentFromBackButton(menuId,menuLink){
+	if(menuLink === "signout.html"){
+		window.location.href = "../../app/index.html";
+	}else{
+		$('.sidebar-link').removeClass('active-menu');
+		// console.log('.sidebar-link #'+menuId);
+		$('#'+menuId+'.sidebar-link').addClass('active-menu');
+		$("#pageContent").load(menuLink);
+
+		sessionStorage.setItem("formFlag", 0);
 	}
 }
 

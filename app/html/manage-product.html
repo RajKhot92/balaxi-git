@@ -271,7 +271,7 @@
     }
 
     function getProducts(){
-    	return callAPIService("get_product.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id=0&product_owner=0");
+    	return callAPIService("get_product.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id=0&product_owner=0&product_assigned_to=0&assigned_menu_id=0");
     }
 
     function saveProduct(){
