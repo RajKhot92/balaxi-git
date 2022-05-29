@@ -28,6 +28,7 @@
     $result = mysqli_query($conn,$get_menu_sql);
     $json_response = array();
 
+    $product_wise_menu_id_arr = array();
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         $row_array = array();
         $json_response_sub = array();
@@ -54,7 +55,7 @@
     	    $row_array_sub['parent_menu'] = $row_sub['parent_menu'];
         	$row_array_sub['seq'] = $row_sub['seq'];
         	$row_array_sub['menu_link'] = $row_sub['menu_link'];
-        	$row_array_sub['menu_icon'] = $row_sub['menu_icon'];	
+        	$row_array_sub['menu_icon'] = $row_sub['menu_icon'];
 			array_push($json_response_sub,$row_array_sub);	
 		}
         if(count($json_response_sub) > 0){
@@ -68,21 +69,27 @@
                                         WHERE `user_id`=".$login_id;
             $result_product_wise = mysqli_query($conn,$get_product_wise_menu_sql);
             while ($row_product_wise = mysqli_fetch_array($result_product_wise, MYSQLI_ASSOC)) {
-                
-                $get_sub_menu_product_wise_sql = "SELECT * FROM `menu_master` 
-                                    WHERE `parent_menu`=".$product_update_menu_id."
-                                    AND menu_id = ".$row_product_wise['menu_id']." 
-                                    order by `menu_id`,`seq`";
-                $result_sub_menu_product = mysqli_query($conn,$get_sub_menu_product_wise_sql);
-                while ($row_sub_menu_product = mysqli_fetch_array($result_sub_menu_product, MYSQLI_ASSOC)) {
-                    $row_array_sub_menu_product['menu_id'] = $row_sub_menu_product['menu_id'];
-                    $row_array_sub_menu_product['menu_name'] = $row_sub_menu_product['menu_name'];
-                    $row_array_sub_menu_product['parent_menu'] = $row_sub_menu_product['parent_menu'];
-                    $row_array_sub_menu_product['seq'] = $row_sub_menu_product['seq'];
-                    $row_array_sub_menu_product['menu_link'] = $row_sub_menu_product['menu_link'];
-                    $row_array_sub_menu_product['menu_icon'] = $row_sub_menu_product['menu_icon'];
-                    
-                    array_push($json_response_sub_menu_product,$row_array_sub_menu_product);  
+
+                if(in_array($row_product_wise['menu_id'], $product_wise_menu_id_arr)){
+                    //nothing
+                }else{
+                    $get_sub_menu_product_wise_sql = "SELECT * FROM `menu_master` 
+                                                    WHERE `parent_menu`=".$product_update_menu_id."
+                                                    AND menu_id = ".$row_product_wise['menu_id']." 
+                                                    order by `menu_id`,`seq`";
+                    $result_sub_menu_product = mysqli_query($conn,$get_sub_menu_product_wise_sql);
+                    while ($row_sub_menu_product = mysqli_fetch_array($result_sub_menu_product, MYSQLI_ASSOC)) {
+                        $row_array_sub_menu_product['menu_id'] = $row_sub_menu_product['menu_id'];
+                        $row_array_sub_menu_product['menu_name'] = $row_sub_menu_product['menu_name'];
+                        $row_array_sub_menu_product['parent_menu'] = $row_sub_menu_product['parent_menu'];
+                        $row_array_sub_menu_product['seq'] = $row_sub_menu_product['seq'];
+                        $row_array_sub_menu_product['menu_link'] = $row_sub_menu_product['menu_link'];
+                        $row_array_sub_menu_product['menu_icon'] = $row_sub_menu_product['menu_icon'];
+                        
+                        array_push($json_response_sub_menu_product,$row_array_sub_menu_product);  
+                    }
+
+                    array_push($product_wise_menu_id_arr,$row_product_wise['menu_id']);
                 }
             }
             if(count($json_response_sub_menu_product) > 0){

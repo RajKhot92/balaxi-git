@@ -2,13 +2,13 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Artwork</h4>
+                <h4 class="page-title">Shipment</h4>
                 <div class="ms-auto text-end">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                            Artwork
+                            Shipment
                             </li>
                         </ol>
                     </nav>
@@ -18,37 +18,37 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-artwork-questionnaire.html')">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-shipment-booking.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
-                    <h5 class="mb-1 mt-1">Questionnaire</h5>
+                    <h5 class="mb-1 mt-1">Shipment Booking</h5>
                     <hr>
                     <div class="row">
-                        <div class="col" id="divQuestionaire">
+                        <div class="col" id="divBooking">
                             
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-artwork.html')">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-shipment-box-prep.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>2.</h4>
-                    <h5 class="mb-1 mt-1">Artworks</h5>
+                    <h5 class="mb-1 mt-1">Box Prep</h5>
                     <hr>
                     <div class="row">
-                        <div class="col" id="divArtworks">
+                        <div class="col" id="divBoxPrep">
                             
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-artwork-commercial-document.html')">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-shipment-dispatch.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>3.</h4>
-                    <h5 class="mb-1 mt-1">Commercial Document</h5>
+                    <h5 class="mb-1 mt-1">Dispatch</h5>
                     <hr>
                     <div class="row">
-                        <div class="col" id="divCommercialDocument">
+                        <div class="col" id="divDispatch">
                             
                         </div>
                     </div>
@@ -58,6 +58,7 @@
                 &nbsp;
             </div>
         </div>
+
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
@@ -71,30 +72,30 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-        // console.log(sessionStorage.getItem("artwork_question"));
-        // console.log(sessionStorage.getItem("artwork_form"));
-        // console.log(sessionStorage.getItem("commercial_doc"));
+        // console.log(sessionStorage.getItem("shipment_boxing"));
+        // console.log(sessionStorage.getItem("shipment_box_prep"));
+        // console.log(sessionStorage.getItem("shipment_dipatch"));
 
-        $("#divQuestionaire").html("<h4>"+sessionStorage.getItem("artwork_question")+"%</h4>"+
+        $("#divBooking").html("<h4>"+sessionStorage.getItem("shipment_boxing")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
-                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("artwork_question")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("artwork_question")+"%;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("shipment_boxing")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("shipment_boxing")+"%;\">"+
                                         "</div>"+
                                     "</div>");
 
-        $("#divArtworks").html("<h4>"+sessionStorage.getItem("artwork_form")+"%</h4>"+
+        $("#divBoxPrep").html("<h4>"+sessionStorage.getItem("shipment_box_prep")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
-                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("artwork_form")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("artwork_form")+"%;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("shipment_box_prep")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("shipment_box_prep")+"%;\">"+
                                         "</div>"+
                                     "</div>");
 
-        $("#divCommercialDocument").html("<h4>"+sessionStorage.getItem("commercial_doc")+"%</h4>"+
+        $("#divDispatch").html("<h4>"+sessionStorage.getItem("shipment_dipatch")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
-                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("commercial_doc")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("commercial_doc")+"%;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("shipment_dipatch")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("shipment_dipatch")+"%;\">"+
                                         "</div>"+
                                     "</div>");
     });
 
     function back() {
-        loadPageContentFromBackButton(12,'menu-sample-finalization.html');
+        loadPageContentFromBackButton(14,'menu-shipment.html');
     }
 </script>

@@ -132,7 +132,7 @@
                 optionsProductData += "<option value=\""+counter.product_id+"\">"+counter.product_name+" ["+counter.category_name+"] ["+counter.country_name+"]</option>";
             }
             $("#divProduct").html("<select id=\"product_id\" name=\"product_id\" class=\"form-control\">"+
-                                       "<option value=\"\">Select Product Category</option>"+
+                                       "<option value=\"\">Select Product</option>"+
                                        optionsProductData+
                                     "</select>");
         }
@@ -176,7 +176,7 @@
             for(i=0; i<jsonProductProgressData.length; i++){
                 var counter = jsonProductProgressData[i];
                 // console.log(counter.data_capture);
-                $("#divDataCapture").html("<h4>"+counter.data_capture+"%</h4>"+
+                $("#divDataCapture").html("<h4>"+counter.data_capture.toFixed(2)+"%</h4>"+
                                         "<div class=\"progress\" style=\"height: 20px;\">"+
                                             "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+counter.data_capture+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+counter.data_capture+"%;\">"+
                                             "</div>"+
