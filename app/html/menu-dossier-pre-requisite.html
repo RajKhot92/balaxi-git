@@ -18,27 +18,61 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-dossier-pre-requisite-check.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
                     <h5 class="mb-1 mt-1">Pre-Requisite Check</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divPreRequisiteCheck">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-dossier-check-list.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>2.</h4>
                     <h5 class="mb-1 mt-1">Check List</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divCheckList">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-danger" onclick="loadPageContent(13,'menu-dossier.html')">
+                    <button type="button" class="btn btn-danger" onclick="back()">
                         <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </button>      
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // console.log(sessionStorage.getItem("pre_requisite_check"));
+        // console.log(sessionStorage.getItem("dossier_check"));
+
+        $("#divPreRequisiteCheck").html("<h4>"+sessionStorage.getItem("pre_requisite_check")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("pre_requisite_check")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("pre_requisite_check")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divCheckList").html("<h4>"+sessionStorage.getItem("dossier_check")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("dossier_check")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("dossier_check")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+    });
+
+    function back() {
+        loadPageContentFromBackButton(13,'menu-dossier.html');
+    }
+</script>
