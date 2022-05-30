@@ -29,6 +29,7 @@
     $menu_id_arr = explode(",", $menu_id_data);
     $user_id_arr = explode(",", $user_id_data);
 
+    $product_id_selected = 0;
     // $isError = false;
     for ($i = 0; $i < count($product_id_arr); $i++) {
         /*  Checking product by product id already exists     */
@@ -40,6 +41,8 @@
             echo "Product details not found for given product id ".$product_id_arr[$i].".";
             exit();
         }
+
+        $product_id_selected = $product_id_arr[$i];
     }
 
     for ($i = 0; $i < count($menu_id_arr); $i++) {
@@ -64,7 +67,14 @@
             exit();
         }
     }
+
+    $delete_step_sql = "DELETE FROM product_step_master WHERE product_id=".$product_id_selected." AND ent_by=".$login_id;
     
+    if ($conn->query($delete_step_sql) !== TRUE) {
+        echo "Some error occurred while assigning product steps. Please try again later.";
+        exit();
+    }
+
     /*  Assigning steps     */
     $assign_step_sql = "INSERT INTO product_step_master (product_id,menu_id,user_id,ent_by,ent_dt)
                     VALUES ";

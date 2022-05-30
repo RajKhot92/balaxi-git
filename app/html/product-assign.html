@@ -179,6 +179,8 @@
 
         $(".choose-product").hide();
         $(".assign-product").show();
+
+        loadProductSteps();
     }
 
     function back() {
@@ -232,6 +234,36 @@
 
     function getExecutives() {
         return callAPIService("get_user.php","login_id="+localStorage.getItem("balaxi_user_id")+"&user_id=0&role_id="+EXECUTIVE_ROLE);
+    }
+
+    function loadProductSteps() {
+        let productStepResult = getProductSteps();
+        // console.log(productStepResult);
+        var jsonProductStepData = JSON.parse(productStepResult);
+        if(jsonProductStepData.length > 0){
+            for(i=0; i<jsonProductStepData.length; i++){
+                var counter = jsonProductStepData[i];
+                if(counter.menu_id == 9){
+                    $("#cmboDataCapture").val(counter.user_id);
+                }else if(counter.menu_id == 10){
+                    $("#divVendorFinalize").val(counter.user_id);
+                }else if(counter.menu_id == 11){
+                    $("#cmboDocSampleCollection").val(counter.user_id);
+                }else if(counter.menu_id == 12){
+                    $("#cmboSampleFinalize").val(counter.user_id);
+                }else if(counter.menu_id == 13){
+                    $("#cmboDossier").val(counter.user_id);
+                }else if(counter.menu_id == 14){
+                    $("#cmboShipment").val(counter.user_id);
+                }else if(counter.menu_id == 15){
+                    $("#cmboSubmission").val(counter.user_id);
+                }
+            }
+        }
+    }
+
+    function getProductSteps() {
+        return callAPIService("get_product_step.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+$("#product_id").val());
     }
 
     function saveSteps() {
