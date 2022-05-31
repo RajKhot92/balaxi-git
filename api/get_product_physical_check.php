@@ -5,7 +5,7 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $fsc_id = mysqli_real_escape_string($conn, $_REQUEST['fsc_id']);
+    $pc_id = mysqli_real_escape_string($conn, $_REQUEST['pc_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -25,23 +25,22 @@
         exit();
     }
 
-    /*  Getting market research    */
-    $get_fsc_sql = "SELECT * FROM product_fsc WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    /*  Getting nomenclature    */
+    $get_physical_check_sql = "SELECT * FROM product_physical_check WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
-    if($fsc_id != 0){
-        $get_fsc_sql .= " AND fsc_id = ".$fsc_id;
+    if($pc_id != 0){
+        $get_physical_check_sql .= " AND pc_id = ".$pc_id;
     }
 
-    $result = mysqli_query($conn,$get_fsc_sql);  
+    $result = mysqli_query($conn,$get_physical_check_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['fsc_id'] = $row['fsc_id'];
+        $row_array['pc_id'] = $row['pc_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['composition'] = $row['composition'];
-        $row_array['validity'] = $row['validity'];
-        $row_array['received_date'] = $row['received_date'];
-        $row_array['fsc'] = base64_encode($row['fsc']);
+        $row_array['appearance'] = $row['appearance'];
+        $row_array['weight'] = $row['weight'];
+        $row_array['remarks'] = $row['remarks'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

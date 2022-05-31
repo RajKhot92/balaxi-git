@@ -5,23 +5,14 @@
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $manufacture_name = mysqli_real_escape_string($conn, $_REQUEST['manufacture_name']);
+    $appearance = mysqli_real_escape_string($conn, $_REQUEST['appearance']);
     $validity = mysqli_real_escape_string($conn, $_REQUEST['validity']);
     $received_date = mysqli_real_escape_string($conn, $_REQUEST['received_date']);
-    if (!empty($_FILES['license']['name'])) {
-        if ($_FILES['license']['error'] != 0) {
-            echo 'Something wrong with the file.';
-            exit();
-        }
-
-        $file_name = $_FILES['license']['name'];
-        $file_tmp = $_FILES['license']['tmp_name'];
-        $file_content = addslashes(file_get_contents($_FILES['license']['tmp_name']));
-    }
+    $remarks = mysqli_real_escape_string($conn, $_REQUEST['remarks']);
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $manufacture_name === "" || $validity === "" || $received_date === ""){
+    if($login_id === "" || $product_id === "" || $appearance === "" || $validity === "" || $received_date === "" || $remarks === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -45,21 +36,21 @@
         exit();
     }
 
-    /*  Adding market research     */
-    $add_license_manufacture_sql = "INSERT INTO product_license_manufacture (`product_id`, `manufacture_name`, `validity`, `received_date`, `license`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$manufacture_name."',STR_TO_DATE('".$validity."', '%m/%d/%Y'),STR_TO_DATE('".$received_date."', '%m/%d/%Y'),'".$file_content."',".$login_id.",NOW())";
+    /*  Adding license manufacture     */
+    $add_work_standard_sql = "INSERT INTO product_work_standard (`product_id`, `appearance`, `validity`, `received_date`, `remarks`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",'".$appearance."',STR_TO_DATE('".$validity."', '%m/%d/%Y'), STR_TO_DATE('".$received_date."', '%m/%d/%Y'),'".$remarks."',".$login_id.",NOW())";
 
-    if ($conn->query($add_license_manufacture_sql) !== TRUE) {
-        echo "Some error occurred while adding license manufacture details. Please try again later.";
+    if ($conn->query($add_work_standard_sql) !== TRUE) {
+        echo "Some error occurred while adding working standard details. Please try again later.";
         exit();
     }
     
     if (!$conn -> commit()) {
-        echo "Some error occurred while adding license manufacture details. Please try again later.";
+        echo "Some error occurred while adding working standard details. Please try again later.";
         exit();
     }else{
         echo "1";
     }
 
     $conn->close();
-?>
+?>  

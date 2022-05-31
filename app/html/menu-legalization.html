@@ -18,27 +18,61 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-legal-submission.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
                     <h5 class="mb-1 mt-1">Submission</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divSubmission">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-legal-receipt.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>2.</h4>
                     <h5 class="mb-1 mt-1">Receipt</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divReceipt">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-danger" onclick="loadPageContent(11,'menu-document-sample-collection.html')">
+                    <button type="button" class="btn btn-danger" onclick="back()">
                         <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </button>      
                 </div>
             </div>
-        </div>  
+        </div>   
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // console.log(sessionStorage.getItem("submission"));
+        // console.log(sessionStorage.getItem("receipt"));
+
+        $("#divSubmission").html("<h4>"+sessionStorage.getItem("submission")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("submission")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("submission")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divReceipt").html("<h4>"+sessionStorage.getItem("receipt")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("receipt")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("receipt")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+    });
+
+    function back() {
+        loadPageContentFromBackButton(11,'menu-document-sample-collection.html');
+    }
+</script>

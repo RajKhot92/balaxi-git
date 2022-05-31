@@ -18,51 +18,137 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-license-manufacture.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
                     <h5 class="mb-1 mt-1">License Of Manufacturer</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divLicenseManufacture">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-pp.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>2.</h4>
                     <h5 class="mb-1 mt-1">PP</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divPP">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-fsc.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>3.</h4>
                     <h5 class="mb-1 mt-1">FSC</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divFSC">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-gmp.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>4.</h4>
                     <h5 class="mb-1 mt-1">GMP</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divGMP">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-copp.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>5.</h4>
                     <h5 class="mb-1 mt-1">CoPP</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divCoPP">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-cma.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>6.</h4>
                     <h5 class="mb-1 mt-1">CMA</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divCMA">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-danger" onclick="loadPageContent(11,'menu-document-sample-collection.html')">
+                    <button type="button" class="btn btn-danger" onclick="back()">
                         <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </button>      
                 </div>
             </div>
-        </div>   
+        </div> 
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // console.log(sessionStorage.getItem("license_manufacture"));
+        // console.log(sessionStorage.getItem("pp"));
+        // console.log(sessionStorage.getItem("fsc"));
+        // console.log(sessionStorage.getItem("gmp"));
+        // console.log(sessionStorage.getItem("copp"));
+        // console.log(sessionStorage.getItem("cma"));
+
+        $("#divLicenseManufacture").html("<h4>"+sessionStorage.getItem("license_manufacture")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("license_manufacture")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("license_manufacture")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divPP").html("<h4>"+sessionStorage.getItem("pp")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("pp")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("pp")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divFSC").html("<h4>"+sessionStorage.getItem("fsc")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("fsc")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("fsc")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divGMP").html("<h4>"+sessionStorage.getItem("gmp")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("gmp")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("gmp")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divCoPP").html("<h4>"+sessionStorage.getItem("copp")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("copp")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("copp")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divCMA").html("<h4>"+sessionStorage.getItem("cma")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("cma")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("cma")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+    });
+
+    function back() {
+        loadPageContentFromBackButton(11,'menu-document-sample-collection.html');
+    }
+</script>

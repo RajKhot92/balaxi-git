@@ -102,7 +102,6 @@ function loadUserMenus() {
 		var finalMenuContent = "<ul id=\"sidebarnav\" class=\"pt-4\">"+menuContent+"<ul>";
 		$("#customMenu").html(finalMenuContent);
 
-
 		loadPageContent(firstMenuIdToLoad,firstPageToLoad);
 	}else{
 		alert("It looks like there is no any menu assigned to your role. Please talk with system administrator.");

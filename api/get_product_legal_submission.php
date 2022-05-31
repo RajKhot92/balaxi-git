@@ -5,7 +5,7 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $fsc_id = mysqli_real_escape_string($conn, $_REQUEST['fsc_id']);
+    $ls_id = mysqli_real_escape_string($conn, $_REQUEST['ls_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -25,23 +25,25 @@
         exit();
     }
 
-    /*  Getting market research    */
-    $get_fsc_sql = "SELECT * FROM product_fsc WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    /*  Getting nomenclature    */
+    $get_legal_submission_sql = "SELECT * FROM product_legal_submission WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
-    if($fsc_id != 0){
-        $get_fsc_sql .= " AND fsc_id = ".$fsc_id;
+    if($ls_id != 0){
+        $get_legal_submission_sql .= " AND ls_id = ".$ls_id;
     }
 
-    $result = mysqli_query($conn,$get_fsc_sql);  
+    $result = mysqli_query($conn,$get_legal_submission_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['fsc_id'] = $row['fsc_id'];
+        $row_array['ls_id'] = $row['ls_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['composition'] = $row['composition'];
-        $row_array['validity'] = $row['validity'];
-        $row_array['received_date'] = $row['received_date'];
-        $row_array['fsc'] = base64_encode($row['fsc']);
+        $row_array['gmp'] = $row['gmp'];
+        $row_array['fsc'] = $row['fsc'];
+        $row_array['copp'] = $row['copp'];
+        $row_array['pp'] = $row['pp'];
+        $row_array['license_manufacture'] = $row['license_manufacture'];
+        $row_array['cma'] = $row['cma'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

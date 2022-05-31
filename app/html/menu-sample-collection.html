@@ -18,23 +18,35 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-working-standard.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
                     <h5 class="mb-1 mt-1">Working Standard</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divWorkStandard">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-finish-product.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>2.</h4>
                     <h5 class="mb-1 mt-1">Finished Product</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divFinishProduct">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-danger" onclick="loadPageContent(11,'menu-document-sample-collection.html')">
+                    <button type="button" class="btn btn-danger" onclick="back()">
                         <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </button>      
                 </div>
@@ -42,3 +54,25 @@
         </div>   
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // console.log(sessionStorage.getItem("work_standard"));
+        // console.log(sessionStorage.getItem("finish_product"));
+
+        $("#divWorkStandard").html("<h4>"+sessionStorage.getItem("work_standard")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("work_standard")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("work_standard")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divFinishProduct").html("<h4>"+sessionStorage.getItem("finish_product")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("finish_product")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("finish_product")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+    });
+
+    function back() {
+        loadPageContentFromBackButton(11,'menu-document-sample-collection.html');
+    }
+</script>

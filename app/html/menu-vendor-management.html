@@ -2,13 +2,13 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Document Collection</h4>
+                <h4 class="page-title">Vendor Management</h4>
                 <div class="ms-auto text-end">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                            Document Collection
+                            Vendor Management
                             </li>
                         </ol>
                     </nav>
@@ -18,37 +18,37 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-certificate-analysis.html')">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-vendor-finalization.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
-                    <h5 class="mb-1 mt-1">Certificate Of Analysis</h5>
+                    <h5 class="mb-1 mt-1">Vendor Finalization</h5>
                     <hr>
                     <div class="row">
-                        <div class="col" id="divCertificateAnalysis">
+                        <div class="col" id="divVendorFinalization">
                             
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-qnq-formula.html')">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-vendor-document-collection.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>2.</h4>
-                    <h5 class="mb-1 mt-1">QnQ Formula</h5>
+                    <h5 class="mb-1 mt-1">Document Collection</h5>
                     <hr>
                     <div class="row">
-                        <div class="col" id="divQNQFormula">
+                        <div class="col" id="divDocCollection">
                             
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-misc.html')">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-vendor-sample-collection.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>3.</h4>
-                    <h5 class="mb-1 mt-1">Misc</h5>
+                    <h5 class="mb-1 mt-1">Sample Collection</h5>
                     <hr>
                     <div class="row">
-                        <div class="col" id="divMisc">
+                        <div class="col" id="divSampleCollection">
                             
                         </div>
                     </div>
@@ -58,6 +58,7 @@
                 &nbsp;
             </div>
         </div>
+
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
@@ -66,35 +67,35 @@
                     </button>      
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-        // console.log(sessionStorage.getItem("certificate_analysis"));
-        // console.log(sessionStorage.getItem("qnq_formula"));
-        // console.log(sessionStorage.getItem("misc"));
-
-        $("#divCertificateAnalysis").html("<h4>"+sessionStorage.getItem("certificate_analysis")+"%</h4>"+
+        // console.log(sessionStorage.getItem("finalization"));
+        // console.log(sessionStorage.getItem("doc_collection"));
+        // console.log(sessionStorage.getItem("sample_collection"));
+        
+        $("#divVendorFinalization").html("<h4>"+sessionStorage.getItem("finalization")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
-                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("certificate_analysis")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("certificate_analysis")+"%;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("finalization")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("finalization")+"%;\">"+
                                         "</div>"+
                                     "</div>");
 
-        $("#divQNQFormula").html("<h4>"+sessionStorage.getItem("qnq_formula")+"%</h4>"+
+        $("#divDocCollection").html("<h4>"+sessionStorage.getItem("doc_collection")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
-                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("qnq_formula")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("qnq_formula")+"%;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("doc_collection")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("doc_collection")+"%;\">"+
                                         "</div>"+
                                     "</div>");
 
-        $("#divMisc").html("<h4>"+sessionStorage.getItem("misc")+"%</h4>"+
+        $("#divSampleCollection").html("<h4>"+sessionStorage.getItem("sample_collection")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
-                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("misc")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("misc")+"%;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("sample_collection")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("sample_collection")+"%;\">"+
                                         "</div>"+
                                     "</div>");
     });
 
     function back() {
-        loadPageContentFromBackButton(11,'menu-document-sample-collection.html');
+        loadPageContentFromBackButton(10,'menu-vendor-finalization.html');
     }
 </script>

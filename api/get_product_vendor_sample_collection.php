@@ -1,11 +1,11 @@
 <?php
-	header('Access-Control-Allow-Origin: *');
-	include "db_connect.php";
+    header('Access-Control-Allow-Origin: *');
+    include "db_connect.php";
 
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $fsc_id = mysqli_real_escape_string($conn, $_REQUEST['fsc_id']);
+    $vsc_id = mysqli_real_escape_string($conn, $_REQUEST['vsc_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -25,23 +25,25 @@
         exit();
     }
 
-    /*  Getting market research    */
-    $get_fsc_sql = "SELECT * FROM product_fsc WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    /*  Getting nomenclature    */
+    $get_vendor_doc_collection_sql = "SELECT * FROM product_vendor_sample_collection WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
-    if($fsc_id != 0){
-        $get_fsc_sql .= " AND fsc_id = ".$fsc_id;
+    if($vsc_id != 0){
+        $get_vendor_doc_collection_sql .= " AND vsc_id = ".$vsc_id;
     }
 
-    $result = mysqli_query($conn,$get_fsc_sql);  
+    $result = mysqli_query($conn,$get_vendor_doc_collection_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['fsc_id'] = $row['fsc_id'];
+        $row_array['vsc_id'] = $row['vsc_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['composition'] = $row['composition'];
-        $row_array['validity'] = $row['validity'];
-        $row_array['received_date'] = $row['received_date'];
-        $row_array['fsc'] = base64_encode($row['fsc']);
+        $row_array['work_standard_received_dt'] = $row['work_standard_received_dt'];
+        $row_array['work_standard_finalize_dt'] = $row['work_standard_finalize_dt'];
+        $row_array['work_standard_remark'] = $row['work_standard_remark'];
+        $row_array['finish_product_received_dt'] = $row['finish_product_received_dt'];
+        $row_array['finish_product_finalize_dt'] = $row['finish_product_finalize_dt'];
+        $row_array['finish_product_remark'] = $row['finish_product_remark'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

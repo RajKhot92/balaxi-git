@@ -5,7 +5,7 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $fsc_id = mysqli_real_escape_string($conn, $_REQUEST['fsc_id']);
+    $ca_id = mysqli_real_escape_string($conn, $_REQUEST['ca_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -25,23 +25,22 @@
         exit();
     }
 
-    /*  Getting market research    */
-    $get_fsc_sql = "SELECT * FROM product_fsc WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    /*  Getting nomenclature    */
+    $get_certificate_analysis_sql = "SELECT * FROM product_certificate_analysis WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
-    if($fsc_id != 0){
-        $get_fsc_sql .= " AND fsc_id = ".$fsc_id;
+    if($ca_id != 0){
+        $get_certificate_analysis_sql .= " AND ca_id = ".$ca_id;
     }
 
-    $result = mysqli_query($conn,$get_fsc_sql);  
+    $result = mysqli_query($conn,$get_certificate_analysis_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['fsc_id'] = $row['fsc_id'];
+        $row_array['ca_id'] = $row['ca_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['composition'] = $row['composition'];
+        $row_array['batch_details'] = $row['batch_details'];
         $row_array['validity'] = $row['validity'];
-        $row_array['received_date'] = $row['received_date'];
-        $row_array['fsc'] = base64_encode($row['fsc']);
+        $row_array['certificate'] = base64_encode($row['certificate']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

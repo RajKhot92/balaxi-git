@@ -1,0 +1,230 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">QnQ Formula</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            QnQ Formula
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" method="post" id="frmQnQFormula" name="frmQnQFormula"  enctype="multipart/form-data">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <input type="hidden" id="product_id" name="product_id">
+                        <div class="card-body">
+                            <!-- <h4 class="card-title text-center">Add QnQ Formula Data</h4> -->
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Composition</label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="composition"
+                                        name="composition"
+                                        placeholder="Enter composition"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Average Weight</label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="avg_weight"
+                                        name="avg_weight"
+                                        placeholder="Enter avg weight"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Formula</label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="file"
+                                        class="form-control"
+                                        id="formula"
+                                        name="formula"
+                                        placeholder="Enter formula"
+                                    />
+                                </div>
+                                <div class="col-sm-6">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-warning" onclick="loadSubPageContent('menu-document-validation.html')">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                                <button type="button" onclick="saveQnQFormula()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetQnQFormula()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added QnQ Formula</h4>
+                        <div class="card-body" id="divQnQFormula" class="table-responsive">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        $("#product_id").val(sessionStorage.getItem("document_sample_collection_product_id"));
+        loadQnQFormula();
+    });
+
+    function loadQnQFormula(){
+        let qnQFormulaResult = getQnQFormula();
+        // console.log(qnQFormulaResult);
+        var jsonQnQFormulaData = JSON.parse(qnQFormulaResult);
+        var qnQFormulaTbody = "";
+        if(jsonQnQFormulaData.length > 0){
+            for(i=0; i<jsonQnQFormulaData.length; i++){
+                var counter = jsonQnQFormulaData[i];
+                qnQFormulaTbody += "<tr>"+
+                                            "<td align=\"center\">"+(i+1)+"</td>"+
+                                            "<td align=\"center\">"+counter.composition+"</td>"+
+                                            "<td align=\"center\">"+counter.avg_weight+"</td>"+
+                                            "<td align=\"center\">"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.formula+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                            "</td>"+
+                                            "<td>"+counter.ent_dt+"</td>"+
+                                            "<td align=\"center\">"+
+                                            	"<span title=\"Click here to delete this qnq formula details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQnQFormula("+counter.qnq_id+")\"></span>"+
+                                            "</td>"+
+                                        "</tr>";
+            }
+        }else{
+            qnQFormulaTbody += "<tr>"+
+                            "<td colspan=\"6\" align=\"center\">No qnq formula details found.</td>"
+                        "</tr>";
+        }
+        $("#divQnQFormula").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"qnQFormulaTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>Composition</th>"+
+                                        "<th>Average Weight</th>"+
+                                        "<th>Formula</th>"+
+                                        "<th>Entry Date</th>"+
+                                        "<th>Delete</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    qnQFormulaTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonQnQFormulaData.length > 0){
+            $("#qnQFormulaTable").DataTable({
+            	"columnDefs": [
+	            	{"targets": 5,"orderable": false}
+            	]
+            });
+        }
+    }
+
+    function getQnQFormula(){
+    	return callAPIService("get_product_qnq_formula.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&qnq_id=0");
+    }
+
+    function openFile(URL){
+        var win = window.open();
+        win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+    }
+
+    function saveQnQFormula(){
+    	
+        if($("#composition").val() == ""){
+            alert("Please enter composition.");
+            $("#composition").focus();
+            return false;
+        }
+
+        if($("#avg_weight").val() == ""){
+            alert("Please enter average weight.");
+            $("#avg_weight").focus();
+            return false;
+        }
+
+        if($("#formula").val() == ""){
+            alert("Please upload formula file.");
+            $("#formula").focus();
+            return false;
+        }
+
+        // Create a FormData object.
+        var formData = new FormData();
+
+        var fileSelect = document.getElementById('formula');
+        var files = fileSelect.files;
+        var file = files[0];
+        formData.append('formula', file, file.name);
+
+        formData.append("login_id", $("#login_id").val());
+        formData.append("product_id", $("#product_id").val());
+        formData.append("composition", $("#composition").val());
+        formData.append("avg_weight", $("#avg_weight").val());
+
+    	let qnQFormulaSaveResult = saveQnQFormulaData(formData);
+    	if(qnQFormulaSaveResult != "1" && qnQFormulaSaveResult != 1){
+    		alert(qnQFormulaSaveResult);
+    	}else{
+    		resetQnQFormula();
+    		alert("QnQ formula details has been saved successfully.");
+    		loadQnQFormula();
+    	}
+    }
+
+    function saveQnQFormulaData(qnQFormulaData){
+    	return callAPIServicePost("save_product_qnq_formula.php",qnQFormulaData);
+    }
+
+    function resetQnQFormula(){
+    	document.getElementById("frmQnQFormula").reset();
+    }
+
+    function deleteQnQFormula(wsId) {
+        alert("This feature is not yet implemented.");
+    }
+</script>

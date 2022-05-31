@@ -5,7 +5,7 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $lm_id = mysqli_real_escape_string($conn, $_REQUEST['lm_id']);
+    $misc_id = mysqli_real_escape_string($conn, $_REQUEST['misc_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -25,23 +25,23 @@
         exit();
     }
 
-    /*  Getting market research    */
-    $get_license_manufacture_sql = "SELECT * FROM product_license_manufacture WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    /*  Getting nomenclature    */
+    $get_misc_sql = "SELECT * FROM product_misc WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
-    if($lm_id != 0){
-        $get_license_manufacture_sql .= " AND lm_id = ".$lm_id;
+    if($misc_id != 0){
+        $get_misc_sql .= " AND misc_id = ".$misc_id;
     }
 
-    $result = mysqli_query($conn,$get_license_manufacture_sql);  
+    $result = mysqli_query($conn,$get_misc_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['lm_id'] = $row['lm_id'];
+        $row_array['misc_id'] = $row['misc_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['manufacture_name'] = $row['manufacture_name'];
-        $row_array['validity'] = $row['validity'];
-        $row_array['received_date'] = $row['received_date'];
-        $row_array['license'] = base64_encode($row['license']);
+        $row_array['pckg_specification'] = $row['pckg_specification'];
+        $row_array['warnings'] = $row['warnings'];
+        $row_array['manual'] = base64_encode($row['manual']);
+        $row_array['remarks'] = $row['remarks'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);
