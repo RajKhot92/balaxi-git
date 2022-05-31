@@ -63,7 +63,7 @@
         }
 
         //Fetch menu product assigned step wise
-        if($role_id == 4 && $product_update_menu_id == 8){
+        if(($role_id == 3 || $role_id == 4) && $product_update_menu_id == 8){
             $get_product_wise_menu_sql = "SELECT DISTINCT `product_id`,`menu_id` 
                                         FROM `product_step_master` 
                                         WHERE `user_id`=".$login_id;

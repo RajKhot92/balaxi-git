@@ -197,6 +197,9 @@
                 var counter = jsonUserData[i];
                 optionsUsersData += "<option value=\""+counter.user_id+"\">"+counter.user_name+"</option>";
             }
+
+            optionsUsersData += "<option value=\""+localStorage.getItem("balaxi_user_id")+"\">"+localStorage.getItem("balaxi_user_name")+"</option>";
+
             $("#divDataCapture").html("<select id=\"cmboDataCapture\" name=\"cmboDataCapture\" class=\"form-control\">"+
                                        "<option value=\"\">Select User</option>"+
                                        optionsUsersData+
