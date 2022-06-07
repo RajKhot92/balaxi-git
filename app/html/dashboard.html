@@ -364,21 +364,23 @@
                             "<td>"+counter.country_name+"</td>"+
                             "<td>"+counter.user_name+"</td>"+
                             "<td>"+counter.menu_name+"</td>"+
+                            "<td>"+counter.progress+"%</td>"+
                         "</tr>";
         }
     }else{
         menuTbody += "<tr>"+
-                        "<td colspan=\"5\" align=\"center\">No any steps assigned.</td>"
+                        "<td colspan=\"6\" align=\"center\">No any steps assigned.</td>"
                     "</tr>";
     }
-    $("#divAssignedMenu").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"menuTable\" width=\"100%\" cellspacing=\"0\">"+
+    $("#divAssignedMenu").html("<table class=\"table table-sm table-hover table-bordered\" id=\"menuTable\" width=\"100%\" cellspacing=\"0\">"+
                             "<thead>"+
                                 "<tr>"+
-                                    "<th>Sr.No.</th>"+
-                                    "<th>Product</th>"+
-                                    "<th>Country</th>"+
-                                    "<th>Product Owner</th>"+
-                                    "<th>Assigned Step</th>"+
+                                    "<th><b>Sr.No.</b></th>"+
+                                    "<th><b>Product</b></th>"+
+                                    "<th><b>Country</b></th>"+
+                                    "<th><b>Product Owner</b></th>"+
+                                    "<th><b>Assigned Step</b></th>"+
+                                    "<th><b>Progress</b></th>"+
                                 "</tr>"+
                             "</thead>"+
                             "<tbody>"+

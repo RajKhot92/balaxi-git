@@ -29,7 +29,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Composition</label
+                                  >Composition <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -37,13 +37,14 @@
                                         class="form-control"
                                         id="composition"
                                         name="composition"
+                                        maxlength="450"
                                         placeholder="Enter composition"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Average Weight</label
+                                  >Average Weight <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -51,6 +52,7 @@
                                         class="form-control"
                                         id="avg_weight"
                                         name="avg_weight"
+                                        maxlength="450"
                                         placeholder="Enter avg weight"
                                     />
                                 </div>
@@ -164,7 +166,7 @@
         }
     }
 
-    function getQnQFormula(){
+    function getQnQFormula(){formula
     	return callAPIService("get_product_qnq_formula.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&qnq_id=0");
     }
 
@@ -187,19 +189,17 @@
             return false;
         }
 
-        if($("#formula").val() == ""){
-            alert("Please upload formula file.");
-            $("#formula").focus();
-            return false;
-        }
-
         // Create a FormData object.
         var formData = new FormData();
 
-        var fileSelect = document.getElementById('formula');
-        var files = fileSelect.files;
-        var file = files[0];
-        formData.append('formula', file, file.name);
+        if($("#formula").val() != ""){
+            var fileSelect = document.getElementById('formula');
+            var files = fileSelect.files;
+            var file = files[0];
+            formData.append('formula', file, file.name);
+        }else{
+            formData.append('formula', null);
+        }
 
         formData.append("login_id", $("#login_id").val());
         formData.append("product_id", $("#product_id").val());

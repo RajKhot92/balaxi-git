@@ -2,11 +2,14 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
+    include "update_document_sample_collection_stats.php";
+
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $composition = mysqli_real_escape_string($conn, $_REQUEST['composition']);
     $avg_weight = mysqli_real_escape_string($conn, $_REQUEST['avg_weight']);
+    $file_content = "";
     if (!empty($_FILES['formula']['name'])) {
         if ($_FILES['formula']['error'] != 0) {
             echo 'Something wrong with the file.';
@@ -44,9 +47,11 @@
         exit();
     }
 
+    $fil_cntnt = $file_content === "" ? "null" : "'".$file_content."'";
+
     /*  Adding license manufacture     */
     $add_qnq_formula_sql = "INSERT INTO product_qnq_formula (`product_id`, `composition`, `avg_weight`, `formula`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$composition."','".$avg_weight."','".$file_content."',".$login_id.",NOW())";
+                            VALUES (".$product_id.",'".$composition."','".$avg_weight."',".$fil_cntnt.",".$login_id.",NOW())";
 
     if ($conn->query($add_qnq_formula_sql) !== TRUE) {
         echo "Some error occurred while adding qnq formula details. Please try again later.";
@@ -57,7 +62,16 @@
         echo "Some error occurred while adding qnq formula details. Please try again later.";
         exit();
     }else{
-        echo "1";
+        $retval = processStats($login_id,$product_id,$conn);
+        if($retval == "0"){
+            echo "Some error occurred while updating progress details. Please try again later.";
+            exit();
+        }else if($retval != "1"){
+            echo $retval;
+            exit();
+        }else{
+            echo $retval;
+        }
     }
 
     $conn->close();

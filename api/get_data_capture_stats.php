@@ -80,6 +80,8 @@
     // echo "progess=".$total_progress;
     // echo "entries=".$total_entries;
     $total_percent = (int)$total_progress / (int)$total_entries * 100;
+    $row_array['define_product'] = $total_percent;
+
     $row_array['data_capture'] = $total_percent;
 
     $json_response = array();

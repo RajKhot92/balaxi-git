@@ -2,12 +2,15 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
+    include "update_document_sample_collection_stats.php";
+
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $manufacture_name = mysqli_real_escape_string($conn, $_REQUEST['manufacture_name']);
     $validity = mysqli_real_escape_string($conn, $_REQUEST['validity']);
     $received_date = mysqli_real_escape_string($conn, $_REQUEST['received_date']);
+    $file_content = '';
     if (!empty($_FILES['license']['name'])) {
         if ($_FILES['license']['error'] != 0) {
             echo 'Something wrong with the file.';
@@ -21,7 +24,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $manufacture_name === "" || $validity === "" || $received_date === ""){
+    if($login_id === "" || $product_id === "" || $manufacture_name === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -45,9 +48,13 @@
         exit();
     }
 
+    $vldt = $validity === "" ? "null" : "STR_TO_DATE('".$validity."', '%m/%d/%Y')";
+    $rcvd_dt = $received_date === "" ? "null" : "STR_TO_DATE('".$received_date."', '%m/%d/%Y')";
+    $fil_cntnt = $file_content === "" ? "null" : "'".$file_content."'";
+
     /*  Adding license manufacture     */
     $add_license_manufacture_sql = "INSERT INTO product_license_manufacture (`product_id`, `manufacture_name`, `validity`, `received_date`, `license`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$manufacture_name."',STR_TO_DATE('".$validity."', '%m/%d/%Y'),STR_TO_DATE('".$received_date."', '%m/%d/%Y'),'".$file_content."',".$login_id.",NOW())";
+                            VALUES (".$product_id.",'".$manufacture_name."',".$vldt.",".$rcvd_dt.",".$fil_cntnt.",".$login_id.",NOW())";
 
     if ($conn->query($add_license_manufacture_sql) !== TRUE) {
         echo "Some error occurred while adding license manufacture details. Please try again later.";
@@ -58,7 +65,16 @@
         echo "Some error occurred while adding license manufacture details. Please try again later.";
         exit();
     }else{
-        echo "1";
+        $retval = processStats($login_id,$product_id,$conn);
+        if($retval == "0"){
+            echo "Some error occurred while updating progress details. Please try again later.";
+            exit();
+        }else if($retval != "1"){
+            echo $retval;
+            exit();
+        }else{
+            echo $retval;
+        }
     }
 
     $conn->close();

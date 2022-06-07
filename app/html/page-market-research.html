@@ -29,7 +29,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Is Market Research completed?</label
+                                  >Is Market Research completed? <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3 mt-2">
                                     <input type="radio" id="rdoResearch" name="rdoResearch" value="Yes">&nbsp;Yes&nbsp;
@@ -43,10 +43,10 @@
                                 <div class="col-sm-4">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="conducted_on"
                                         name="conducted_on"
-                                        maxlength="50"
                                         placeholder="Enter conducted on date"
                                     />
                                 </div>
@@ -55,7 +55,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Research Report</label
+                                  >Research Report <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -180,12 +180,6 @@
         var isResearch = $('input[name=rdoResearch]:checked').val();
         if(isResearch === undefined || isResearch == null){
             alert("Please provide whether market research is completed.");
-            return false;
-        }
-
-        if($("#conducted_on").val() == ""){
-            alert("Please enter conducted on.");
-            $("#conducted_on").focus();
             return false;
         }
 

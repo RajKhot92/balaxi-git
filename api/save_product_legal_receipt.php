@@ -2,6 +2,8 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
+    include "update_document_sample_collection_stats.php";
+
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
@@ -14,7 +16,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $gmp === "" || $fsc === "" || $copp === "" || $pp === "" || $license_manufacture === "" || $cma === ""){
+    if($login_id === "" || $product_id === "" || $gmp === "" || $fsc === "" || $copp === "" || $cma === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -38,9 +40,12 @@
         exit();
     }
 
+    $ppdt = $pp === "" ? "null" : "STR_TO_DATE('".$pp."', '%m/%d/%Y')";
+    $lcnsedt = $license_manufacture === "" ? "null" : "STR_TO_DATE('".$license_manufacture."', '%m/%d/%Y')";
+
     /*  Adding license manufacture     */
     $add_legal_receipt_sql = "INSERT INTO product_legal_receipt (`product_id`, `gmp`, `fsc`, `copp`, `pp`, `license_manufacture`, `cma`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",STR_TO_DATE('".$gmp."', '%m/%d/%Y'), STR_TO_DATE('".$fsc."', '%m/%d/%Y'), STR_TO_DATE('".$copp."', '%m/%d/%Y'), STR_TO_DATE('".$pp."', '%m/%d/%Y'), STR_TO_DATE('".$license_manufacture."', '%m/%d/%Y'), STR_TO_DATE('".$cma."', '%m/%d/%Y'),".$login_id.",NOW())";
+                            VALUES (".$product_id.",STR_TO_DATE('".$gmp."', '%m/%d/%Y'), STR_TO_DATE('".$fsc."', '%m/%d/%Y'), STR_TO_DATE('".$copp."', '%m/%d/%Y'), ".$ppdt.", ".$lcnsedt.", STR_TO_DATE('".$cma."', '%m/%d/%Y'),".$login_id.",NOW())";
 
     if ($conn->query($add_legal_receipt_sql) !== TRUE) {
         echo "Some error occurred while adding legal receipt details. Please try again later.";
@@ -51,7 +56,16 @@
         echo "Some error occurred while adding legal receipt details. Please try again later.";
         exit();
     }else{
-        echo "1";
+        $retval = processStats($login_id,$product_id,$conn);
+        if($retval == "0"){
+            echo "Some error occurred while updating progress details. Please try again later.";
+            exit();
+        }else if($retval != "1"){
+            echo $retval;
+            exit();
+        }else{
+            echo $retval;
+        }
     }
 
     $conn->close();

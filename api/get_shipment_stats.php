@@ -74,6 +74,8 @@
     $total_percent = (int)$total_progress / (int)$total_entries * 100;
     $row_array['shipment'] = $total_percent;
 
+    $row_array['shipment_main'] = $total_percent;
+
     $json_response = array();
     array_push($json_response,$row_array);
 

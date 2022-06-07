@@ -7,7 +7,8 @@
 
     /*  Getting roles    */
     $get_steps_sql = "SELECT b.`product_id`,b.`product_name`,b.`country_id`,
-					d.`country_name`,b.`product_owner`,c.`user_name`,e.`menu_id`,e.`menu_name`
+					d.`country_name`,b.`product_owner`,c.`user_name`,
+                    e.`menu_id`,e.`menu_name`,IFNULL(a.`progress`,'0.00') progress
 					FROM `product_step_master` a 
 					INNER JOIN `product_master` b ON a.`product_id`=b.`product_id`
 					INNER JOIN `user_master` c ON b.`product_owner`=c.`user_id`
@@ -27,6 +28,7 @@
         $row_array['user_name'] = $row['user_name'];
         $row_array['menu_id'] = $row['menu_id'];
         $row_array['menu_name'] = $row['menu_name'];
+        $row_array['progress'] = $row['progress'];
         array_push($json_response,$row_array);  
     }
 

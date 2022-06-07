@@ -29,7 +29,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Name</label
+                                  >Name <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -37,14 +37,14 @@
                                         class="form-control"
                                         id="nomen_name"
                                         name="nomen_name"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter name"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >pf Value</label
+                                  >Pharmacopeia File</label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -52,8 +52,8 @@
                                         class="form-control"
                                         id="pf_value"
                                         name="pf_value"
-                                        maxlength="50"
-                                        placeholder="Enter pf value"
+                                        maxlength="450"
+                                        placeholder="Enter pharmacopeia file"
                                     />
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Pharmacopeia Type</label
+                                  >Pharmacopeia Type <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -69,7 +69,7 @@
                                         class="form-control"
                                         id="pharmacopeia_type"
                                         name="pharmacopeia_type"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter pharmacopeia type"
                                     />
                                 </div>
@@ -146,7 +146,7 @@
                                     "<tr>"+
                                         "<th>Sr.No.</th>"+
                                         "<th>Nomenclature</th>"+
-                                        "<th>pf Value</th>"+
+                                        "<th>Pharmacopeia File</th>"+
                                         "<th>Pharmacopeia Type</th>"+
                                         "<th>Entry Date</th>"+
                                         "<th>Delete</th>"+
@@ -176,12 +176,6 @@
     		$("#nomen_name").focus();
     		return false;
     	}
-
-        if($("#pf_value").val() == ""){
-            alert("Please enter valid pf value.");
-            $("#pf_value").focus();
-            return false;
-        }
 
         if($("#pharmacopeia_type").val() == ""){
             alert("Please enter valid pharmacopeia type.");

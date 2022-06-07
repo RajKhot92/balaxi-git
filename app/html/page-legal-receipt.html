@@ -29,11 +29,12 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >GMP</label
+                                  >GMP <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="gmp"
                                         name="gmp"
@@ -43,11 +44,12 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >FSC</label
+                                  >FSC <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="fsc"
                                         name="fsc"
@@ -59,11 +61,12 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >CoPP</label
+                                  >CoPP <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="copp"
                                         name="copp"
@@ -78,6 +81,7 @@
                                 <div class="col-sm-3">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="pp"
                                         name="pp"
@@ -94,6 +98,7 @@
                                 <div class="col-sm-4">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="license_manufacture"
                                         name="license_manufacture"
@@ -103,11 +108,12 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >CMA</label
+                                  >CMA <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="cma"
                                         name="cma"
@@ -265,18 +271,6 @@
         if($("#copp").val() == ""){
             alert("Please enter copp date.");
             $("#copp").focus();
-            return false;
-        }
-
-        if($("#pp").val() == ""){
-            alert("Please enter pp date.");
-            $("#pp").focus();
-            return false;
-        }
-
-        if($("#license_manufacture").val() == ""){
-            alert("Please enter license of manufacture date.");
-            $("#license_manufacture").focus();
             return false;
         }
 

@@ -18,10 +18,16 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-translation.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
                     <h5 class="mb-1 mt-1">Translation</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divTranslation">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-6 mt-4">
@@ -31,11 +37,26 @@
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-danger" onclick="loadPageContent(15,'menu-submission.html')">
+                    <button type="button" class="btn btn-danger" onclick="back()">
                         <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </button>      
                 </div>
             </div>
-        </div>   
+        </div> 
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // console.log(sessionStorage.getItem("translation"));
+
+        $("#divTranslation").html("<h4>"+sessionStorage.getItem("translation")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("translation")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("translation")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+    });
+
+    function back() {
+        loadPageContentFromBackButton(15,'menu-submission.html');
+    }
+</script>

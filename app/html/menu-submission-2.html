@@ -18,39 +18,99 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-validation.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>1.</h4>
                     <h5 class="mb-1 mt-1">Validation</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divValidation">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-translation.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>2.</h4>
                     <h5 class="mb-1 mt-1">Legalization (DC)</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divLegalization">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-translation.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>3.</h4>
                     <h5 class="mb-1 mt-1">Submission</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divSubmission">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-translation.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>4.</h4>
                     <h5 class="mb-1 mt-1">Queries</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divQueries">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="border-top">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-danger" onclick="loadPageContent(15,'menu-submission.html')">
+                    <button type="button" class="btn btn-danger" onclick="back()">
                         <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </button>      
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // console.log(sessionStorage.getItem("validation"));
+        // console.log(sessionStorage.getItem("legalization"));
+        // console.log(sessionStorage.getItem("submission"));
+        // console.log(sessionStorage.getItem("validation"));
+
+        $("#divValidation").html("<h4>"+sessionStorage.getItem("validation")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("validation")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("validation")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divLegalization").html("<h4>"+sessionStorage.getItem("legalization")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("legalization")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("legalization")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divSubmission").html("<h4>"+sessionStorage.getItem("submission")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("submission")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("submission")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divQueries").html("<h4>"+sessionStorage.getItem("queries")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("queries")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("queries")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+    });
+
+    function back() {
+        loadPageContentFromBackButton(15,'menu-submission.html');
+    }
+</script>

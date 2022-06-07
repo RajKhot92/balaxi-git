@@ -2,14 +2,18 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
+    include "update_document_sample_collection_stats.php";
+
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $batch_no = mysqli_real_escape_string($conn, $_REQUEST['batch_no']);
     $lab_name = mysqli_real_escape_string($conn, $_REQUEST['lab_name']);
+    $test_performed = mysqli_real_escape_string($conn, $_REQUEST['test_performed']);
     $submitted_dt = mysqli_real_escape_string($conn, $_REQUEST['submitted_dt']);
     $received_dt = mysqli_real_escape_string($conn, $_REQUEST['received_dt']);
     $result = mysqli_real_escape_string($conn, $_REQUEST['result']);
+    $remarks = mysqli_real_escape_string($conn, $_REQUEST['remarks']);
     if (!empty($_FILES['lab_report']['name'])) {
         if ($_FILES['lab_report']['error'] != 0) {
             echo 'Something wrong with the file.';
@@ -23,7 +27,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $batch_no === "" || $lab_name === "" || $submitted_dt === "" || $received_dt === "" || $result === ""){
+    if($login_id === "" || $product_id === "" || $batch_no === "" || $lab_name === "" || $test_performed === "" || $submitted_dt === "" || $received_dt === "" || $result === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -48,8 +52,8 @@
     }
 
     /*  Adding license manufacture     */
-    $add_lab_test_sql = "INSERT INTO product_lab_test (`product_id`, `batch_no`, `lab_name`, `submitted_dt`, `received_dt`, `result`, `lab_report`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$batch_no."','".$lab_name."',STR_TO_DATE('".$submitted_dt."', '%m/%d/%Y'),STR_TO_DATE('".$received_dt."', '%m/%d/%Y'),'".$result."','".$file_content."',".$login_id.",NOW())";
+    $add_lab_test_sql = "INSERT INTO product_lab_test (`product_id`, `batch_no`, `lab_name`, `test_performed`, `submitted_dt`, `received_dt`, `result`, `lab_report`, `remarks`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",'".$batch_no."','".$lab_name."','".$test_performed."',STR_TO_DATE('".$submitted_dt."', '%m/%d/%Y'),STR_TO_DATE('".$received_dt."', '%m/%d/%Y'),'".$result."','".$file_content."','".$remarks."',".$login_id.",NOW())";
 
     if ($conn->query($add_lab_test_sql) !== TRUE) {
         echo "Some error occurred while adding lab test details. Please try again later.";
@@ -60,7 +64,16 @@
         echo "Some error occurred while adding lab test details. Please try again later.";
         exit();
     }else{
-        echo "1";
+        $retval = processStats($login_id,$product_id,$conn);
+        if($retval == "0"){
+            echo "Some error occurred while updating progress details. Please try again later.";
+            exit();
+        }else if($retval != "1"){
+            echo $retval;
+            exit();
+        }else{
+            echo $retval;
+        }
     }
 
     $conn->close();

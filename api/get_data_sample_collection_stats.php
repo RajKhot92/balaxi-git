@@ -215,6 +215,10 @@
     $total_percent_sample_quality = (int)$total_progress_sample_quality / (int)$total_entries_legalization * 100;
     $row_array['sample_quality'] = $total_percent_sample_quality;
 
+    $total_progress_doc_sample_collection = (int)$total_percent_doc_collection + (int)$total_percent_doc_validation + (int)$total_percent_legalization + (int)$total_percent_sample_collection + (int)$total_percent_sample_quality;
+    $total_percent_doc_sample_collection = (int)$total_progress_doc_sample_collection / 5;
+    $row_array['doc_sample_collection'] = $total_percent_doc_sample_collection;    
+
     $json_response = array();
     array_push($json_response,$row_array);
 

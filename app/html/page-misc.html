@@ -25,11 +25,17 @@
                         <input type="hidden" id="product_id" name="product_id">
                         <div class="card-body">
                             <!-- <h4 class="card-title text-center">Add Misc Data</h4> -->
+                            <div class="row">
+                                <div class="col">
+                                    (<b>Note</b>: If this form is not required for any product, then you can enter N/A as input.)
+                                    <hr>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Packaging Specification</label
+                                  >Packaging Specification <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -37,6 +43,7 @@
                                         class="form-control"
                                         id="pckg_specification"
                                         name="pckg_specification"
+                                        maxlength="450"
                                         placeholder="Enter packaging specification"
                                     />
                                 </div>
@@ -51,6 +58,7 @@
                                         class="form-control"
                                         id="warnings"
                                         name="warnings"
+                                        maxlength="450"
                                         placeholder="Enter warnings"
                                     />
                                 </div>
@@ -81,6 +89,7 @@
                                         class="form-control"
                                         id="remarks"
                                         name="remarks"
+                                        maxlength="450"
                                         placeholder="Enter remarks"
                                     />
                             </div>
@@ -193,31 +202,17 @@
             return false;
         }
 
-        if($("#warnings").val() == ""){
-            alert("Please enter warnings.");
-            $("#warnings").focus();
-            return false;
-        }
-
-        if($("#manual").val() == ""){
-            alert("Please upload manual file.");
-            $("#manual").focus();
-            return false;
-        }
-
-        if($("#remarks").val() == ""){
-            alert("Please enter remarks.");
-            $("#remarks").focus();
-            return false;
-        }
-
         // Create a FormData object.
         var formData = new FormData();
-
-        var fileSelect = document.getElementById('manual');
-        var files = fileSelect.files;
-        var file = files[0];
-        formData.append('manual', file, file.name);
+        
+        if($("#manual").val() != ""){
+            var fileSelect = document.getElementById('manual');
+            var files = fileSelect.files;
+            var file = files[0];
+            formData.append('manual', file, file.name);
+        }else{
+            formData.append('manual', null);
+        }
 
         formData.append("login_id", $("#login_id").val());
         formData.append("product_id", $("#product_id").val());

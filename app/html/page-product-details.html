@@ -29,7 +29,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Strength</label
+                                  >Strength <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -37,14 +37,14 @@
                                         class="form-control"
                                         id="strength"
                                         name="strength"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter strength"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Description</label
+                                  >Description <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -52,7 +52,7 @@
                                         class="form-control"
                                         id="description"
                                         name="description"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter description"
                                     />
                                 </div>
@@ -61,7 +61,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Composition</label
+                                  >Composition <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -69,14 +69,14 @@
                                         class="form-control"
                                         id="composition"
                                         name="composition"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter composition"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Weigth Fill Weight</label
+                                  >Weigth Fill Weight <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -84,7 +84,7 @@
                                         class="form-control"
                                         id="fill_weight"
                                         name="fill_weight"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter weight fill weight"
                                     />
                                 </div>
@@ -93,7 +93,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Pack Style</label
+                                  >Pack Style <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -101,7 +101,7 @@
                                         class="form-control"
                                         id="pack_style"
                                         name="pack_style"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter pack style"
                                     />
                                 </div>
@@ -116,7 +116,7 @@
                                         class="form-control"
                                         id="packaging_description"
                                         name="packaging_description"
-                                        maxlength="50"
+                                        maxlength="450"
                                         placeholder="Enter packaging description"
                                     />
                                 </div>
@@ -248,12 +248,6 @@
         if($("#pack_style").val() == ""){
             alert("Please enter valid pack style value.");
             $("#pack_style").focus();
-            return false;
-        }
-
-        if($("#packaging_description").val() == ""){
-            alert("Please enter valid packaging description value.");
-            $("#packaging_description").focus();
             return false;
         }
 

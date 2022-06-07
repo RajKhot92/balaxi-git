@@ -38,7 +38,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >FSC/PP Draft</label
+                                  >FSC/PP Draft <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -153,8 +153,7 @@
     	
         var isResearch = $('input[name=rdoResearch]:checked').val();
         if(isResearch === undefined || isResearch == null){
-            alert("Please provide whether market research is completed.");
-            return false;
+            isResearch = "";
         }
         
         if($("#fsc_pp_draft").val() == ""){
@@ -181,7 +180,7 @@
         formData.append("is_research", isResearch);
 
         let procurementSaveResult = saveProcurementData(formData);
-    	if(procurementSaveResult != "1"){
+    	if(procurementSaveResult != "1" && procurementSaveResult != 1){
     		alert(procurementSaveResult);
     	}else{
     		resetProcurement();
@@ -195,8 +194,7 @@
     }
 
     function resetProcurement(){
-        document.querySelector('input[name="rdoResearch"]:checked').checked = false;
-    	$("#fsc_pp_draft").val("");
+        document.getElementById("frmProcurement").reset();
     }
 
     function deleteProcurement(countryId) {

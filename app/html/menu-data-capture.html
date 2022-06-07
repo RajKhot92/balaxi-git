@@ -2,13 +2,13 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">Data Capture</h4>
+                <h4 class="page-title">Technical Draft</h4>
                 <div class="ms-auto text-end">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                            Data Capture
+                            Technical Draft
                             </li>
                         </ol>
                     </nav>
@@ -40,10 +40,11 @@
                                     <table class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Product Name</th>
-                                                <th>Product Owner</th>
-                                                <th>Product Category</th>
-                                                <th>Product Country</th>
+                                                <th><b>Product Name</b></th>
+                                                <th><b>Product Owner</b></th>
+                                                <th><b>Product Category</b></th>
+                                                <th><b>Product Country</b></th>
+                                                <th><b>Overall Progress</b></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -52,6 +53,7 @@
                                                 <td id="tdProductOwner"></td>
                                                 <td id="tdProductCategory"></td>
                                                 <td id="tdProductCountry"></td>
+                                                <td id="tdOverallProgress" class="text-center"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -87,7 +89,7 @@
                     <h5 class="mb-1 mt-1">Define Product</h5>
                     <hr>
                     <div class="row">
-                        <div class="col" id="divDataCapture">
+                        <div class="col" id="divDefineProduct">
                             
                         </div>
                     </div>
@@ -175,10 +177,14 @@
         if(jsonProductProgressData.length > 0){
             for(i=0; i<jsonProductProgressData.length; i++){
                 var counter = jsonProductProgressData[i];
+                // console.log(counter.define_product);
                 // console.log(counter.data_capture);
-                $("#divDataCapture").html("<h4>"+counter.data_capture.toFixed(2)+"%</h4>"+
+
+                $("#tdOverallProgress").html("<h5>"+counter.data_capture.toFixed(2)+"%</h5>");
+
+                $("#divDefineProduct").html("<h4>"+counter.define_product.toFixed(2)+"%</h4>"+
                                         "<div class=\"progress\" style=\"height: 20px;\">"+
-                                            "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+counter.data_capture+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+counter.data_capture+"%;\">"+
+                                            "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+counter.define_product+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+counter.define_product+"%;\">"+
                                             "</div>"+
                                         "</div>");
 

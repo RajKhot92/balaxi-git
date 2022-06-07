@@ -29,7 +29,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Appearance</label
+                                  >Appearance <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -37,13 +37,14 @@
                                         class="form-control"
                                         id="appearance"
                                         name="appearance"
+                                        maxlength="450"
                                         placeholder="Enter appearance"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Weight</label
+                                  >Weight <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -51,6 +52,7 @@
                                         class="form-control"
                                         id="weight"
                                         name="weight"
+                                        maxlength="450"
                                         placeholder="Enter weight"
                                     />
                                 </div>
@@ -67,6 +69,7 @@
                                         class="form-control"
                                         id="remarks"
                                         name="remarks"
+                                        maxlength="450"
                                         placeholder="Enter remarks"
                                     />
                                 </div>
@@ -182,12 +185,6 @@
         if($("#weight").val() == ""){
             alert("Please enter weight.");
             $("#weight").focus();
-            return false;
-        }
-
-        if($("#remarks").val() == ""){
-            alert("Please enter remarks.");
-            $("#remarks").focus();
             return false;
         }
 

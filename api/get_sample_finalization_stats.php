@@ -91,6 +91,9 @@
     $total_percent_finalize = (int)$total_progress_finalize / (int)$total_entries_finalize * 100;
     $row_array['finalization'] = $total_percent_finalize;
 
+    $total_progress_sample_finalize = (int)$total_percent_artwork + (int)$total_percent_finalize;
+    $row_array['sample_finalization'] = (int)$total_progress_sample_finalize / 2;
+
     $json_response = array();
     array_push($json_response,$row_array);
 

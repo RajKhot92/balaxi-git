@@ -29,7 +29,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Batch No</label
+                                  >Batch No <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -37,13 +37,14 @@
                                         class="form-control"
                                         id="batch_no"
                                         name="batch_no"
+                                        maxlength="450"
                                         placeholder="Enter batch no"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Lab Name</label
+                                  >Lab Name <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -51,6 +52,7 @@
                                         class="form-control"
                                         id="lab_name"
                                         name="lab_name"
+                                        maxlength="450"
                                         placeholder="Enter lab name"
                                     />
                                 </div>
@@ -59,29 +61,31 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Submitted to Lab Date</label
+                                  >Test Performed <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="submitted_dt"
-                                        name="submitted_dt"
-                                        placeholder="Enter submitted date"
+                                        id="test_performed"
+                                        name="test_performed"
+                                        maxlength="450"
+                                        placeholder="Enter test performed"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Received from Lab Date</label
+                                  >Submitted to Lab Date <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
-                                        id="received_dt"
-                                        name="received_dt"
-                                        placeholder="Enter received date"
+                                        id="submitted_dt"
+                                        name="submitted_dt"
+                                        placeholder="Enter submitted date"
                                     />
                                 </div>
                             </div>
@@ -89,16 +93,33 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Result</label
+                                  >Received from Lab Date <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
-                                    <input type="radio" name="rdoResult" id="rdoResult" value="Pass">&nbsp;Pass&nbsp;
-                                    <input type="radio" name="rdoResult" id="rdoResult" value="Fail">&nbsp;Fail
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                        id="received_dt"
+                                        name="received_dt"
+                                        placeholder="Enter received date"
+                                    />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Lab Report</label
+                                  >Result <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3 mt-2">
+                                    <input type="radio" name="rdoResult" id="rdoResult" value="Pass">&nbsp;Pass&nbsp;
+                                    <input type="radio" name="rdoResult" id="rdoResult" value="Fail">&nbsp;Fail
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Lab Report <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -107,6 +128,21 @@
                                         id="lab_report"
                                         name="lab_report"
                                         placeholder="Enter lab report"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Remarks</label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="remarks"
+                                        name="remarks"
+                                        maxlength="450"
+                                        placeholder="Enter remarks"
                                     />
                                 </div>
                             </div>
@@ -172,12 +208,14 @@
                                             "<td align=\"center\">"+(i+1)+"</td>"+
                                             "<td align=\"center\">"+counter.batch_no+"</td>"+
                                             "<td align=\"center\">"+counter.lab_name+"</td>"+
+                                            "<td align=\"center\">"+counter.test_performed+"</td>"+
                                             "<td align=\"center\">"+counter.submitted_dt+"</td>"+
                                             "<td align=\"center\">"+counter.received_dt+"</td>"+
                                             "<td align=\"center\">"+counter.result+"</td>"+
                                             "<td align=\"center\">"+
                                                 "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.lab_report+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
+                                            "<td>"+counter.remarks+"</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
                                             	"<span title=\"Click here to delete this physical checks details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteLabTest("+counter.lt_id+")\"></span>"+
@@ -186,7 +224,7 @@
             }
         }else{
             labTestTbody += "<tr>"+
-                            "<td colspan=\"9\" align=\"center\">No lab test details found.</td>"
+                            "<td colspan=\"11\" align=\"center\">No lab test details found.</td>"
                         "</tr>";
         }
         $("#divLabTest").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"labTestTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -195,10 +233,12 @@
                                         "<th>Sr.No.</th>"+
                                         "<th>Batch No</th>"+
                                         "<th>Lab Name</th>"+
+                                        "<th>Test Performed</th>"+
                                         "<th>Submitted to Lab Date</th>"+
                                         "<th>Received from Lab Date</th>"+
                                         "<th>Result</th>"+
                                         "<th>Lab Report</th>"+
+                                        "<th>Remarks</th>"+
                                         "<th>Entry Date</th>"+
                                         "<th>Delete</th>"+
                                     "</tr>"+
@@ -210,7 +250,7 @@
         if(jsonLabTestData.length > 0){
             $("#labTestTable").DataTable({
             	"columnDefs": [
-	            	{"targets": 8,"orderable": false}
+	            	{"targets": 10,"orderable": false}
             	]
             });
         }
@@ -236,6 +276,12 @@
         if($("#lab_name").val() == ""){
             alert("Please enter lab name.");
             $("#lab_name").focus();
+            return false;
+        }
+
+        if($("#test_performed").val() == ""){
+            alert("Please enter test performed.");
+            $("#test_performed").focus();
             return false;
         }
 
@@ -275,9 +321,11 @@
         formData.append("product_id", $("#product_id").val());
         formData.append("batch_no", $("#batch_no").val());
         formData.append("lab_name", $("#lab_name").val());
+        formData.append("test_performed", $("#test_performed").val());
         formData.append("submitted_dt", $("#submitted_dt").val());
         formData.append("received_dt", $("#received_dt").val());
         formData.append("result", isResult);
+        formData.append("remarks", $("#remarks").val());
 
     	let labTestSaveResult = saveLabTestData(formData);
     	if(labTestSaveResult != "1" && labTestSaveResult != 1){

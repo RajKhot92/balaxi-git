@@ -29,7 +29,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Product Code</label
+                                  >Product Code <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3" id="divProductCode">
                                     
@@ -37,7 +37,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Vendor name</label
+                                  >Vendor name <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4" id="divVendor">
                                     
@@ -47,7 +47,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Packaging Details (L/W/H)</label
+                                  >Packaging Details</label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -55,13 +55,14 @@
                                         class="form-control"
                                         id="package_details"
                                         name="package_details"
+                                        maxlength="450"
                                         placeholder="Enter packaging details"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Revision No</label
+                                  >Revision No <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -69,6 +70,7 @@
                                         class="form-control"
                                         id="revision_no"
                                         name="revision_no"
+                                        maxlength="450"
                                         placeholder="Enter revision no"
                                     />
                                 </div>
@@ -77,22 +79,22 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Revision Date</label
+                                  >Revision Date <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="revision_dt"
                                         name="revision_dt"
-                                        maxlength="50"
                                         placeholder="Enter revision date"
                                     />
                                 </div>
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Artwork File</label
+                                  >Artwork File <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -108,7 +110,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Commercial File</label
+                                  >Commercial File <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -295,12 +297,6 @@
         if($("#cmboVendor").val() == ""){
             alert("Please select valid vendor.");
             $("#cmboVendor").focus();
-            return false;
-        }
-
-        if($("#package_details").val() == ""){
-            alert("Please enter package details.");
-            $("#package_details").focus();
             return false;
         }
 

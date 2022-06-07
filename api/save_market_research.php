@@ -2,6 +2,8 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
+    include "update_data_capture_stats.php";
+
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
@@ -20,7 +22,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $is_research === "" || $conducted_on === ""){
+    if($login_id === "" || $product_id === "" || $is_research === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -44,9 +46,11 @@
         exit();
     }
 
+    $cndct_on = $conducted_on === "" ? "null" : "STR_TO_DATE('".$conducted_on."', '%m/%d/%Y')";
+
     /*  Adding market research     */
     $add_market_research_sql = "INSERT INTO product_market_research (`product_id`, `research_complete`, `conducted_on`, `research_report`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$is_research."',STR_TO_DATE('".$conducted_on."', '%m/%d/%Y'),'".$file_content."',".$login_id.",NOW())";
+                            VALUES (".$product_id.",'".$is_research."',".$cndct_on.",'".$file_content."',".$login_id.",NOW())";
 
     if ($conn->query($add_market_research_sql) !== TRUE) {
         echo "Some error occurred while adding market research details. Please try again later.";
@@ -57,7 +61,16 @@
         echo "Some error occurred while adding market research details. Please try again later.";
         exit();
     }else{
-        echo "1";
+        $retval = processStats($login_id,$product_id,$conn);
+        if($retval == "0"){
+            echo "Some error occurred while updating progress details. Please try again later.";
+            exit();
+        }else if($retval != "1"){
+            echo $retval;
+            exit();
+        }else{
+            echo $retval;
+        }
     }
 
     $conn->close();

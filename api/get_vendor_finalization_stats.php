@@ -72,6 +72,8 @@
     // echo "progess=".$total_progress;
     // echo "entries=".$total_entries;
     $total_percent = (int)$total_progress / (int)$total_entries * 100;
+    $row_array['vendor_management'] = $total_percent;
+
     $row_array['vendor_finalize'] = $total_percent;
 
     $json_response = array();

@@ -91,6 +91,9 @@
     $total_percent_population = (int)$total_progress_population / (int)$total_entries_population * 100;
     $row_array['population'] = $total_percent_population;
 
+    $total_progress_dossier = (int)$total_percent_pre_requisite + (int)$total_percent_population;
+    $row_array['dossier'] = (int)$total_progress_dossier / 2;
+
     $json_response = array();
     array_push($json_response,$row_array);
 

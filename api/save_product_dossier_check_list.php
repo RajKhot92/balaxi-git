@@ -2,6 +2,8 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
+    include "update_dossier_development_stats.php";
+
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
@@ -20,7 +22,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $artwork === "" || $everything_complete === ""){
+    if($login_id === "" || $product_id === "" || $artwork === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -44,9 +46,11 @@
         exit();
     }
 
+    $evrthng_cmplt = $everything_complete === "" ? "null" : "STR_TO_DATE('".$everything_complete."', '%m/%d/%Y')";
+
     /*  Adding artwork question     */
     $add_check_list_sql = "INSERT INTO product_dossier_check (`product_id`, `check_list`, `artwork`, `everything_complete`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$file_content."',STR_TO_DATE('".$artwork."', '%m/%d/%Y'),STR_TO_DATE('".$everything_complete."', '%m/%d/%Y'),".$login_id.",NOW())";
+                            VALUES (".$product_id.",'".$file_content."',STR_TO_DATE('".$artwork."', '%m/%d/%Y'),".$evrthng_cmplt.",".$login_id.",NOW())";
 
     if ($conn->query($add_check_list_sql) !== TRUE) {
         echo "Some error occurred while adding dossier check list details. Please try again later.";
@@ -57,7 +61,16 @@
         echo "Some error occurred while adding dossier check list details. Please try again later.";
         exit();
     }else{
-        echo "1";
+        $retval = processStats($login_id,$product_id,$conn);
+        if($retval == "0"){
+            echo "Some error occurred while updating progress details. Please try again later.";
+            exit();
+        }else if($retval != "1"){
+            echo $retval;
+            exit();
+        }else{
+            echo $retval;
+        }
     }
 
     $conn->close();

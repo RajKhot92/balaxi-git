@@ -25,11 +25,17 @@
                         <input type="hidden" id="product_id" name="product_id">
                         <div class="card-body">
                             <!-- <h4 class="card-title text-center">Add PP Data</h4> -->
+                            <div class="row">
+                                <div class="col">
+                                    (<b>Note</b>: If this form is not required for any product, then you can enter N/A as input.)
+                                    <hr>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label
                                     for="fname"
                                     class="col-sm-2 text-end control-label col-form-label"
-                                  >Strength</label
+                                  >Strength <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-4">
                                     <input
@@ -37,6 +43,7 @@
                                         class="form-control"
                                         id="strength"
                                         name="strength"
+                                        maxlength="450"
                                         placeholder="Enter strength"
                                     />
                                 </div>
@@ -51,6 +58,7 @@
                                         class="form-control"
                                         id="composition"
                                         name="composition"
+                                        maxlength="450"
                                         placeholder="Enter composition"
                                     />
                                 </div>
@@ -67,6 +75,7 @@
                                         class="form-control"
                                         id="pharmacopeia_type"
                                         name="pharmacopeia_type"
+                                        maxlength="450"
                                         placeholder="Enter pharmacopeia type"
                                     />
                                 </div>
@@ -78,6 +87,7 @@
                                 <div class="col-sm-3">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="validity"
                                         name="validity"
@@ -94,6 +104,7 @@
                                 <div class="col-sm-4">
                                     <input
                                         type="text"
+                                        readonly
                                         class="form-control"
                                         id="received_date"
                                         name="received_date"
@@ -238,44 +249,17 @@
             return false;
         }
 
-        if($("#composition").val() == ""){
-            alert("Please enter composition.");
-            $("#composition").focus();
-            return false;
-        }
-
-        if($("#pharmacopeia_type").val() == ""){
-            alert("Please enter pharmacopeia type.");
-            $("#pharmacopeia_type").focus();
-            return false;
-        }
-
-        if($("#validity").val() == ""){
-            alert("Please enter validity date.");
-            $("#validity").focus();
-            return false;
-        }
-
-        if($("#received_date").val() == ""){
-            alert("Please enter received date.");
-            $("#received_date").focus();
-            return false;
-        }
-
-        if($("#pp").val() == ""){
-            alert("Please upload pp file.");
-            $("#pp").focus();
-            return false;
-        }
-
         // Create a FormData object.
         var formData = new FormData();
 
-        var fileSelect = document.getElementById('pp');
-        var files = fileSelect.files;
-        var file = files[0];
-        formData.append('pp', file, file.name);
-
+        if($("#pp").val() != ""){
+            var fileSelect = document.getElementById('pp');
+            var files = fileSelect.files;
+            var file = files[0];
+            formData.append('pp', file, file.name);
+        }else{
+            formData.append('pp', null);
+        }
         formData.append("login_id", $("#login_id").val());
         formData.append("product_id", $("#product_id").val());
         formData.append("strength", $("#strength").val());
