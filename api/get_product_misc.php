@@ -40,7 +40,7 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['pckg_specification'] = $row['pckg_specification'];
         $row_array['warnings'] = $row['warnings'];
-        $row_array['manual'] = base64_encode($row['manual']);
+        $row_array['manual'] = $row['manual'] == null ? "" : base64_encode($row['manual']);
         $row_array['remarks'] = $row['remarks'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        

@@ -158,7 +158,8 @@
                                             "<td align=\"center\">"+counter.validity+"</td>"+
                                             "<td align=\"center\">"+counter.received_date+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.license+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                (counter.license != "" ?
+                                                ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.license+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"):"")+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+

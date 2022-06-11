@@ -129,7 +129,8 @@
                                             "<td align=\"center\">"+counter.composition+"</td>"+
                                             "<td align=\"center\">"+counter.avg_weight+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.formula+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                (counter.formula != "" ?
+                                                ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.formula+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"):"")+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+

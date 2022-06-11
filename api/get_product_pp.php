@@ -41,9 +41,9 @@
         $row_array['strength'] = $row['strength'];
         $row_array['composition'] = $row['composition'];
         $row_array['pharmacopeia_type'] = $row['pharmacopeia_type'];
-        $row_array['validity'] = $row['validity'];
-        $row_array['received_date'] = $row['received_date'];
-        $row_array['pp'] = base64_encode($row['pp']);
+        $row_array['validity'] = $row['validity'] == null ? "" : $row['validity'];
+        $row_array['received_date'] = $row['received_date'] == null ? "" : $row['received_date'];
+        $row_array['pp'] = $row['pp'] == null ? "" : base64_encode($row['pp']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

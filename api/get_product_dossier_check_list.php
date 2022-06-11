@@ -41,7 +41,7 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['check_list'] = base64_encode($row['check_list']);
         $row_array['artwork'] = $row['artwork'];
-        $row_array['everything_complete'] = $row['everything_complete'];
+        $row_array['everything_complete'] = $row['everything_complete'] == null ? "" : $row['everything_complete'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

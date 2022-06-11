@@ -146,7 +146,8 @@
                                             "<td align=\"center\">"+counter.pckg_specification+"</td>"+
                                             "<td align=\"center\">"+counter.warnings+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.manual+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                (counter.manual != "" ?
+                                                ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.manual+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"):"")+
                                             "</td>"+
                                             "<td align=\"center\">"+counter.remarks+"</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+

@@ -67,22 +67,37 @@
 
                 // console.log(counter.steps.length);
                 var totalProgress = 0.00;
+                var menuId = 9;
                 if(counter.steps.length > 0){
                     for(j=0; j<counter.steps.length; j++){
                         var step = counter.steps[j];
-                        // console.log(step.executive);
+                        console.log(step.executive+" | "+step.menu_id+" | "+menuId);
                         if(step.executive != ""){
-                            productStepData += "<td>"+
-                                                    "<center><h6>"+step.progress+"%</h6><center>"+"<hr>"+
-                                                    step.executive+
-                                                "</td>";
-                            totalProgress += parseFloat(step.progress);
+                            if(step.menu_id == menuId){
+                                productStepData += "<td>"+
+                                                        "<center><h6>"+step.progress+"%</h6><center>"+"<hr>"+
+                                                        step.executive+
+                                                    "</td>";
+                                totalProgress += parseFloat(step.progress);
+                            }else{
+                                productStepData += "<td>&nbsp;</td>";
+                                j = j - 1;
+                                totalProgress += 0;
+                            }
                         }else{
                             productStepData += "<td>&nbsp;</td>";
                         }
+                        menuId++;
                     }
                 }else{
                     for(j=0; j<7; j++){
+                        productStepData += "<td>&nbsp;</td>";
+                    }
+                }
+                // console.log("menuId="+menuId);
+                if(menuId != 16){
+                    for(k=menuId; k<=15; k++){
+                        // console.log("Added");
                         productStepData += "<td>&nbsp;</td>";
                     }
                 }

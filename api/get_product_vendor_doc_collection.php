@@ -41,14 +41,14 @@
         $row_array['gmp_received_dt'] = $row['gmp_received_dt'];
         $row_array['gmp_finalize_dt'] = $row['gmp_finalize_dt'];
         $row_array['gmp_remark'] = $row['gmp_remark'];
-        $row_array['manufacture_received_dt'] = $row['manufacture_received_dt'];
-        $row_array['manufacture_finalize_dt'] = $row['manufacture_finalize_dt'];
+        $row_array['manufacture_received_dt'] = $row['manufacture_received_dt'] == null ? "" : $row['manufacture_received_dt'];
+        $row_array['manufacture_finalize_dt'] = $row['manufacture_finalize_dt'] == null ? "" : $row['manufacture_finalize_dt'];
         $row_array['manufacture_remark'] = $row['manufacture_remark'];
         $row_array['fsc_copp_received_dt'] = $row['fsc_copp_received_dt'];
         $row_array['fsc_copp_finalize_dt'] = $row['fsc_copp_finalize_dt'];
         $row_array['fsc_copp_remark'] = $row['fsc_copp_remark'];
-        $row_array['pp_received_dt'] = $row['pp_received_dt'];
-        $row_array['pp_finalize_dt'] = $row['pp_finalize_dt'];
+        $row_array['pp_received_dt'] = $row['pp_received_dt'] == null ? "" : $row['pp_received_dt'];
+        $row_array['pp_finalize_dt'] = $row['pp_finalize_dt'] == null ? "" : $row['pp_finalize_dt'];
         $row_array['pp_remark'] = $row['pp_remark'];
         $row_array['cma_received_dt'] = $row['cma_received_dt'];
         $row_array['cma_finalize_dt'] = $row['cma_finalize_dt'];

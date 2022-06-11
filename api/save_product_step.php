@@ -25,9 +25,24 @@
         exit();
     }
 
-    $product_id_arr = explode(",", $product_id_data);
-    $menu_id_arr = explode(",", $menu_id_data);
-    $user_id_arr = explode(",", $user_id_data);
+    $product_id_arr = array();
+    $menu_id_arr = array();
+    $user_id_arr = array();
+    if (strpos($product_id_data, ',') !== false) { 
+        $product_id_arr = explode(",", $product_id_data);    
+    }else{
+        array_push($product_id_arr,$product_id_data);
+    }
+    if (strpos($menu_id_data, ',') !== false) { 
+        $menu_id_arr = explode(",", $menu_id_data);    
+    }else{
+        array_push($menu_id_arr,$menu_id_data);
+    }
+    if (strpos($user_id_data, ',') !== false) { 
+        $user_id_arr = explode(",", $user_id_data);    
+    }else{
+        array_push($user_id_arr,$user_id_data);
+    }
 
     $product_id_selected = 0;
     // $isError = false;
@@ -79,7 +94,7 @@
     $assign_step_sql = "INSERT INTO product_step_master (product_id,menu_id,user_id,ent_by,ent_dt)
                     VALUES ";
     if(count($user_id_arr) == 1){
-        $assign_step_sql .= "(".$product_id_arr[$i].",".$menu_id_arr[$i].",".$user_id_arr[$i].",".$login_id.",CURDATE())";
+        $assign_step_sql .= "(".$product_id_arr[0].",".$menu_id_arr[0].",".$user_id_arr[0].",".$login_id.",CURDATE())";
     }else if(count($user_id_arr) > 1){
         for ($i = 0; $i < count($user_id_arr); $i++) {
             if($i == count($user_id_arr)-1){

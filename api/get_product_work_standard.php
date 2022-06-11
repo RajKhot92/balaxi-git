@@ -39,7 +39,7 @@
         $row_array['ws_id'] = $row['ws_id'];
         $row_array['product_id'] = $row['product_id'];
         $row_array['appearance'] = $row['appearance'];
-        $row_array['validity'] = $row['validity'];
+        $row_array['validity'] = $row['validity'] == null ? "" : $row['validity'];
         $row_array['received_date'] = $row['received_date'];
         $row_array['remarks'] = $row['remarks'];
         $row_array['ent_by'] = $row['ent_by'];

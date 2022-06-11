@@ -41,8 +41,8 @@
         $row_array['gmp'] = $row['gmp'];
         $row_array['fsc'] = $row['fsc'];
         $row_array['copp'] = $row['copp'];
-        $row_array['pp'] = $row['pp'];
-        $row_array['license_manufacture'] = $row['license_manufacture'];
+        $row_array['pp'] = $row['pp'] == null ? "" : $row['pp'];
+        $row_array['license_manufacture'] = $row['license_manufacture'] == null ? "" : $row['license_manufacture'];
         $row_array['cma'] = $row['cma'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
