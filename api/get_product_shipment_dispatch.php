@@ -32,6 +32,8 @@
         $get_shipment_dispatch_sql .= " AND psd_id = ".$psd_id;
     }
 
+    $get_shipment_dispatch_sql .= " ORDER BY psd_id DESC ";
+
     $result = mysqli_query($conn,$get_shipment_dispatch_sql);  
     $json_response = array();  
     

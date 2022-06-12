@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
 <div class="page-wrapper">
     <div class="page-breadcrumb">
         <div class="row">
@@ -63,7 +64,13 @@
                 var productStepData = "";
                 var counter = jsonProductData[i];
 
-                productStepData += "<td>"+counter.product_name+" ["+counter.country_name+"] "+" ["+counter.user_name+"]"+"</td>";
+                productStepData += "<td>"+
+                                    counter.product_name+" ["+counter.country_name+"] "+" ["+counter.user_name+"]"+
+                                    "<span style=\"display:none;\" id=\"spnProductName"+counter.product_id+"\">"+counter.product_name+"</span>"+
+                                    "<span style=\"display:none;\" id=\"spnProductCountry"+counter.product_id+"\">"+counter.country_name+"</span>"+
+                                    "<span style=\"display:none;\" id=\"spnProductOwner"+counter.product_id+"\">"+counter.user_name+"</span>"+
+                                    "<span style=\"display:none;\" id=\"spnProductCategory"+counter.product_id+"\">"+counter.category_name+"</span>"+
+                                    "</td>";
 
                 // console.log(counter.steps.length);
                 var totalProgress = 0.00;
@@ -71,33 +78,39 @@
                 if(counter.steps.length > 0){
                     for(j=0; j<counter.steps.length; j++){
                         var step = counter.steps[j];
-                        console.log(step.executive+" | "+step.menu_id+" | "+menuId);
+                        // console.log(step.executive+" | "+step.menu_id+" | "+menuId);
                         if(step.executive != ""){
                             if(step.menu_id == menuId){
                                 productStepData += "<td>"+
-                                                        "<center><h6>"+step.progress+"%</h6><center>"+"<hr>"+
+                                                        "<center>"+
+                                                            "<h6>"+step.progress+"%</h6>"+
+                                                            "<span style=\"display:none;\" id=\"spnProgress"+counter.product_id+menuId+"\">"+step.progress+"</span>"+
+                                                        "<center>"+"<hr>"+
                                                         step.executive+
+                                                        "<span style=\"display:none;\" id=\"spnExecutiveId"+counter.product_id+menuId+"\">"+step.user_id+"</span>"+
+                                                        "<span style=\"display:none;\" id=\"spnExecutiveName"+counter.product_id+menuId+"\">"+step.executive+"</span>"+
                                                     "</td>";
                                 totalProgress += parseFloat(step.progress);
                             }else{
-                                productStepData += "<td>&nbsp;</td>";
+                                productStepData += "<td>&nbsp;<span style=\"display:none;\" id=\"spnProgress"+counter.product_id+menuId+"\">0</span></td>";
                                 j = j - 1;
                                 totalProgress += 0;
                             }
                         }else{
-                            productStepData += "<td>&nbsp;</td>";
+                            productStepData += "<td>&nbsp;<span style=\"display:none;\" id=\"spnProgress"+counter.product_id+menuId+"\">0</span></td>";
                         }
                         menuId++;
                     }
+
+                    // console.log("menuId="+menuId);
+                    if(menuId != 16){
+                        for(k=menuId; k<=15; k++){
+                            // console.log("Added");
+                            productStepData += "<td>&nbsp;<span style=\"display:none;\" id=\"spnProgress"+counter.product_id+menuId+"\">0</span></td>";
+                        }
+                    }
                 }else{
                     for(j=0; j<7; j++){
-                        productStepData += "<td>&nbsp;</td>";
-                    }
-                }
-                // console.log("menuId="+menuId);
-                if(menuId != 16){
-                    for(k=menuId; k<=15; k++){
-                        // console.log("Added");
                         productStepData += "<td>&nbsp;</td>";
                     }
                 }
@@ -107,10 +120,11 @@
 
                     productStepData += "<td align=\"center\">"+
                                         "<h6>"+totalProgress+"</h6><hr>"+
-                                        "<button type=\"button\" class=\"btn btn-info\" style=\"cursor:pointer;\" title=\"Click here to see more details\" onclick=\"openProductDetails()\">Details</button>"+
+                                        "<button type=\"button\" class=\"btn btn-info\" style=\"cursor:pointer;\" title=\"Click here to see more details\" onclick=\"openProductDetails("+counter.product_id+")\">Details</button>"+
+                                        "<span style=\"display:none;\" id=\"spnOverallProgress"+counter.product_id+"\">"+totalProgress+"</span>"+
                                     "</td>";
                 }else{
-                    productStepData += "<td align=\"center\">&nbsp;</td>";
+                    productStepData += "<td align=\"center\">&nbsp;<span style=\"display:none;\" id=\"spnOverallProgress"+step.product_id+"\">0</span></td>";
                 }
 
                 optionsProductData += "<tr>"+productStepData+"</tr>";
@@ -119,7 +133,7 @@
                                 "<thead>"+
                                     "<tr>"+
                                         "<th valign=\"top\" width=\"20%\"><h5>Product [Country] [Product Owner]</h5></th>"+
-                                        "<th valign=\"top\"><h5>Data Capture</h5></th>"+
+                                        "<th valign=\"top\"><h5>Technical Draft</h5></th>"+
                                         "<th valign=\"top\"><h5>Vendor Finalization</h5></th>"+
                                         "<th valign=\"top\"><h5>Document &amp; Sample Collection</h5></th>"+
                                         "<th valign=\"top\"><h5>Sample Finalization</h5></th>"+
@@ -134,11 +148,7 @@
                                 "</tbody>"+
                             "</table>");
             if(jsonProductData.length > 0){
-                $("#productStepTable").DataTable({
-                    "columnDefs": [
-                        {"targets": 8,"orderable": false}
-                    ]
-                });
+                $("#productStepTable").DataTable();
             }
         }
     }
@@ -147,7 +157,45 @@
         return callAPIService("get_assigned_step_tabular.php","login_id="+localStorage.getItem("balaxi_user_id"));
     }
 
-    function openProductDetails(){
-        alert("This feature is under process.");
+    function openProductDetails(productId){
+        sessionStorage.clear();       
+
+        sessionStorage.setItem("details_product_id",productId);
+        sessionStorage.setItem("details_product_name",$("#spnProductName"+productId).text());
+        sessionStorage.setItem("details_product_owner",$("#spnProductOwner"+productId).text());
+        sessionStorage.setItem("details_product_category",$("#spnProductCategory"+productId).text());
+        sessionStorage.setItem("details_product_country",$("#spnProductCountry"+productId).text());
+        
+        sessionStorage.setItem("data_capture",$("#spnProgress"+productId+DATA_CAPTURE_MENU_ID).text());
+        sessionStorage.setItem("data_capture_assigned_to",$("#spnExecutiveId"+productId+DATA_CAPTURE_MENU_ID).text());
+        sessionStorage.setItem("data_capture_assigned_name",$("#spnExecutiveName"+productId+DATA_CAPTURE_MENU_ID).text());
+
+        sessionStorage.setItem("vendor_finalization",$("#spnProgress"+productId+VENDOR_FINALIZE_MENU_ID).text());
+        sessionStorage.setItem("vendor_finalization_assigned_to",$("#spnExecutiveId"+productId+VENDOR_FINALIZE_MENU_ID).text());
+        sessionStorage.setItem("vendor_finalization_assigned_name",$("#spnExecutiveName"+productId+VENDOR_FINALIZE_MENU_ID).text());
+
+        sessionStorage.setItem("document_sample_collection",$("#spnProgress"+productId+DOCUMENT_SAMPLE_COLLECTION_MENU_ID).text());
+        sessionStorage.setItem("document_sample_collection_assigned_to",$("#spnExecutiveId"+productId+DOCUMENT_SAMPLE_COLLECTION_MENU_ID).text());
+        sessionStorage.setItem("document_sample_collection_assigned_name",$("#spnExecutiveName"+productId+DOCUMENT_SAMPLE_COLLECTION_MENU_ID).text());
+
+        sessionStorage.setItem("sample_finalization",$("#spnProgress"+productId+SAMPLE_FINALIZATION_MENU_ID).text());
+        sessionStorage.setItem("sample_finalization_assigned_to",$("#spnExecutiveId"+productId+SAMPLE_FINALIZATION_MENU_ID).text());
+        sessionStorage.setItem("sample_finalization_assigned_name",$("#spnExecutiveName"+productId+SAMPLE_FINALIZATION_MENU_ID).text());
+
+        sessionStorage.setItem("dossier_development",$("#spnProgress"+productId+DOSSIER_DEVELOPMENT_MENU_ID).text());
+        sessionStorage.setItem("dossier_development_assigned_to",$("#spnExecutiveId"+productId+DOSSIER_DEVELOPMENT_MENU_ID).text());
+        sessionStorage.setItem("dossier_development_assigned_name",$("#spnExecutiveName"+productId+DOSSIER_DEVELOPMENT_MENU_ID).text());
+
+        sessionStorage.setItem("shipment",$("#spnProgress"+productId+SHIPMENT_MENU_ID).text());
+        sessionStorage.setItem("shipment_assigned_to",$("#spnExecutiveId"+productId+SHIPMENT_MENU_ID).text());
+        sessionStorage.setItem("shipment_assigned_name",$("#spnExecutiveName"+productId+SHIPMENT_MENU_ID).text());
+
+        sessionStorage.setItem("submission",$("#spnProgress"+productId+SUBMISSION_MENU_ID).text());
+        sessionStorage.setItem("submission_assigned_to",$("#spnExecutiveId"+productId+SUBMISSION_MENU_ID).text());
+        sessionStorage.setItem("submission_assigned_name",$("#spnExecutiveName"+productId+SUBMISSION_MENU_ID).text());
+
+        sessionStorage.setItem("overall_progress",$("#spnOverallProgress"+productId).text());
+        
+        loadSubPageContent("product-assign-details.html");
     }
 </script>

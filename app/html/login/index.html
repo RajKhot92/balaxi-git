@@ -70,6 +70,13 @@
   		<script src="js/main.js"></script>
   		<script src="../../dist/js/api-service.js"></script>
   		<script src="js/app.js"></script>
+  		<script type="text/javascript">
+  			$(document).on('keypress',function(e) {
+  				if(e.which == 13) {
+  					signIn();
+  				}
+  			});
+  		</script>
 	</div>
 	</body>
 </html>

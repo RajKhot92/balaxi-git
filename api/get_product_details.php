@@ -32,6 +32,8 @@
         $get_product_details_sql .= " AND det_id = ".$det_id;
     }
 
+    $get_product_details_sql .= " ORDER BY det_id DESC ";
+
     $result = mysqli_query($conn,$get_product_details_sql);  
     $json_response = array();  
     

@@ -33,6 +33,8 @@
         $get_commercial_doc_sql .= " AND dpr_id = ".$dpr_id;
     }
 
+    $get_commercial_doc_sql .= " ORDER BY dpr_id DESC ";
+
     $result = mysqli_query($conn,$get_commercial_doc_sql);  
     $json_response = array();  
     

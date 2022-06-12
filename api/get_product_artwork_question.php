@@ -32,6 +32,8 @@
         $get_artwork_question_sql .= " AND aq_id = ".$aq_id;
     }
 
+    $get_artwork_question_sql .= " ORDER BY aq_id DESC ";
+
     $result = mysqli_query($conn,$get_artwork_question_sql);  
     $json_response = array();  
     

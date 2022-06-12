@@ -22,6 +22,8 @@
         $get_category_sql .= " AND category_id = ".$category_id;
     }
 
+    $get_category_sql .= " ORDER BY category_id DESC ";
+
     $result = mysqli_query($conn,$get_category_sql);  
     $json_response = array();  
     

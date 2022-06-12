@@ -32,6 +32,8 @@
         $get_physical_check_sql .= " AND pc_id = ".$pc_id;
     }
 
+    $get_physical_check_sql .= " ORDER BY pc_id DESC ";
+
     $result = mysqli_query($conn,$get_physical_check_sql);  
     $json_response = array();  
     

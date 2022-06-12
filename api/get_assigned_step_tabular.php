@@ -23,10 +23,11 @@
     $json_response = array();
     $product_step_arr = array();
     $get_products_sql = "SELECT a.`product_id`,a.`product_name`,a.`country_id`,
-                        c.`country_name`,a.`product_owner`,b.`user_name`
+                        c.`country_name`,a.`product_owner`,b.`user_name`,a.`product_category`,d.`category_name`
                         FROM `product_master` a 
                         INNER JOIN `user_master` b ON a.`product_owner`=b.`user_id`
-                        INNER JOIN `country_master` c ON a.`country_id`=c.`country_id` ";
+                        INNER JOIN `country_master` c ON a.`country_id`=c.`country_id`
+                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` ";
     if($role_id == 3){
         $get_products_sql .= "WHERE a.`product_owner`=".$login_id." ";
     }
@@ -39,10 +40,12 @@
         $row_array['country_name'] = $row_product['country_name'];
         $row_array['product_owner'] = $row_product['product_owner'];
         $row_array['user_name'] = $row_product['user_name'];
+        $row_array['product_category'] = $row_product['product_category'];
+        $row_array['category_name'] = $row_product['category_name'];
 
         $product_step_arr = array();
         /*  Getting steps    */
-        $get_steps_sql = "SELECT a.`menu_id`,e.`menu_name`,f.`user_name` executive,
+        $get_steps_sql = "SELECT a.`menu_id`,e.`menu_name`,a.`user_id`,f.`user_name` executive,
                         IFNULL(a.`progress`,'0.00') progress
                         FROM `product_step_master` a 
                         INNER JOIN `menu_master` e ON a.`menu_id`=e.`menu_id`
@@ -57,6 +60,7 @@
         while ($row_steps = mysqli_fetch_array($result_steps, MYSQLI_ASSOC)) {
             $step_array['menu_id'] = $row_steps['menu_id'];
             $step_array['menu_name'] = $row_steps['menu_name'];
+            $step_array['user_id'] = $row_steps['user_id'];
             $step_array['executive'] = $row_steps['executive'];
             $step_array['progress'] = $row_steps['progress'];
 

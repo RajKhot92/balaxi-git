@@ -32,6 +32,8 @@
         $get_validation_sql .= " AND psv_id = ".$psv_id;
     }
 
+    $get_validation_sql .= " ORDER BY psv_id DESC ";
+
     $result = mysqli_query($conn,$get_validation_sql);  
     $json_response = array();  
     

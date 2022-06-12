@@ -32,6 +32,8 @@
         $get_legal_submission_sql .= " AND ls_id = ".$ls_id;
     }
 
+    $get_legal_submission_sql .= " ORDER BY ls_id DESC ";
+
     $result = mysqli_query($conn,$get_legal_submission_sql);  
     $json_response = array();  
     

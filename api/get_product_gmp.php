@@ -32,6 +32,8 @@
         $get_gmp_sql .= " AND gmp_id = ".$gmp_id;
     }
 
+    $get_gmp_sql .= " ORDER BY gmp_id DESC ";
+
     $result = mysqli_query($conn,$get_gmp_sql);  
     $json_response = array();  
     

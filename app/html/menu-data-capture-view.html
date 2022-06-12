@@ -1,0 +1,289 @@
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Product Details - Technical Draft</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Technical Draft
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#substep1" role="tab" aria-selected="false"><span class="hidden-sm-up"></span>
+                <span class="hidden-xs-down">Define Product</span></a>
+            </li>
+          </ul>
+          <div class="tab-content tabcontent-border">
+            <div class="tab-pane active" id="substep1" role="tabpanel">
+              <div class="row">
+                <div class="col-12 m-2 p-2">
+                  <h4>Nomenclature</h4>
+                </div>
+                <div class="col-12 m-2 p-2">
+                  <div class="col-11" id="divNomenclature" style="height: 120px; overflow: scroll;">
+                    
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-12 m-2 p-2">
+                  <h4>Product Details</h4>
+                </div>
+                <div class="col-12 m-2 p-2">
+                  <div class="col-11" id="divProductDetails" style="height: 120px; overflow: scroll;">
+                    
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-12 m-2 p-2">
+                  <h4>Market Research</h4>
+                </div>
+                <div class="col-12 m-2 p-2">
+                  <div class="col-11" id="divMarketResearch" style="height: 120px; overflow: scroll;">
+                    
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-12 m-2 p-2">
+                  <h4>Hand Over To Procurement</h4>
+                </div>
+                <div class="col-12 m-2 p-2">
+                  <div class="col-11" id="divProcurement" style="height: 120px; overflow: scroll;">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var loginId = 0, productId = 0;
+  $(document).ready(function(){
+    loginId = sessionStorage.getItem("data_capture_assigned_to");
+    productId = sessionStorage.getItem("details_product_id");
+    loadNomenclature();
+  });
+
+  function loadNomenclature(){
+    let nomenclatureResult = getNomenclature();
+      // console.log(nomenclatureResult);
+      var jsonNomenclatureData = JSON.parse(nomenclatureResult);
+      var nomenclatureTbody = "";
+      if(jsonNomenclatureData.length > 0){
+          for(i=0; i<jsonNomenclatureData.length; i++){
+              var counter = jsonNomenclatureData[i];
+              nomenclatureTbody += "<tr>"+
+                                      "<td align=\"center\">"+(i+1)+"</td>"+
+                                      "<td>"+counter.nom_name+"</td>"+
+                                      "<td>"+counter.pf_value+"</td>"+
+                                      "<td>"+counter.pharmacopeia_type+"</td>"+
+                                      "<td>"+counter.ent_dt+"</td>"+
+                                      "<td align=\"center\">"+
+                                        "<span title=\"Click here to delete this entry\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteNomenclature("+counter.nom_id+")\"></span>"+
+                                      "</td>"+
+                                  "</tr>";
+          }
+      }else{
+          nomenclatureTbody += "<tr>"+
+                          "<td colspan=\"6\" align=\"center\">No nomenclature details found.</td>"
+                      "</tr>";
+      }
+      $("#divNomenclature").html("<table class=\"table table-sm table-hover table-bordered\" id=\"nomenclatureTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Nomenclature</th>"+
+                                      "<th>Pharmacopeia File</th>"+
+                                      "<th>Pharmacopeia Type</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  nomenclatureTbody+
+                              "</tbody>"+
+                          "</table>");
+
+      loadProductDetails();
+  }
+
+  function getNomenclature(){
+    return callAPIService("get_product_nomenclature.php","login_id="+loginId+"&product_id="+productId+"&nom_id=0");
+  }
+
+  function loadProductDetails(){
+    let productDetailsResult = getProductDetails();
+    // console.log(productDetailsResult);
+    var jsonProductDetailsData = JSON.parse(productDetailsResult);
+    var productDetailsTbody = "";
+    if(jsonProductDetailsData.length > 0){
+        for(i=0; i<jsonProductDetailsData.length; i++){
+            var counter = jsonProductDetailsData[i];
+            productDetailsTbody += "<tr>"+
+                                "<td align=\"center\">"+(i+1)+"</td>"+
+                                "<td>"+counter.strength+"</td>"+
+                                "<td>"+counter.description+"</td>"+
+                                "<td>"+counter.composition+"</td>"+
+                                "<td>"+counter.fill_weight+"</td>"+
+                                "<td>"+counter.pack_style+"</td>"+
+                                "<td>"+counter.package_description+"</td>"+
+                                "<td>"+counter.ent_dt+"</td>"+
+                                "<td align=\"center\">"+
+                                  "<span title=\"Click here to delete this country\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteProductDetails("+counter.det_i+")\"></span>"+
+                                "</td>"+
+                            "</tr>";
+        }
+    }else{
+        productDetailsTbody += "<tr>"+
+                        "<td colspan=\"9\" align=\"center\">No product details found.</td>"
+                    "</tr>";
+    }
+    $("#divProductDetails").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"productDetailsTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Sr.No.</th>"+
+                                    "<th>Strength</th>"+
+                                    "<th>Description</th>"+
+                                    "<th>Composition</th>"+
+                                    "<th>Fill Weight</th>"+
+                                    "<th>Pack Style</th>"+
+                                    "<th>Packaging Description</th>"+
+                                    "<th>Entry Date</th>"+
+                                    "<th>Delete</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                productDetailsTbody+
+                            "</tbody>"+
+                        "</table>");
+
+    loadMarketResearch();
+  }
+
+  function getProductDetails(){
+    return callAPIService("get_product_details.php","login_id="+loginId+"&product_id="+productId+"&det_id=0");
+  }
+
+  function loadMarketResearch(){
+    let marketResearchResult = getMarketResearch();
+    // console.log(marketResearchResult);
+    var jsonMarketResearchData = JSON.parse(marketResearchResult);
+    var marketResearchTbody = "";
+    if(jsonMarketResearchData.length > 0){
+        for(i=0; i<jsonMarketResearchData.length; i++){
+            var counter = jsonMarketResearchData[i];
+            marketResearchTbody += "<tr>"+
+                                "<td align=\"center\">"+(i+1)+"</td>"+
+                                "<td align=\"center\">"+counter.research_complete+"</td>"+
+                                "<td align=\"center\">"+counter.conducted_on+"</td>"+
+                                "<td align=\"center\">"+
+                                    (counter.research_report != "" ?
+                                    ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.research_report+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"):"")+
+                                "</td>"+
+                                "<td>"+counter.ent_dt+"</td>"+
+                                "<td align=\"center\">"+
+                                  "<span title=\"Click here to delete this market research details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteMarketResearch("+counter.mr_id+")\"></span>"+
+                                "</td>"+
+                            "</tr>";
+        }
+    }else{
+        marketResearchTbody += "<tr>"+
+                        "<td colspan=\"6\" align=\"center\">No market research details found.</td>"
+                    "</tr>";
+    }
+    $("#divMarketResearch").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"marketResearchTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Sr.No.</th>"+
+                                    "<th>Research Complete</th>"+
+                                    "<th>Conducted On</th>"+
+                                    "<th>Research Report</th>"+
+                                    "<th>Entry Date</th>"+
+                                    "<th>Delete</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                marketResearchTbody+
+                            "</tbody>"+
+                        "</table>");
+
+    loadProcurement();
+  }
+
+  function getMarketResearch(){
+    return callAPIService("get_market_research.php","login_id="+loginId+"&product_id="+productId+"&mr_id=0");
+  }
+
+  function openFile(URL){
+      var win = window.open();
+      win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+  }
+
+  function loadProcurement(){
+      let procurementResult = getProcurement();
+      // console.log(procurementResult);
+      var jsonProcurementData = JSON.parse(procurementResult);
+      var procurementTbody = "";
+      if(jsonProcurementData.length > 0){
+          for(i=0; i<jsonProcurementData.length; i++){
+              var counter = jsonProcurementData[i];
+              procurementTbody += "<tr>"+
+                                      "<td align=\"center\">"+(i+1)+"</td>"+
+                                      "<td align=\"center\">"+counter.research_complete+"</td>"+
+                                      "<td align=\"center\">"+
+                                          "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.fsc_pp_draft+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                      "</td>"+
+                                      "<td>"+counter.ent_dt+"</td>"+
+                                      "<td align=\"center\">"+
+                                        "<span title=\"Click here to delete this procurement details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteProcurement("+counter.country_id+")\"></span>"+
+                                      "</td>"+
+                                  "</tr>";
+          }
+      }else{
+          procurementTbody += "<tr>"+
+                          "<td colspan=\"5\" align=\"center\">No procurement details found.</td>"
+                      "</tr>";
+      }
+      $("#divProcurement").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"procurementTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Research Complete</th>"+
+                                      "<th>FSC/PP Draft</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  procurementTbody+
+                              "</tbody>"+
+                          "</table>");
+  }
+
+  function getProcurement(){
+    return callAPIService("get_product_procurement.php","login_id="+loginId+"&product_id="+productId+"&procure_id=0");
+  }
+</script>

@@ -32,6 +32,8 @@
         $get_legal_receipt_sql .= " AND lr_id = ".$lr_id;
     }
 
+    $get_legal_receipt_sql .= " ORDER BY lr_id DESC ";
+
     $result = mysqli_query($conn,$get_legal_receipt_sql);  
     $json_response = array();  
     

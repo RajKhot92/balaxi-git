@@ -33,6 +33,8 @@
         $get_writing_sql .= " AND dw_id = ".$dw_id;
     }
 
+    $get_writing_sql .= " ORDER BY dw_id DESC ";
+
     $result = mysqli_query($conn,$get_writing_sql);  
     $json_response = array();  
     

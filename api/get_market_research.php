@@ -32,6 +32,8 @@
         $get_market_research_sql .= " AND mr_id = ".$mr_id;
     }
 
+    $get_market_research_sql .= " ORDER BY mr_id DESC ";
+
     $result = mysqli_query($conn,$get_market_research_sql);  
     $json_response = array();  
     

@@ -32,6 +32,8 @@
         $get_vendor_doc_collection_sql .= " AND vdc_id = ".$vdc_id;
     }
 
+    $get_vendor_doc_collection_sql .= " ORDER BY vdc_id DESC ";
+
     $result = mysqli_query($conn,$get_vendor_doc_collection_sql);  
     $json_response = array();  
     

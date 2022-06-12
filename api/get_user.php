@@ -50,6 +50,8 @@
         $get_user_sql .= " AND role_id = ".$role_id;
     }
 
+    $get_user_sql .= " ORDER BY user_id DESC ";
+
     $result = mysqli_query($conn,$get_user_sql);  
     $json_response = array();  
     

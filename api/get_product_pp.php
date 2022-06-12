@@ -32,6 +32,8 @@
         $get_pp_sql .= " AND pp_id = ".$pp_id;
     }
 
+    $get_pp_sql .= " ORDER BY pp_id DESC ";
+
     $result = mysqli_query($conn,$get_pp_sql);  
     $json_response = array();  
     

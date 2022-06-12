@@ -32,6 +32,8 @@
         $get_translation_sql .= " AND ps_id = ".$ps_id;
     }
 
+    $get_translation_sql .= " ORDER BY ps_id DESC ";
+
     $result = mysqli_query($conn,$get_translation_sql);  
     $json_response = array();  
     

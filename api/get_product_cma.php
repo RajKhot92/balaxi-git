@@ -32,6 +32,8 @@
         $get_cma_sql .= " AND cma_id = ".$cma_id;
     }
 
+    $get_cma_sql .= " ORDER BY cma_id DESC ";
+
     $result = mysqli_query($conn,$get_cma_sql);  
     $json_response = array();  
     

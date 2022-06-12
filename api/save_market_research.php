@@ -9,6 +9,7 @@
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $is_research = mysqli_real_escape_string($conn, $_REQUEST['is_research']);
     $conducted_on = mysqli_real_escape_string($conn, $_REQUEST['conducted_on']);
+    $file_content = "";
     if (!empty($_FILES['research_report']['name'])) {
         if ($_FILES['research_report']['error'] != 0) {
             echo 'Something wrong with the file.';
@@ -47,10 +48,11 @@
     }
 
     $cndct_on = $conducted_on === "" ? "null" : "STR_TO_DATE('".$conducted_on."', '%m/%d/%Y')";
+    $fil_cntnt = $file_content === "" ? "null" : "'".$file_content."'";
 
     /*  Adding market research     */
     $add_market_research_sql = "INSERT INTO product_market_research (`product_id`, `research_complete`, `conducted_on`, `research_report`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$is_research."',".$cndct_on.",'".$file_content."',".$login_id.",NOW())";
+                            VALUES (".$product_id.",'".$is_research."',".$cndct_on.",".$fil_cntnt.",".$login_id.",NOW())";
 
     if ($conn->query($add_market_research_sql) !== TRUE) {
         echo "Some error occurred while adding market research details. Please try again later.";

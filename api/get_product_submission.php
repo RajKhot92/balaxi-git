@@ -32,6 +32,8 @@
         $get_submission_sql .= " AND ps_id = ".$ps_id;
     }
 
+    $get_submission_sql .= " ORDER BY ps_id DESC ";
+
     $result = mysqli_query($conn,$get_submission_sql);  
     $json_response = array();  
     

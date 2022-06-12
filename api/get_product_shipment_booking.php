@@ -32,6 +32,8 @@
         $get_shipment_booking_sql .= " AND psb_id = ".$psb_id;
     }
 
+    $get_shipment_booking_sql .= " ORDER BY psb_id DESC ";
+
     $result = mysqli_query($conn,$get_shipment_booking_sql);  
     $json_response = array();  
     

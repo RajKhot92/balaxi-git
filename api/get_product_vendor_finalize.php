@@ -32,6 +32,8 @@
         $get_vendor_finalize_sql .= " AND vf_id = ".$vf_id;
     }
 
+    $get_vendor_finalize_sql .= " ORDER BY vf_id DESC ";
+
     $result = mysqli_query($conn,$get_vendor_finalize_sql);  
     $json_response = array();  
     

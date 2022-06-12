@@ -32,6 +32,8 @@
         $get_nomenclature_sql .= " AND nom_id = ".$nom_id;
     }
 
+    $get_nomenclature_sql .= " ORDER BY nom_id DESC ";
+
     $result = mysqli_query($conn,$get_nomenclature_sql);  
     $json_response = array();  
     

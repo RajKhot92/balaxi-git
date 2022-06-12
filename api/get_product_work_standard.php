@@ -32,6 +32,8 @@
         $get_work_standard_sql .= " AND ws_id = ".$ws_id;
     }
 
+    $get_work_standard_sql .= " ORDER BY ws_id DESC ";
+
     $result = mysqli_query($conn,$get_work_standard_sql);  
     $json_response = array();  
     

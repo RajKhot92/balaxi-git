@@ -32,6 +32,8 @@
         $get_misc_sql .= " AND misc_id = ".$misc_id;
     }
 
+    $get_misc_sql .= " ORDER BY misc_id DESC ";
+
     $result = mysqli_query($conn,$get_misc_sql);  
     $json_response = array();  
     

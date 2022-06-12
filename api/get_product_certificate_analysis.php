@@ -32,6 +32,8 @@
         $get_certificate_analysis_sql .= " AND ca_id = ".$ca_id;
     }
 
+    $get_certificate_analysis_sql .= " ORDER BY ca_id DESC ";
+
     $result = mysqli_query($conn,$get_certificate_analysis_sql);  
     $json_response = array();  
     

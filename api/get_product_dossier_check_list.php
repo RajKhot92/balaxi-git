@@ -33,6 +33,8 @@
         $get_check_list_sql .= " AND dc_id = ".$dc_id;
     }
 
+    $get_check_list_sql .= " ORDER BY dc_id DESC ";
+
     $result = mysqli_query($conn,$get_check_list_sql);  
     $json_response = array();  
     

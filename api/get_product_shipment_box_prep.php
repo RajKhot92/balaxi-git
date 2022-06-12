@@ -32,6 +32,8 @@
         $get_shipment_box_prep_sql .= " AND psbp_id = ".$psbp_id;
     }
 
+    $get_shipment_box_prep_sql .= " ORDER BY psbp_id DESC ";
+
     $result = mysqli_query($conn,$get_shipment_box_prep_sql);  
     $json_response = array();  
     

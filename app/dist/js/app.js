@@ -1,5 +1,13 @@
 var menu_id = 0, sub_menu_id = 0, retval = 0;
 
+const DATA_CAPTURE_MENU_ID = 9;
+const VENDOR_FINALIZE_MENU_ID = 10;
+const DOCUMENT_SAMPLE_COLLECTION_MENU_ID = 11;
+const SAMPLE_FINALIZATION_MENU_ID = 12;
+const DOSSIER_DEVELOPMENT_MENU_ID = 13;
+const SHIPMENT_MENU_ID = 14;
+const SUBMISSION_MENU_ID = 15;
+
 $(document).ready(function(){
 	$("#loggedInPerson").html("Hi, "+localStorage.getItem("balaxi_user_name"));
 

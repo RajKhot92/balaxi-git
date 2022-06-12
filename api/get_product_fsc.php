@@ -32,6 +32,8 @@
         $get_fsc_sql .= " AND fsc_id = ".$fsc_id;
     }
 
+    $get_fsc_sql .= " ORDER BY fsc_id DESC ";
+
     $result = mysqli_query($conn,$get_fsc_sql);  
     $json_response = array();  
     

@@ -23,7 +23,7 @@
         $get_role_sql .= " AND role_id = ".$role_id;
     }
 
-    $get_role_sql .= " order by role_id";
+    $get_role_sql .= " ORDER BY role_id DESC ";
 
     $result = mysqli_query($conn,$get_role_sql);  
     $json_response = array();  

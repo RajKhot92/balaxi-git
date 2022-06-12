@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
 <div class="page-wrapper">
     <div class="page-breadcrumb">
         <div class="row">
@@ -55,7 +56,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Research Report <span style="color: red;">*</span></label
+                                  >Research Report</label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -129,7 +130,8 @@
                                     "<td align=\"center\">"+counter.research_complete+"</td>"+
                                     "<td align=\"center\">"+counter.conducted_on+"</td>"+
                                     "<td align=\"center\">"+
-                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.research_report+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                        (counter.research_report != "" ?
+                                        ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.research_report+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"):"")+
                                     "</td>"+
                                     "<td>"+counter.ent_dt+"</td>"+
                                     "<td align=\"center\">"+
@@ -183,24 +185,27 @@
             return false;
         }
 
-        if($("#research_report").val() == ""){
-            alert("Please upload fsc ppd draft file.");
-            $("#research_report").focus();
-            return false;
+        if(isResearch == "Yes"){
+            if($("#research_report").val() == ""){
+                alert("Please upload fsc ppd draft file.");
+                $("#research_report").focus();
+                return false;
+            }
         }
 
-        var fileSelect = document.getElementById('research_report');
-
-        // Get the files from the input
-        var files = fileSelect.files;
-        
         // Create a FormData object.
         var formData = new FormData();
 
-        //Grab only one file since this script disallows multiple file uploads.
-        var file = files[0]; 
-
-        formData.append('research_report', file, file.name);
+        if(isResearch == "Yes" && $("#research_report").val() != ""){
+            var fileSelect = document.getElementById('research_report');
+            // Get the files from the input
+            var files = fileSelect.files;
+            //Grab only one file since this script disallows multiple file uploads.
+            var file = files[0]; 
+            formData.append('research_report', file, file.name);
+        }else{
+            formData.append('research_report', null);
+        }
 
         formData.append("login_id", $("#login_id").val());
         formData.append("product_id", $("#product_id").val());

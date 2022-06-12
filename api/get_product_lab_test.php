@@ -32,6 +32,8 @@
         $get_lab_test_sql .= " AND lt_id = ".$lt_id;
     }
 
+    $get_lab_test_sql .= " ORDER BY lt_id DESC ";
+
     $result = mysqli_query($conn,$get_lab_test_sql);  
     $json_response = array();  
     

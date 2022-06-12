@@ -32,6 +32,8 @@
         $get_copp_sql .= " AND copp_id = ".$copp_id;
     }
 
+    $get_copp_sql .= " ORDER BY copp_id DESC ";
+
     $result = mysqli_query($conn,$get_copp_sql);  
     $json_response = array();  
     

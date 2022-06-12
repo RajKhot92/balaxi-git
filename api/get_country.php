@@ -22,6 +22,8 @@
         $get_country_sql .= " AND country_id = ".$country_id;
     }
 
+    $get_country_sql .= " ORDER BY country_id DESC ";
+
     $result = mysqli_query($conn,$get_country_sql);  
     $json_response = array();  
     

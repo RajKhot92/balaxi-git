@@ -32,6 +32,8 @@
         $get_license_manufacture_sql .= " AND lm_id = ".$lm_id;
     }
 
+    $get_license_manufacture_sql .= " ORDER BY lm_id DESC ";
+
     $result = mysqli_query($conn,$get_license_manufacture_sql);  
     $json_response = array();  
     

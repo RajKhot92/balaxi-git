@@ -37,6 +37,8 @@
         $get_artwork_sql .= " AND art_id = ".$art_id;
     }
 
+    $get_artwork_sql .= " ORDER BY art_id DESC ";
+
     $result = mysqli_query($conn,$get_artwork_sql);  
     $json_response = array();  
     

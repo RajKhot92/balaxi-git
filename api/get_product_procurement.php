@@ -32,6 +32,8 @@
         $get_procurement_sql .= " AND procure_id = ".$procure_id;
     }
 
+    $get_procurement_sql .= " ORDER BY procure_id DESC ";
+
     $result = mysqli_query($conn,$get_procurement_sql);  
     $json_response = array();  
     

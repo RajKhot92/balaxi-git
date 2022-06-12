@@ -32,6 +32,8 @@
         $get_finish_product_sql .= " AND fp_id = ".$fp_id;
     }
 
+    $get_finish_product_sql .= " ORDER BY fp_id DESC ";
+
     $result = mysqli_query($conn,$get_finish_product_sql);  
     $json_response = array();  
     

@@ -33,6 +33,8 @@
         $get_finalize_artwork_sql .= " AND af_id = ".$af_id;
     }
 
+    $get_finalize_artwork_sql .= " ORDER BY af_id DESC ";
+
     $result = mysqli_query($conn,$get_finalize_artwork_sql);  
     $json_response = array();  
     

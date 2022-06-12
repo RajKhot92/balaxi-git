@@ -32,6 +32,8 @@
         $get_qnq_formula_sql .= " AND qnq_id = ".$qnq_id;
     }
 
+    $get_qnq_formula_sql .= " ORDER BY qnq_id DESC ";
+
     $result = mysqli_query($conn,$get_qnq_formula_sql);  
     $json_response = array();  
     
