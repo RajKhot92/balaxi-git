@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-data-capture-view.html')">
+                            <div id ="divTechnicalDraft" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-data-capture-view.html')">
                                 <div class="card card-hover">
                                     <div class="box bg-cyan text-center">
                                         <h3 class="font-light text-white">
@@ -167,7 +167,23 @@
     </div>
 </div>
 <script type="text/javascript">
+    var optionsProductData = "";
     $(document).ready(function(){
+
+        if(sessionStorage.getItem("product_details_form_flag") == "1"){
+            // alert("dashboard");
+            if(sessionStorage.getItem("product_details_product_id") != null && sessionStorage.getItem("product_details_product_id") != ""){
+                // alert(sessionStorage.getItem("product_details_product_id"));
+                loadProductSteps(sessionStorage.getItem("product_details_product_id"));
+                // openProductDetails(sessionStorage.getItem("product_details_product_id"));
+            }
+        }else{
+            //Nothing
+            loadProductDetails();           
+        }
+    });
+
+    function loadProductDetails(){
         $("#tdProductName").html(sessionStorage.getItem("details_product_name"));
         $("#tdProductOwner").html(sessionStorage.getItem("details_product_owner"));
         $("#tdProductCategory").html(sessionStorage.getItem("details_product_category"));
@@ -178,6 +194,11 @@
         $("#spnTechnicalDraft").html("<b>"+sessionStorage.getItem("data_capture")+"%</b>");
         $("#spnTechnicalDraftUser").html(sessionStorage.getItem("data_capture_assigned_to"));
         $("#spnTechnicalDraftUserName").html(technicalDraftUserName);
+
+        if(technicalDraftUserName == "Not Assigned"){
+            $("#divTechnicalDraft").removeAttr("style");
+            $("#divTechnicalDraft").removeAttr("onclick");
+        }
 
         var vendorFinalizationUserName = sessionStorage.getItem("vendor_finalization_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("vendor_finalization_assigned_name");
         $("#spnVendorFinalization").html("<b>"+sessionStorage.getItem("vendor_finalization")+"%</b>");
@@ -208,55 +229,126 @@
         $("#spnSubmission").html("<b>"+sessionStorage.getItem("submission")+"%</b>");
         $("#spnSubmissionUser").html(sessionStorage.getItem("submission_assigned_to"));
         $("#spnSubmissionUserName").html(submissionUserName);
-    });
+    }
+
+    function loadProductSteps(productId) {
+        let productResult = getProductSteps(productId);
+        // console.log(productResult);
+        var jsonProductData = JSON.parse(productResult);
+        if(jsonProductData.length > 0){
+            for(i=0; i<jsonProductData.length; i++){
+                var productStepData = "";
+                var counter = jsonProductData[i];
+
+                sessionStorage.setItem("details_product_name",counter.product_name);
+                sessionStorage.setItem("details_product_owner",counter.user_name);
+                sessionStorage.setItem("details_product_category",counter.category_name);
+                sessionStorage.setItem("details_product_country",counter.country_name);
+
+                // console.log(counter.steps.length);
+                var totalProgress = 0.00;
+                var menuId = 9;
+                if(counter.steps.length > 0){
+                    for(j=0; j<counter.steps.length; j++){
+                        var step = counter.steps[j];
+                        // console.log(step.executive+" | "+step.menu_id+" | "+menuId);
+                        if(step.executive != ""){
+                            if(step.menu_id == menuId){
+                                setStepWiseDetails(menuId,step.progress,step.user_id,step.executive);
+                                totalProgress += parseFloat(step.progress);
+                            }else{
+                                setStepWiseDetails(menuId,0,"","");
+                                j = j - 1;
+                                totalProgress += 0;
+                            }
+                        }else{
+                            setStepWiseDetails(menuId,0,"","");
+                        }
+                        menuId++;
+                    }
+
+                    if(menuId != 16){
+                        for(k=menuId; k<=15; k++){
+                            // console.log("Added");
+                            setStepWiseDetails(menuId,0,"","");
+                        }
+                    }
+                }else{
+                    for(j=9; j<=15; j++){
+                        setStepWiseDetails(j,0,"","");
+                    }
+                }
+
+                // console.log(totalProgress);
+                if(totalProgress != 0.00){
+                    totalProgress = (totalProgress/7).toFixed(2)+"%";
+                    sessionStorage.setItem("overall_progress",totalProgress);
+                }else{
+                    sessionStorage.setItem("overall_progress",parseFloat(0).toFixed(2));
+                }
+
+                loadProductDetails();
+            }
+        }
+    }
+
+    function setStepWiseDetails(menuId,progress,userId,userName){
+        switch(menuId){
+            case DATA_CAPTURE_MENU_ID:
+                sessionStorage.setItem("data_capture",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("data_capture_assigned_to",userId);
+                sessionStorage.setItem("data_capture_assigned_name",userName);
+                break;
+            case VENDOR_FINALIZE_MENU_ID:
+                sessionStorage.setItem("vendor_finalization",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("vendor_finalization_assigned_to",userId);
+                sessionStorage.setItem("vendor_finalization_assigned_name",userName);
+                break;
+            case DOCUMENT_SAMPLE_COLLECTION_MENU_ID:
+                sessionStorage.setItem("document_sample_collection",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("document_sample_collection_assigned_to",userId);
+                sessionStorage.setItem("document_sample_collection_assigned_name",userName);
+                break;
+            case SAMPLE_FINALIZATION_MENU_ID:
+                sessionStorage.setItem("sample_finalization",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("sample_finalization_assigned_to",userId);
+                sessionStorage.setItem("sample_finalization_assigned_name",userName);
+                break;
+            case DOSSIER_DEVELOPMENT_MENU_ID:
+                sessionStorage.setItem("dossier_development",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("dossier_development_assigned_to",userId);
+                sessionStorage.setItem("dossier_development_assigned_name",userName);
+                break;
+            case SHIPMENT_MENU_ID:
+                sessionStorage.setItem("shipment",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("shipment_assigned_to",userId);
+                sessionStorage.setItem("shipment_assigned_name",userName);
+                break;
+            case SUBMISSION_MENU_ID:
+                sessionStorage.setItem("submission",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("submission_assigned_to",userId);
+                sessionStorage.setItem("submission_assigned_name",userName);
+                break;
+        }
+    }
+
+    function getProductSteps(productId) {
+        return callAPIService("get_assigned_step_tabular.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+productId);
+    }
 
     function resetProduct() {
         $("#product_id").val("");
     }
 
-    function next(){
-        let productProgressResult = getProductProgress();
-        // console.log(productProgressResult);
-        jsonProductProgressData = JSON.parse(productProgressResult);
-        // console.log(jsonProductProgressData);
-        if(jsonProductProgressData.length > 0){
-            for(i=0; i<jsonProductProgressData.length; i++){
-                var counter = jsonProductProgressData[i];
-                // console.log(counter.artwork);
-                // console.log(counter.finalization);
-                // console.log(counter.sample_finalization);
-                $("#tdOverallProgress").html("<h5>"+counter.sample_finalization.toFixed(2)+"%</h5>");
-
-                $("#divArtwork").html("<h4>"+counter.artwork.toFixed(2)+"%</h4>"+
-                                        "<div class=\"progress\" style=\"height: 20px;\">"+
-                                            "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+counter.artwork+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+counter.artwork+"%;\">"+
-                                            "</div>"+
-                                        "</div>");
-
-                $("#divFinalization").html("<h4>"+counter.finalization.toFixed(2)+"%</h4>"+
-                                        "<div class=\"progress\" style=\"height: 20px;\">"+
-                                            "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+counter.finalization+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+counter.finalization+"%;\">"+
-                                            "</div>"+
-                                        "</div>");
-
-                sessionStorage.setItem("artwork_question",counter.artwork_question);
-                sessionStorage.setItem("artwork_form",counter.artwork_form);
-                sessionStorage.setItem("commercial_doc",counter.commercial_doc);
-                sessionStorage.setItem("artwork_finalize",counter.artwork_finalize);
-            }
-        }
-
-        sessionStorage.setItem("sample_finalization_product_id",$("#product_id").val());
-
-        $(".choose-product").hide();
-        $(".selected-product").slideDown();
-    }
-
-    function getProductProgress() {
-        return callAPIService("get_sample_finalization_stats.php","user_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+$("#product_id").val()+"&menu_id="+currentMenuId);
-    }
-
     function back() {
-        loadPageContent(19,"product-assign-view.html");
+        if(sessionStorage.getItem("product_details_form_flag") != ""){
+            if(sessionStorage.getItem("product_details_form_flag") == "1"){
+                loadPageContent(1,"dashboard.html");
+            }else{
+                loadPageContent(19,"product-assign-view.html");
+            }
+        }else{
+            loadPageContent(19,"product-assign-view.html");
+        }
     }
 </script>

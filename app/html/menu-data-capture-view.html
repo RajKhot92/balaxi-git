@@ -72,6 +72,13 @@
                   </div>
                 </div>
               </div>
+              <div class="border-top">
+                <div class="card-body text-center">
+                    <button type="button" onclick="loadSubPageContent('product-assign-details.html')" id="btnBack" name="btnBack" class="btn btn-dark">
+                        <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                    </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -83,7 +90,7 @@
   var loginId = 0, productId = 0;
   $(document).ready(function(){
     loginId = sessionStorage.getItem("data_capture_assigned_to");
-    productId = sessionStorage.getItem("details_product_id");
+    productId = sessionStorage.getItem("product_details_product_id");
     loadNomenclature();
   });
 

@@ -27,6 +27,20 @@
           <div class="card-body">
             <h5 class="card-title mb-0">Product Pipeline</h5>
             <br/>
+            <b>Note</b>: To check country wise product pipeline details, kindly change the country from given drop-down list.
+            <div style="padding: 5px; margin-bottom: 5px;">
+              <div class="row">
+                <label for="fname"
+                  class="col-1 text-end control-label col-form-label">
+                  Country
+                </label>
+                <div class="col-3">
+                  <div id="divCountry">
+
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col-md-3">
                 <div class="card card-hover mt-0">
@@ -112,11 +126,40 @@
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    loadProductPipeline();
+    loadCountry();
   });
 
-  function loadProductPipeline(){
-    let productPipelineResult = getProductPipeline();
+  function loadCountry() {
+    jsonCountryData = new Array();
+    let countryResult = getCountry();
+    // console.log(countryResult);
+    jsonCountryData = JSON.parse(countryResult);
+    // console.log(jsonCountryData);
+    var optionsCountryData = "";
+    if(jsonCountryData.length > 0){
+        for(i=0; i<jsonCountryData.length; i++){
+            var counter = jsonCountryData[i];
+            optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
+        }
+        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchPipeline()\">"+
+                                   "<option value=\"\">All</option>"+
+                                   optionsCountryData+
+                                "</select>");
+    }
+
+    fetchPipeline();
+  }
+
+  function getCountry() {
+    return callAPIService("get_country.php","country_id=0");
+  }
+
+  function fetchPipeline(){
+    loadProductPipeline($("#country_id").val());
+  }
+
+  function loadProductPipeline(countryId){
+    let productPipelineResult = getProductPipeline(countryId);
     // console.log(productPipelineResult);
     var jsonProductPipelineData = JSON.parse(productPipelineResult);
     var wip = 0, dispatch = 0, registered = 0, submitted = 0;
@@ -138,8 +181,8 @@
     loadProductReport();
   }
 
-  function getProductPipeline() {
-    return callAPIService("get_product_pipeline.php","");
+  function getProductPipeline(countryId) {
+    return callAPIService("get_product_pipeline.php","country_id="+countryId);
   }
 
   function loadProductReport(){
@@ -152,7 +195,11 @@
             var counter = jsonProductData[i];
             productTbody += "<tr>"+
                               "<td align=\"center\">"+(i+1)+"</td>"+
-                              "<td>"+counter.product_name+"</td>"+
+                              "<td>"+
+                                ((counter.progress > 0)?
+                                ("<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>"):
+                                (counter.product_name))+
+                              "</td>"+
                               "<td>"+counter.country_name+"</td>"+
                               "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                               "<td align=\"center\">"+
@@ -180,11 +227,12 @@
                                   "<i class='fas fa-check-circle text-success'></i>" : 
                                   "<i class='fas fa-times-circle text-danger'></i>")+
                               "</td>"+
+                              "<td class=\"text-center\">"+counter.progress+"%</td>"+
                             "</tr>";
         }
     }else{
         productTbody += "<tr>"+
-                          "<td colspan=\"9\" align=\"center\">No product details found.</td>"
+                          "<td colspan=\"10\" align=\"center\">No product details found.</td>"
                         "</tr>";
     }
     $("#divProductReport").html("<table class=\"table table-sm table-hover table-bordered\" id=\"productReportTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -199,6 +247,7 @@
                                     "<th><b>CMA Status</b></th>"+
                                     "<th><b>Dossier Status</b></th>"+
                                     "<th><b>AMV Status</b></th>"+
+                                    "<th><b>Overall Progress</b></th>"+
                                 "</tr>"+
                             "</thead>"+
                             "<tbody>"+
@@ -226,5 +275,12 @@
 
   function loadPerformanceReport(){
     $("#divPerformanceReport").html("<center>This module is under process</center>");
+  }
+
+  function loadProductDetails(productId){
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",1);
+    sessionStorage.setItem("product_details_product_id",productId);
+    loadSubPageContent("product-assign-details.html");
   }
 </script>

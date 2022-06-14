@@ -45,7 +45,6 @@
     $(document).ready(function(){
         $("#login_id").val(localStorage.getItem("balaxi_user_id"));
         loadProductSteps();
-        
         // if(localStorage.getItem("balaxi_user_role") == 3){
         //     $(".nonAdminContent").show();
         //     $(".adminContent").hide();
@@ -124,7 +123,7 @@
                                         "<span style=\"display:none;\" id=\"spnOverallProgress"+counter.product_id+"\">"+totalProgress+"</span>"+
                                     "</td>";
                 }else{
-                    productStepData += "<td align=\"center\">&nbsp;<span style=\"display:none;\" id=\"spnOverallProgress"+step.product_id+"\">0</span></td>";
+                    productStepData += "<td align=\"center\">&nbsp;<span style=\"display:none;\" id=\"spnOverallProgress"+counter.product_id+"\">0</span></td>";
                 }
 
                 optionsProductData += "<tr>"+productStepData+"</tr>";
@@ -132,15 +131,15 @@
             $("#divProductSteps").html("<table class=\"table table-sm table-bordered\" id=\"productStepTable\" width=\"100%\" cellspacing=\"0\">"+
                                 "<thead>"+
                                     "<tr>"+
-                                        "<th valign=\"top\" width=\"20%\"><h5>Product [Country] [Product Owner]</h5></th>"+
-                                        "<th valign=\"top\"><h5>Technical Draft</h5></th>"+
-                                        "<th valign=\"top\"><h5>Vendor Finalization</h5></th>"+
-                                        "<th valign=\"top\"><h5>Document &amp; Sample Collection</h5></th>"+
-                                        "<th valign=\"top\"><h5>Sample Finalization</h5></th>"+
-                                        "<th valign=\"top\"><h5>Dossier Development</h5></th>"+
-                                        "<th valign=\"top\"><h5>Shipment</h5></th>"+
-                                        "<th valign=\"top\"><h5>Submission</h5></th>"+
-                                        "<th valign=\"top\"><h5>Overall Progress</h5></th>"+
+                                        "<th valign=\"top\" width=\"20%\"><h6>Product [Country] [Product Owner]</h6></th>"+
+                                        "<th valign=\"top\"><h6>Technical Draft</h6></th>"+
+                                        "<th valign=\"top\"><h6>Vendor Finalization</h6></th>"+
+                                        "<th valign=\"top\"><h6>Document &amp; Sample Collection</h6></th>"+
+                                        "<th valign=\"top\"><h6>Sample Finalization</h6></th>"+
+                                        "<th valign=\"top\"><h6>Dossier Development</h6></th>"+
+                                        "<th valign=\"top\"><h6>Shipment</h6></th>"+
+                                        "<th valign=\"top\"><h6>Submission</h6></th>"+
+                                        "<th valign=\"top\"><h6>Overall Progress</h6></th>"+
                                     "</tr>"+
                                 "</thead>"+
                                 "<tbody>"+
@@ -154,13 +153,16 @@
     }
 
     function getProductSteps() {
-        return callAPIService("get_assigned_step_tabular.php","login_id="+localStorage.getItem("balaxi_user_id"));
+        return callAPIService("get_assigned_step_tabular.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id=0");
     }
 
     function openProductDetails(productId){
-        sessionStorage.clear();       
+        sessionStorage.clear();
 
-        sessionStorage.setItem("details_product_id",productId);
+        sessionStorage.removeItem("product_details_form_flag");
+        sessionStorage.setItem("product_details_form_flag",2);
+        
+        sessionStorage.setItem("product_details_product_id",productId);
         sessionStorage.setItem("details_product_name",$("#spnProductName"+productId).text());
         sessionStorage.setItem("details_product_owner",$("#spnProductOwner"+productId).text());
         sessionStorage.setItem("details_product_category",$("#spnProductCategory"+productId).text());

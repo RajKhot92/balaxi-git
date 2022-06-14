@@ -4,6 +4,7 @@
 
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
+    $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
 
     /*  Checking role access    */
     $login_exist = "SELECT user_role FROM user_master 
@@ -30,7 +31,16 @@
                         INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` ";
     if($role_id == 3){
         $get_products_sql .= "WHERE a.`product_owner`=".$login_id." ";
+
+        if($product_id != "0"){
+            $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
+        }
+    }else{
+        if($product_id != "0"){
+            $get_products_sql .= "WHERE a.`product_id`=".$product_id." ";   
+        }
     }
+
     $get_products_sql .= "ORDER BY a.`product_id`";
     $result_product = mysqli_query($conn,$get_products_sql);  
     while ($row_product = mysqli_fetch_array($result_product, MYSQLI_ASSOC)) {
