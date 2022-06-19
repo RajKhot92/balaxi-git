@@ -195,7 +195,7 @@
         $("#spnTechnicalDraftUser").html(sessionStorage.getItem("data_capture_assigned_to"));
         $("#spnTechnicalDraftUserName").html(technicalDraftUserName);
 
-        if(technicalDraftUserName == "Not Assigned"){
+        if(technicalDraftUserName == "Not Assigned" || parseFloat($("#spnTechnicalDraft").text()) == 0){
             $("#divTechnicalDraft").removeAttr("style");
             $("#divTechnicalDraft").removeAttr("onclick");
         }
@@ -205,7 +205,7 @@
         $("#spnVendorFinalizationUser").html(sessionStorage.getItem("vendor_finalization_assigned_to"));
         $("#spnVendorFinalizationUserName").html(vendorFinalizationUserName);
 
-        if(vendorFinalizationUserName == "Not Assigned"){
+        if(vendorFinalizationUserName == "Not Assigned" || parseFloat($("#spnVendorFinalization").text()) == 0){
             $("#divVendorFinalization").removeAttr("style");
             $("#divVendorFinalization").removeAttr("onclick");
         }
@@ -215,7 +215,7 @@
         $("#spnDocumentSampleCollectionUser").html(sessionStorage.getItem("document_sample_collection_assigned_to"));
         $("#spnDocumentSampleCollectionUserName").html(documentSampleCollectionUserName);
 
-        if(documentSampleCollectionUserName == "Not Assigned"){
+        if(documentSampleCollectionUserName == "Not Assigned" || parseFloat($("#spnDocumentSampleCollection").text()) == 0){
             $("#divDocumentSampleCollection").removeAttr("style");
             $("#divDocumentSampleCollection").removeAttr("onclick");
         }
@@ -225,7 +225,7 @@
         $("#spnSampleFinalizationUser").html(sessionStorage.getItem("sample_finalization_assigned_to"));
         $("#spnSampleFinalizationUserName").html(sampleFinalizationUserName);
 
-        if(sampleFinalizationUserName == "Not Assigned"){
+        if(sampleFinalizationUserName == "Not Assigned" || parseFloat($("#spnSampleFinalization").text()) == 0){
             $("#divSampleFinalization").removeAttr("style");
             $("#divSampleFinalization").removeAttr("onclick");
         }
@@ -235,7 +235,7 @@
         $("#spnDossierDevelopmentUser").html(sessionStorage.getItem("dossier_development_assigned_to"));
         $("#spnDossierDevelopmentUserName").html(dossierDevelopmentUserName);
 
-        if(dossierDevelopmentUserName == "Not Assigned"){
+        if(dossierDevelopmentUserName == "Not Assigned" || parseFloat($("#spnDossierDevelopment").text()) == 0){
             $("#divDossierDevelopment").removeAttr("style");
             $("#divDossierDevelopment").removeAttr("onclick");
         }
@@ -245,7 +245,7 @@
         $("#spnShipmentUser").html(sessionStorage.getItem("shipment_assigned_to"));
         $("#spnShipmentUserName").html(shipmentUserName);
 
-        if(shipmentUserName == "Not Assigned"){
+        if(shipmentUserName == "Not Assigned" || parseFloat($("#spnShipment").text()) == 0){
             $("#divShipment").removeAttr("style");
             $("#divShipment").removeAttr("onclick");
         }
@@ -255,10 +255,12 @@
         $("#spnSubmissionUser").html(sessionStorage.getItem("submission_assigned_to"));
         $("#spnSubmissionUserName").html(submissionUserName);
 
-        if(submissionUserName == "Not Assigned"){
-            $("#divSubmission").removeAttr("style");
-            $("#divSubmission").removeAttr("onclick");
-        }
+        // if(submissionUserName == "Not Assigned" || parseFloat($("#spnSubmission").text()) == 0){
+        //     $("#divSubmission").removeAttr("style");
+        //     $("#divSubmission").removeAttr("onclick");
+        // }
+        $("#divSubmission").attr("style","cursor: not-allowed");
+        $("#divSubmission").removeAttr("onclick");
     }
 
     function loadProductSteps(productId) {
