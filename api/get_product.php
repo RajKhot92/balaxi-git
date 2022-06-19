@@ -83,7 +83,7 @@
         $get_product_sql .= " AND a.`product_id` IN (SELECT DISTINCT psm.`product_id` FROM `product_step_master` psm WHERE psm.`menu_id`=".$assigned_menu_id." AND psm.`user_id`=".$product_assigned_to.")";
     }
 
-    $get_product_sql .= " ORDER BY product_id DESC ";
+    $get_product_sql .= " ORDER BY product_name ";
 
     $result = mysqli_query($conn,$get_product_sql);  
     $json_response = array();  

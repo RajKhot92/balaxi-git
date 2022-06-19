@@ -1,0 +1,361 @@
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Product Details - Sample Finalization</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Sample Finalization
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" style="background-color: #2c3136; color: #ffffff;">
+              <a class="nav-link active" data-bs-toggle="tab" href="#subStep1" role="tab" aria-selected="false"><span class="hidden-sm-up"></span>
+                <span class="hidden-xs-down" id="spnSubStep1">Artwork</span></a>
+            </li>
+            <li class="nav-item" style="background-color: #2c3136; color: #ffffff;">
+              <a class="nav-link" data-bs-toggle="tab" href="#subStep2" role="tab" aria-selected="false"><span class="hidden-sm-up"></span>
+                <span class="hidden-xs-down" id="spnSubStep2">Finalization</span></a>
+            </li>
+          </ul>
+          <div class="tab-content tabcontent-border">
+            <div class="tab-pane active" id="subStep1" role="tabpanel">
+              
+              <div class="accordion" id="accordionExample1">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample1headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnQuestionnaire">
+                      Questionnaire
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="accordionExample1headingOne" data-bs-parent="#accordionExample1">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divQuestionnaire" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample1headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnArtworks">
+                      Artworks
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="accordionExample1headingTwo" data-bs-parent="#accordionExample1">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divArtworks" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample1headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" id="btnCommercialDocument">
+                      Commercial Document
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="accordionExample1headingThree" data-bs-parent="#accordionExample1">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divCommercialDocument" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="subStep2" role="tabpanel">
+              
+              <div class="accordion" id="accordionExample2">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnFinalizationArtwork">
+                      Finalization Artwork
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingOne" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divFinalizationArtwork" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="border-top">
+            <div class="card-body text-center">
+                <button type="button" onclick="loadSubPageContent('product-assign-details.html')" id="btnBack" name="btnBack" class="btn btn-dark">
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var loginId = 0, productId = 0;
+  $(document).ready(function(){
+    loginId = sessionStorage.getItem("sample_finalization_assigned_to");
+    productId = sessionStorage.getItem("product_details_product_id");
+    loadProductProgress();
+  });
+
+  function loadProductProgress(){
+    let productProgressResult = getProductProgress();
+    // console.log(productProgressResult);
+    jsonProductProgressData = JSON.parse(productProgressResult);
+    // console.log(jsonProductProgressData);
+    if(jsonProductProgressData.length > 0){
+      for(i=0; i<jsonProductProgressData.length; i++){
+        var counter = jsonProductProgressData[i];
+        // console.log(counter.define_product);
+        // console.log(counter.data_capture);
+
+        $("#spnSubStep1").html("<b>Artwork ("+counter.artwork.toFixed(2)+"%)</b>");
+        $("#spnSubStep2").html("<b>Finalization ("+counter.finalization.toFixed(2)+"%)</b>");
+
+        $("#btnQuestionnaire").html("<b>Questionnaire ("+counter.artwork_question.toFixed(2)+"%)</b>");
+        $("#btnArtworks").html("<b>Artworks ("+counter.artwork_form.toFixed(2)+"%)</b>");
+        $("#btnCommercialDocument").html("<b>Commercial Document ("+counter.commercial_doc.toFixed(2)+"%)</b>");
+        $("#btnFinalizationArtwork").html("<b>Finalization Artwork ("+counter.artwork_finalize.toFixed(2)+"%)</b>");
+      }
+    }
+
+    loadQuestionnaire();
+  }
+
+  function getProductProgress() {
+    return callAPIService("get_sample_finalization_stats.php","user_id="+loginId+"&product_id="+productId+"&menu_id="+SAMPLE_FINALIZATION_MENU_ID);
+  }
+
+  function loadQuestionnaire(){
+      let questionnaireResult = getQuestionnaire();
+      // console.log(questionnaireResult);
+      var jsonQuestionnaireData = JSON.parse(questionnaireResult);
+      var questionnaireTbody = "";
+      if(jsonQuestionnaireData.length > 0){
+          for(i=0; i<jsonQuestionnaireData.length; i++){
+              var counter = jsonQuestionnaireData[i];
+              questionnaireTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.product_code+"</td>"+
+                                          "<td align=\"center\">"+counter.submitted_dt+"</td>"+
+                                          "<td align=\"center\">"+counter.received_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.artwork+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this artwork questionnaire details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQuestionnaire("+counter.aq_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          questionnaireTbody += "<tr>"+
+                          "<td colspan=\"7\" align=\"center\">No artwork questionnaire details found.</td>"
+                      "</tr>";
+      }
+      $("#divQuestionnaire").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"questionnaireTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Product Code</th>"+
+                                      "<th>Submitted To Regulatory Date</th>"+
+                                      "<th>Received Date</th>"+
+                                      "<th>Uploaded Document</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  questionnaireTbody+
+                              "</tbody>"+
+                          "</table>");
+    loadArtworks();
+  }
+
+  function getQuestionnaire(){
+    return callAPIService("get_product_artwork_question.php","login_id="+loginId+"&product_id="+productId+"&aq_id=0");
+  }
+
+  function loadArtworks(){
+      let artworksResult = getArtworks();
+      // console.log(artworksResult);
+      var jsonArtworksData = JSON.parse(artworksResult);
+      var artworksTbody = "";
+      if(jsonArtworksData.length > 0){
+          for(i=0; i<jsonArtworksData.length; i++){
+              var counter = jsonArtworksData[i];
+              artworksTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.product_code+"</td>"+
+                                          "<td align=\"center\">"+counter.vendor_name+"</td>"+
+                                          "<td align=\"center\">"+counter.package_details+"</td>"+
+                                          "<td align=\"center\">"+counter.revision_no+"</td>"+
+                                          "<td align=\"center\">"+counter.revision_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.artwork_file+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.commercial_file+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this artwork artworks details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteArtworks("+counter.art_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          artworksTbody += "<tr>"+
+                          "<td colspan=\"10\" align=\"center\">No artworks details found.</td>"
+                      "</tr>";
+      }
+      $("#divArtworks").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"artworksTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Product Code</th>"+
+                                      "<th>Vendor Name</th>"+
+                                      "<th>Packaging Details</th>"+
+                                      "<th>Revision No</th>"+
+                                      "<th>Revision Date</th>"+
+                                      "<th>Artwork File</th>"+
+                                      "<th>Commercial File</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  artworksTbody+
+                              "</tbody>"+
+                          "</table>");
+    loadCommercialDocument();
+  }
+
+  function getArtworks(){
+    return callAPIService("get_product_artwork.php","login_id="+loginId+"&product_id="+productId+"&art_id=0");
+  }
+
+  function loadCommercialDocument(){
+      let commercialDocumentResult = getCommercialDocument();
+      // console.log(commercialDocumentResult);
+      var jsonCommercialDocumentData = JSON.parse(commercialDocumentResult);
+      var commercialDocumentTbody = "";
+      if(jsonCommercialDocumentData.length > 0){
+          for(i=0; i<jsonCommercialDocumentData.length; i++){
+              var counter = jsonCommercialDocumentData[i];
+              commercialDocumentTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.product_code+"</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.doc_1+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.doc_2+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this artwork commercial document details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteCommercialDocument("+counter.cd_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          commercialDocumentTbody += "<tr>"+
+                          "<td colspan=\"6\" align=\"center\">No commercial document details found.</td>"
+                      "</tr>";
+      }
+      $("#divCommercialDocument").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"commercialDocumentTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Product Code</th>"+
+                                      "<th>Commercial Document 1</th>"+
+                                      "<th>Commercial Document 2</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  commercialDocumentTbody+
+                              "</tbody>"+
+                          "</table>");
+    loadFinalizationArtwork();
+  }
+
+  function getCommercialDocument(){
+    return callAPIService("get_product_artwork_commercial_doc.php","login_id="+loginId+"&product_id="+productId+"&cd_id=0");
+  }
+
+  function loadFinalizationArtwork(){
+      let finalizationArtworkResult = getFinalizationArtwork();
+      // console.log(finalizationArtworkResult);
+      var jsonFinalizationArtworkData = JSON.parse(finalizationArtworkResult);
+      var finalizationArtworkTbody = "";
+      if(jsonFinalizationArtworkData.length > 0){
+          for(i=0; i<jsonFinalizationArtworkData.length; i++){
+              var counter = jsonFinalizationArtworkData[i];
+              finalizationArtworkTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.prints+"</td>"+
+                                          "<td align=\"center\">"+counter.ws_package+"</td>"+
+                                          "<td align=\"center\">"+counter.fp_package+"</td>"+
+                                          "<td align=\"center\">"+counter.document+"</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this finalization artwork details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteFinalizationArtwork("+counter.aq_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          finalizationArtworkTbody += "<tr>"+
+                          "<td colspan=\"7\" align=\"center\">No finalization artwork details found.</td>"
+                      "</tr>";
+      }
+      $("#divFinalizationArtwork").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"finalizationArtworkTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Prints</th>"+
+                                      "<th>WS Packaging</th>"+
+                                      "<th>FP Packaging</th>"+
+                                      "<th>Documents</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  finalizationArtworkTbody+
+                              "</tbody>"+
+                          "</table>");
+  }
+
+  function getFinalizationArtwork(){
+    return callAPIService("get_product_artwork_finalization.php","login_id="+loginId+"&product_id="+productId+"&af_id=0");
+  }
+
+  function openFile(URL){
+      var win = window.open();
+      win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+  }
+</script>

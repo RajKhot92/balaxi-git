@@ -1,0 +1,352 @@
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Product Details - Dossier Development</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Dossier Development
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" style="background-color: #2c3136; color: #ffffff;">
+              <a class="nav-link active" data-bs-toggle="tab" href="#subStep1" role="tab" aria-selected="false"><span class="hidden-sm-up"></span>
+                <span class="hidden-xs-down" id="spnSubStep1">Dossier Pre-Requisite</span></a>
+            </li>
+            <li class="nav-item" style="background-color: #2c3136; color: #ffffff;">
+              <a class="nav-link" data-bs-toggle="tab" href="#subStep2" role="tab" aria-selected="false"><span class="hidden-sm-up"></span>
+                <span class="hidden-xs-down" id="spnSubStep2">Dossier Population</span></a>
+            </li>
+          </ul>
+          <div class="tab-content tabcontent-border">
+            <div class="tab-pane active" id="subStep1" role="tabpanel">
+              
+              <div class="accordion" id="accordionExample1">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample1headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnPreRequisiteCheck">
+                      Pre-Requisite Check
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="accordionExample1headingOne" data-bs-parent="#accordionExample1">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divPreRequisiteCheck" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample1headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnCheckList">
+                      Check List
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="accordionExample1headingTwo" data-bs-parent="#accordionExample1">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divCheckList" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="subStep2" role="tabpanel">
+              
+              <div class="accordion" id="accordionExample2">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnDossierWriting">
+                      Dossier Writing
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingOne" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divDossierWriting" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnDossierValidation">
+                      Dossier Validation
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="accordionExample2headingTwo" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divDossierValidation" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="border-top">
+            <div class="card-body text-center">
+                <button type="button" onclick="loadSubPageContent('product-assign-details.html')" id="btnBack" name="btnBack" class="btn btn-dark">
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var loginId = 0, productId = 0;
+  $(document).ready(function(){
+    loginId = sessionStorage.getItem("dossier_development_assigned_to");
+    productId = sessionStorage.getItem("product_details_product_id");
+    loadProductProgress();
+  });
+
+  function loadProductProgress(){
+    let productProgressResult = getProductProgress();
+    // console.log(productProgressResult);
+    jsonProductProgressData = JSON.parse(productProgressResult);
+    // console.log(jsonProductProgressData);
+    if(jsonProductProgressData.length > 0){
+      for(i=0; i<jsonProductProgressData.length; i++){
+        var counter = jsonProductProgressData[i];
+        // console.log(counter.define_product);
+        // console.log(counter.data_capture);
+
+        $("#spnSubStep1").html("<b>Dossier Pre-Requisite ("+counter.pre_requisite.toFixed(2)+"%)</b>");
+        $("#spnSubStep2").html("<b>Dossier Population ("+counter.population.toFixed(2)+"%)</b>");
+
+        $("#btnPreRequisiteCheck").html("<b>Pre-Requisite Check ("+counter.pre_requisite_check.toFixed(2)+"%)</b>");
+        $("#btnCheckList").html("<b>Check List ("+counter.dossier_check.toFixed(2)+"%)</b>");
+        $("#btnDossierWriting").html("<b>Dossier Writing ("+counter.dossier_writing.toFixed(2)+"%)</b>");
+        $("#btnDossierValidation").html("<b>Dossier Validation ("+counter.dossier_marker.toFixed(2)+"%)</b>");
+      }
+    }
+
+    loadPreRequisiteCheck();
+  }
+
+  function getProductProgress() {
+    return callAPIService("get_dossier_development_stats.php","user_id="+loginId+"&product_id="+productId+"&menu_id="+DOSSIER_DEVELOPMENT_MENU_ID);
+  }
+
+  function loadPreRequisiteCheck(){
+    let preRequisiteCheckResult = getPreRequisiteCheck();
+    // console.log(preRequisiteCheckResult);
+    var jsonPreRequisiteCheckData = JSON.parse(preRequisiteCheckResult);
+    var preRequisiteCheckTbody = "";
+    if(jsonPreRequisiteCheckData.length > 0){
+        for(i=0; i<jsonPreRequisiteCheckData.length; i++){
+            var counter = jsonPreRequisiteCheckData[i];
+            preRequisiteCheckTbody += "<tr>"+
+                                        "<td align=\"center\">"+(i+1)+"</td>"+
+                                        "<td align=\"center\">"+counter.legal_doc+"</td>"+
+                                        "<td align=\"center\">"+counter.fp_ws+"</td>"+
+                                        "<td align=\"center\">"+counter.qnq+"</td>"+
+                                        "<td align=\"center\">"+counter.misc+"</td>"+
+                                        "<td align=\"center\">"+counter.test_lab+"</td>"+
+                                        "<td align=\"center\">"+
+                                            "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.amv+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                        "</td>"+
+                                        "<td>"+counter.ent_dt+"</td>"+
+                                        "<td align=\"center\">"+
+                                          "<span title=\"Click here to delete this pre requisite check details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deletePreRequisiteCheck("+counter.cd_id+")\"></span>"+
+                                        "</td>"+
+                                    "</tr>";
+        }
+    }else{
+        preRequisiteCheckTbody += "<tr>"+
+                        "<td colspan=\"9\" align=\"center\">No pre requisite check details found.</td>"
+                    "</tr>";
+    }
+    $("#divPreRequisiteCheck").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"preRequisiteCheckTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Sr.No.</th>"+
+                                    "<th>Legal Documents</th>"+
+                                    "<th>FP & WS</th>"+
+                                    "<th>QnQ</th>"+
+                                    "<th>Misc (Manual)</th>"+
+                                    "<th>Test (Lab) Results</th>"+
+                                    "<th>AMV</th>"+
+                                    "<th>Entry Date</th>"+
+                                    "<th>Delete</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                preRequisiteCheckTbody+
+                            "</tbody>"+
+                        "</table>");
+
+    loadCheckList();
+  }
+
+  function getPreRequisiteCheck(){
+    return callAPIService("get_product_dossier_pre_req_check.php","login_id="+loginId+"&product_id="+productId+"&dpr_id=0");
+  }
+
+  function loadCheckList(){
+    let checkListResult = getCheckList();
+    // console.log(checkListResult);
+    var jsonCheckListData = JSON.parse(checkListResult);
+    var checkListTbody = "";
+    if(jsonCheckListData.length > 0){
+        for(i=0; i<jsonCheckListData.length; i++){
+            var counter = jsonCheckListData[i];
+            checkListTbody += "<tr>"+
+                                        "<td align=\"center\">"+(i+1)+"</td>"+
+                                        "<td align=\"center\">"+
+                                            "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.check_list+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                        "</td>"+
+                                        "<td align=\"center\">"+counter.artwork+"</td>"+
+                                        "<td align=\"center\">"+counter.everything_complete+"</td>"+
+                                        "<td>"+counter.ent_dt+"</td>"+
+                                        "<td align=\"center\">"+
+                                          "<span title=\"Click here to delete this dossier check list details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteCheckList("+counter.dc_id+")\"></span>"+
+                                        "</td>"+
+                                    "</tr>";
+        }
+    }else{
+        checkListTbody += "<tr>"+
+                        "<td colspan=\"6\" align=\"center\">No pre requisite check details found.</td>"
+                    "</tr>";
+    }
+    $("#divCheckList").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"checkListTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Sr.No.</th>"+
+                                    "<th>Check List</th>"+
+                                    "<th>Artwork</th>"+
+                                    "<th>Everything Completed</th>"+
+                                    "<th>Entry Date</th>"+
+                                    "<th>Delete</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                checkListTbody+
+                            "</tbody>"+
+                        "</table>");
+
+    loadDossierWriting();
+  }
+
+  function getCheckList(){
+    return callAPIService("get_product_dossier_check_list.php","login_id="+loginId+"&product_id="+productId+"&dc_id=0");
+  }
+
+  function loadDossierWriting(){
+      let dossierWritingResult = getDossierWriting();
+      // console.log(dossierWritingResult);
+      var jsonDossierWritingData = JSON.parse(dossierWritingResult);
+      var dossierWritingTbody = "";
+      if(jsonDossierWritingData.length > 0){
+          for(i=0; i<jsonDossierWritingData.length; i++){
+              var counter = jsonDossierWritingData[i];
+              dossierWritingTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.dossier+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td align=\"center\">"+counter.everything_complete+"</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this dossier check list details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDossierWriting("+counter.dw_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          dossierWritingTbody += "<tr>"+
+                          "<td colspan=\"5\" align=\"center\">No dossoer writing details found.</td>"
+                      "</tr>";
+      }
+      $("#divDossierWriting").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"dossierWritingTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Dossier</th>"+
+                                      "<th>Everything Completed</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  dossierWritingTbody+
+                              "</tbody>"+
+                          "</table>");
+
+      loadDossierValidation();
+  }
+
+  function getDossierWriting(){
+    return callAPIService("get_product_dossier_writing.php","login_id="+loginId+"&product_id="+productId+"&dw_id=0");
+  }
+
+  function loadDossierValidation(){
+        let dossierValidationResult = getDossierValidation();
+        // console.log(dossierValidationResult);
+        var jsonDossierValidationData = JSON.parse(dossierValidationResult);
+        var dossierValidationTbody = "";
+        if(jsonDossierValidationData.length > 0){
+            for(i=0; i<jsonDossierValidationData.length; i++){
+                var counter = jsonDossierValidationData[i];
+                dossierValidationTbody += "<tr>"+
+                                            "<td align=\"center\">"+(i+1)+"</td>"+
+                                            "<td align=\"center\">"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.marker_file+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                            "</td>"+
+                                            "<td align=\"center\">"+counter.score+"</td>"+
+                                            "<td>"+counter.ent_dt+"</td>"+
+                                            "<td align=\"center\">"+
+                                              "<span title=\"Click here to delete this dossier validation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDossierValidation("+counter.dvm_id+")\"></span>"+
+                                            "</td>"+
+                                        "</tr>";
+            }
+        }else{
+            dossierValidationTbody += "<tr>"+
+                            "<td colspan=\"5\" align=\"center\">No dossier validation details found.</td>"
+                        "</tr>";
+        }
+        $("#divDossierValidation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"dossierValidationTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>Marker File</th>"+
+                                        "<th>Score</th>"+
+                                        "<th>Entry Date</th>"+
+                                        "<th>Delete</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    dossierValidationTbody+
+                                "</tbody>"+
+                            "</table>");
+    }
+
+    function getDossierValidation(){
+      return callAPIService("get_product_dossier_validation.php","login_id="+loginId+"&product_id="+productId+"&dvm_id=0");
+    }
+
+  function openFile(URL){
+      var win = window.open();
+      win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+  }
+</script>

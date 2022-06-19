@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div id ="divVendorFinalization" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-vendor-finalization-view.html')">
                                 <div class="card card-hover">
                                     <div class="box bg-success text-center">
                                         <h3 class="font-light text-white">
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div id ="divDocumentSampleCollection" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-document-sample-collection-view.html')">
                                 <div class="card card-hover">
                                     <div class="box bg-warning text-center">
                                         <h3 class="font-light text-white">
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div id ="divSampleFinalization" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-sample-finalization-view.html')">
                                 <div class="card card-hover">
                                     <div class="box bg-danger text-center">
                                         <h3 class="font-light text-white">
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div id ="divDossierDevelopment" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-dossier-view.html')">
                                 <div class="card card-hover">
                                     <div class="box bg-info text-center">
                                         <h3 class="font-light text-white">
@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div id ="divShipment" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-shipment-view.html')">
                                 <div class="card card-hover">
                                     <div class="box bg-cyan text-center">
                                         <h3 class="font-light text-white">
@@ -137,8 +137,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="card card-hover">
+                            <div id ="divSubmission" class="col-md-3" style="cursor: not-allowed;">
+                                <div class="card">
                                     <div class="box bg-success text-center">
                                         <h3 class="font-light text-white">
                                             <i class="fas fa-check"></i>
@@ -205,30 +205,60 @@
         $("#spnVendorFinalizationUser").html(sessionStorage.getItem("vendor_finalization_assigned_to"));
         $("#spnVendorFinalizationUserName").html(vendorFinalizationUserName);
 
+        if(vendorFinalizationUserName == "Not Assigned"){
+            $("#divVendorFinalization").removeAttr("style");
+            $("#divVendorFinalization").removeAttr("onclick");
+        }
+
         var documentSampleCollectionUserName = sessionStorage.getItem("document_sample_collection_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("document_sample_collection_assigned_name");
         $("#spnDocumentSampleCollection").html("<b>"+sessionStorage.getItem("document_sample_collection")+"%</b>");
         $("#spnDocumentSampleCollectionUser").html(sessionStorage.getItem("document_sample_collection_assigned_to"));
         $("#spnDocumentSampleCollectionUserName").html(documentSampleCollectionUserName);
+
+        if(documentSampleCollectionUserName == "Not Assigned"){
+            $("#divDocumentSampleCollection").removeAttr("style");
+            $("#divDocumentSampleCollection").removeAttr("onclick");
+        }
 
         var sampleFinalizationUserName = sessionStorage.getItem("sample_finalization_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("sample_finalization_assigned_name");
         $("#spnSampleFinalization").html("<b>"+sessionStorage.getItem("sample_finalization")+"%</b>");
         $("#spnSampleFinalizationUser").html(sessionStorage.getItem("sample_finalization_assigned_to"));
         $("#spnSampleFinalizationUserName").html(sampleFinalizationUserName);
 
+        if(sampleFinalizationUserName == "Not Assigned"){
+            $("#divSampleFinalization").removeAttr("style");
+            $("#divSampleFinalization").removeAttr("onclick");
+        }
+
         var dossierDevelopmentUserName = sessionStorage.getItem("dossier_development_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("dossier_development_assigned_name");
         $("#spnDossierDevelopment").html("<b>"+sessionStorage.getItem("dossier_development")+"%</b>");
         $("#spnDossierDevelopmentUser").html(sessionStorage.getItem("dossier_development_assigned_to"));
         $("#spnDossierDevelopmentUserName").html(dossierDevelopmentUserName);
+
+        if(dossierDevelopmentUserName == "Not Assigned"){
+            $("#divDossierDevelopment").removeAttr("style");
+            $("#divDossierDevelopment").removeAttr("onclick");
+        }
 
         var shipmentUserName = sessionStorage.getItem("shipment_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("shipment_assigned_name");
         $("#spnShipment").html("<b>"+sessionStorage.getItem("shipment")+"%</b>");
         $("#spnShipmentUser").html(sessionStorage.getItem("shipment_assigned_to"));
         $("#spnShipmentUserName").html(shipmentUserName);
 
+        if(shipmentUserName == "Not Assigned"){
+            $("#divShipment").removeAttr("style");
+            $("#divShipment").removeAttr("onclick");
+        }
+
         var submissionUserName = sessionStorage.getItem("submission_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("submission_assigned_name");
         $("#spnSubmission").html("<b>"+sessionStorage.getItem("submission")+"%</b>");
         $("#spnSubmissionUser").html(sessionStorage.getItem("submission_assigned_to"));
         $("#spnSubmissionUserName").html(submissionUserName);
+
+        if(submissionUserName == "Not Assigned"){
+            $("#divSubmission").removeAttr("style");
+            $("#divSubmission").removeAttr("onclick");
+        }
     }
 
     function loadProductSteps(productId) {

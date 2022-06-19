@@ -278,6 +278,7 @@
   }
 
   function loadProductDetails(productId){
+    sessionStorage.clear();
     sessionStorage.removeItem("product_details_form_flag");
     sessionStorage.setItem("product_details_form_flag",1);
     sessionStorage.setItem("product_details_product_id",productId);
