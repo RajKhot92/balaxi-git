@@ -51,68 +51,58 @@
                             </div>
                         </div>
                         <div class="row assign-product" style="display: none;">
-                            <div class="col-12">
+                            <div class="col-12" style="margin: 2px;">
+                                <hr>
+                                <b>Note:</b> You can assign/re-assgign the executives only, if that work is not started or not completed.
+                            </div>
+                            <div class="col-12" style="padding-top: 5px;">
                                 <h4 class="card-title text-center">Select Users</h4>
                                 <div class="row p-1">
                                     <div class="col-6"><h5 style="text-align: right;">Data Capture</h5></div>
                                     <div class="col-3" id="divDataCapture">
-                                        <!-- <select class="form-control" id="cmboDataCapture" name="cmboDataCapture">
-                                            
-                                        </select> -->
+
                                     </div>
                                     <div class="col-3">&nbsp;</div>
                                 </div>
                                 <div class="row p-1">
                                     <div class="col-6"><h5 style="text-align: right;">Vendor Finalization</h5></div>
                                     <div class="col-3" id="divVendorFinalize">
-                                        <!-- <select class="form-control" id="cmboVendorFinalize" name="cmboVendorFinalize">
-                                            
-                                        </select> -->
+
                                     </div>
                                     <div class="col-3">&nbsp;</div>
                                 </div>
                                 <div class="row p-1">
                                     <div class="col-6"><h5 style="text-align: right;">Document & Sample Collection</h5></div>
                                     <div class="col-3" id="divDocSampleCollection">
-                                        <!-- <select class="form-control" id="cmboDocSampleCollection" name="cmboDocSampleCollection">
-                                            
-                                        </select> -->
+
                                     </div>
                                     <div class="col-3">&nbsp;</div>
                                 </div>
                                 <div class="row p-1">
                                     <div class="col-6"><h5 style="text-align: right;">Sample Finalization</h5></div>
                                     <div class="col-3" id="divSampleFinalize">
-                                        <!-- <select class="form-control" id="cmboSampleFinalize" name="cmboSampleFinalize">
-                                            
-                                        </select> -->
+
                                     </div>
                                     <div class="col-3">&nbsp;</div>
                                 </div>
                                 <div class="row p-1">
                                     <div class="col-6"><h5 style="text-align: right;">Dossier Development</h5></div>
                                     <div class="col-3" id="divDossier">
-                                        <!-- <select class="form-control" id="cmboDossier" name="cmboDossier">
-                                            
-                                        </select> -->
+
                                     </div>
                                     <div class="col-3">&nbsp;</div>
                                 </div>
                                 <div class="row p-1">
                                     <div class="col-6"><h5 style="text-align: right;">Shipment</h5></div>
                                     <div class="col-3" id="divShipment">
-                                        <!-- <select class="form-control" id="cmboShipment" name="cmboShipment">
-                                        
-                                        </select> -->
+
                                     </div>
                                     <div class="col-3">&nbsp;</div>
                                 </div>
                                 <div class="row p-1">
                                     <div class="col-6"><h5 style="text-align: right;">Submission</h5></div>
                                     <div class="col-3" id="divSubmission">
-                                        <!-- <select class="form-control" id="cmboSubmission" name="cmboSubmission">
-                                            
-                                        </select> -->
+
                                     </div>
                                     <div class="col-3">&nbsp;</div>
                                 </div>
@@ -268,18 +258,39 @@
                 var counter = jsonProductStepData[i];
                 if(counter.menu_id == 9){
                     $("#cmboDataCapture").val(counter.user_id);
+                    if(counter.progress !=null && parseFloat(counter.progress) > 0){
+                        $("#cmboDataCapture").attr("disabled",true);
+                    }
                 }else if(counter.menu_id == 10){
                     $("#cmboVendorFinalize").val(counter.user_id);
+                    if(counter.progress !=null && parseFloat(counter.progress) > 0){
+                        $("#cmboVendorFinalize").attr("disabled",true);
+                    }
                 }else if(counter.menu_id == 11){
                     $("#cmboDocSampleCollection").val(counter.user_id);
+                    if(counter.progress !=null && parseFloat(counter.progress) > 0){
+                        $("#cmboDocSampleCollection").attr("disabled",true);
+                    }
                 }else if(counter.menu_id == 12){
                     $("#cmboSampleFinalize").val(counter.user_id);
+                    if(counter.progress !=null && parseFloat(counter.progress) > 0){
+                        $("#cmboSampleFinalize").attr("disabled",true);
+                    }
                 }else if(counter.menu_id == 13){
                     $("#cmboDossier").val(counter.user_id);
+                    if(counter.progress !=null && parseFloat(counter.progress) > 0){
+                        $("#cmboDossier").attr("disabled",true);
+                    }
                 }else if(counter.menu_id == 14){
                     $("#cmboShipment").val(counter.user_id);
+                    if(counter.progress !=null && parseFloat(counter.progress) > 0){
+                        $("#cmboShipment").attr("disabled",true);
+                    }
                 }else if(counter.menu_id == 15){
                     $("#cmboSubmission").val(counter.user_id);
+                    if(counter.progress !=null && parseFloat(counter.progress) > 0){
+                        $("#cmboSubmission").attr("disabled",true);
+                    }
                 }
             }
         }
@@ -294,37 +305,37 @@
         var menuArray = new Array();
         var userArray = new Array();
 
-        if($("#cmboDataCapture").val() != ""){
+        if($("#cmboDataCapture").val() != "" && !$('#cmboDataCapture').is(':disabled')){
             productArray.push($("#product_id").val());
             menuArray.push(9);
             userArray.push($("#cmboDataCapture").val());
         }
-        if($("#cmboVendorFinalize").val() != ""){
+        if($("#cmboVendorFinalize").val() != "" && !$('#cmboVendorFinalize').is(':disabled')){
             productArray.push($("#product_id").val());
             menuArray.push(10);
             userArray.push($("#cmboVendorFinalize").val());
         }
-        if($("#cmboDocSampleCollection").val() != ""){
+        if($("#cmboDocSampleCollection").val() != "" && !$('#cmboDocSampleCollection').is(':disabled')){
             productArray.push($("#product_id").val());
             menuArray.push(11);
             userArray.push($("#cmboDocSampleCollection").val());
         }
-        if($("#cmboSampleFinalize").val() != ""){
+        if($("#cmboSampleFinalize").val() != "" && !$('#cmboSampleFinalize').is(':disabled')){
             productArray.push($("#product_id").val());
             menuArray.push(12);
             userArray.push($("#cmboSampleFinalize").val());
         }
-        if($("#cmboDossier").val() != ""){
+        if($("#cmboDossier").val() != "" && !$('#cmboDossier').is(':disabled')){
             productArray.push($("#product_id").val());
             menuArray.push(13);
             userArray.push($("#cmboDossier").val());
         }
-        if($("#cmboShipment").val() != ""){
+        if($("#cmboShipment").val() != "" && !$('#cmboShipment').is(':disabled')){
             productArray.push($("#product_id").val());
             menuArray.push(14);
             userArray.push($("#cmboShipment").val());
         }
-        if($("#cmboSubmission").val() != ""){
+        if($("#cmboSubmission").val() != "" && !$('#cmboSubmission').is(':disabled')){
             productArray.push($("#product_id").val());
             menuArray.push(15);
             userArray.push($("#cmboSubmission").val());
@@ -344,13 +355,14 @@
     }
 
     function resetSteps() {
-        $("#cmboDataCapture").val("");
-        $("#cmboVendorFinalize").val("");
-        $("#cmboDocSampleCollection").val("");
-        $("#cmboSampleFinalize").val("");
-        $("#cmboDossier").val("");
-        $("#cmboShipment").val("");
-        $("#cmboSubmission").val("");
+        loadProductSteps();
+        // $("#cmboDataCapture").val("");
+        // $("#cmboVendorFinalize").val("");
+        // $("#cmboDocSampleCollection").val("");
+        // $("#cmboSampleFinalize").val("");
+        // $("#cmboDossier").val("");
+        // $("#cmboShipment").val("");
+        // $("#cmboSubmission").val("");
     }
 
     function openProductAssigned(){

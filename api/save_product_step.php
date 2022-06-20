@@ -83,7 +83,7 @@
         }
     }
 
-    $delete_step_sql = "DELETE FROM product_step_master WHERE product_id=".$product_id_selected." AND ent_by=".$login_id;
+    $delete_step_sql = "DELETE FROM product_step_master WHERE product_id=".$product_id_selected." AND ent_by=".$login_id." AND (progress IS NULL OR progress = 0)";
     
     if ($conn->query($delete_step_sql) !== TRUE) {
         echo "Some error occurred while assigning product steps. Please try again later.";

@@ -27,6 +27,7 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['menu_id'] = $row['menu_id'];
         $row_array['user_id'] = $row['user_id'];
+        $row_array['progress'] = $row['progress'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);  
