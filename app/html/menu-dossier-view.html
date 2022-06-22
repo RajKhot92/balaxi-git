@@ -37,7 +37,7 @@
               <div class="accordion" id="accordionExample1">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample1headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnPreRequisiteCheck">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnPreRequisiteCheck" onclick="loadPreRequisiteCheck()">
                       Pre-Requisite Check
                     </button>
                   </h2>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample1headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnCheckList">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnCheckList" onclick="loadCheckList()">
                       Check List
                     </button>
                   </h2>
@@ -70,7 +70,7 @@
               <div class="accordion" id="accordionExample2">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample2headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnDossierWriting">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnDossierWriting" onclick="loadDossierWriting()">
                       Dossier Writing
                     </button>
                   </h2>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample2headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnDossierValidation">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnDossierValidation" onclick="loadDossierValidation()">
                       Dossier Validation
                     </button>
                   </h2>
@@ -165,11 +165,11 @@
                                         "<td align=\"center\">"+counter.misc+"</td>"+
                                         "<td align=\"center\">"+counter.test_lab+"</td>"+
                                         "<td align=\"center\">"+
-                                            "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.amv+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                            "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.dpr_id+"','pre_requisite_check')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                         "</td>"+
                                         "<td>"+counter.ent_dt+"</td>"+
                                         "<td align=\"center\">"+
-                                          "<span title=\"Click here to delete this pre requisite check details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deletePreRequisiteCheck("+counter.cd_id+")\"></span>"+
+                                          "<span title=\"Click here to delete this pre requisite check details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deletePreRequisiteCheck("+counter.dpr_id+")\"></span>"+
                                         "</td>"+
                                     "</tr>";
         }
@@ -196,8 +196,6 @@
                                 preRequisiteCheckTbody+
                             "</tbody>"+
                         "</table>");
-
-    loadCheckList();
   }
 
   function getPreRequisiteCheck(){
@@ -215,7 +213,7 @@
             checkListTbody += "<tr>"+
                                         "<td align=\"center\">"+(i+1)+"</td>"+
                                         "<td align=\"center\">"+
-                                            "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.check_list+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                            "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.dc_id+"','check_list')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                         "</td>"+
                                         "<td align=\"center\">"+counter.artwork+"</td>"+
                                         "<td align=\"center\">"+counter.everything_complete+"</td>"+
@@ -245,8 +243,6 @@
                                 checkListTbody+
                             "</tbody>"+
                         "</table>");
-
-    loadDossierWriting();
   }
 
   function getCheckList(){
@@ -264,7 +260,7 @@
               dossierWritingTbody += "<tr>"+
                                           "<td align=\"center\">"+(i+1)+"</td>"+
                                           "<td align=\"center\">"+
-                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.dossier+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.dw_id+"','dossier_writing')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "</td>"+
                                           "<td align=\"center\">"+counter.everything_complete+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
@@ -292,8 +288,6 @@
                                   dossierWritingTbody+
                               "</tbody>"+
                           "</table>");
-
-      loadDossierValidation();
   }
 
   function getDossierWriting(){
@@ -311,7 +305,7 @@
                 dossierValidationTbody += "<tr>"+
                                             "<td align=\"center\">"+(i+1)+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.marker_file+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.dvm_id+"','dossier_marker')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td align=\"center\">"+counter.score+"</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
@@ -345,8 +339,34 @@
       return callAPIService("get_product_dossier_validation.php","login_id="+loginId+"&product_id="+productId+"&dvm_id=0");
     }
 
-  function openFile(URL){
-      var win = window.open();
-      win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+  function openFile(id,menu){
+    var tbl="",col="",col1="",format="";
+    switch(menu){
+      case 'pre_requisite_check':
+        tbl = "product_dossier_pre_requisite";
+        col = "amv";
+        col1 = "dpr_id";
+        format = "pdf";
+        break;
+      case 'check_list':
+        tbl = "product_dossier_check";
+        col = "check_list";
+        col1 = "dc_id";
+        format = "pdf";
+        break;
+      case 'dossier_writing':
+        tbl = "product_dossier_writing";
+        col = "dossier";
+        col1 = "dw_id";
+        format = "pdf";
+        break;
+      case 'dossier_marker':
+        tbl = "product_dossier_valid_marker";
+        col = "marker_file";
+        col1 = "dvm_id";
+        format = "pdf";
+        break;
+    }
+    downloadFile(tbl,col,col1,id,format);
   }
 </script>

@@ -151,11 +151,11 @@
                                             "<td align=\"center\">"+counter.slot_booking+"</td>"+
                                             "<td align=\"center\">"+counter.pick_up_date+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.book_invoice+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psb_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
-                                            	"<span title=\"Click here to delete this shipment booking details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBooking("+counter.psm_id+")\"></span>"+
+                                            	"<span title=\"Click here to delete this shipment booking details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBooking("+counter.psb_id+")\"></span>"+
                                             "</td>"+
                                         "</tr>";
             }
@@ -193,10 +193,9 @@
     	return callAPIService("get_product_shipment_booking.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&psb_id=0");
     }
 
-    function openFile(URL){
-        var win = window.open();
-        win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
-    }
+    function openFile(id){
+        downloadFile('product_shipment_booking','book_invoice','psb_id',id,"pdf");
+    }    
 
     function saveShipmentBooking(){
     	

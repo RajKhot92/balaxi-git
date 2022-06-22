@@ -30,6 +30,24 @@ $(document).ready(function(){
 	loadUserMenus();
 });
 
+// function showLoader(){
+//     $("#loader").show();
+//     $("#mainContainer").prop("disabled","disabled");
+//     //alert("Loading...");
+// }
+
+// function hideLoader(){
+//     $("#loader").hide();
+//     $("#mainContainer").show();
+//     //alert("Hide loading...");
+// }
+
+function popupwindow(url, title, target, w, h) {
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    return window.open(url, title, target, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
 function loadUserMenus() {
 	let firstPageToLoad = "";
 	let firstMenuIdToLoad = "";
@@ -131,6 +149,17 @@ function loadPageContent(menuId,menuLink) {
 	}
 }
 
+function loadPageContentFromDashboard(menuId,menuLink) {
+	if(menuLink === "signout.html"){
+		window.location.href = "../../app/index.html";
+	}else{
+		$('.sidebar-link').removeClass('active-menu');
+		// console.log('.sidebar-link #'+menuId);
+		$('#'+menuId+'.sidebar-link').addClass('active-menu');
+		$("#pageContent").load(menuLink);
+	}
+}
+
 function loadPageContentFromBackButton(menuId,menuLink){
 	if(menuLink === "signout.html"){
 		window.location.href = "../../app/index.html";
@@ -144,6 +173,78 @@ function loadPageContentFromBackButton(menuId,menuLink){
 	}
 }
 
+function loadPageContentFromBackButtonDashboard(menuId,menuLink){
+	if(menuLink === "signout.html"){
+		window.location.href = "../../app/index.html";
+	}else{
+		$('.sidebar-link').removeClass('active-menu');
+		// console.log('.sidebar-link #'+menuId);
+		$('#'+menuId+'.sidebar-link').addClass('active-menu');
+		$("#pageContent").load(menuLink);
+
+		sessionStorage.setItem("formFlag", 2);
+	}
+}
+
 function loadSubPageContent(menuLink) {
 	$("#pageContent").load(menuLink);
+}
+
+function downloadFile(tbl,col,col1,val,format) {
+    var queryString = "uploaded-file.html?tbl="+tbl+"&col="+col+"&col1="+col1+"&val="+val+"&format="+format;
+    popupwindow(queryString, "Report", "_blank", 1000, 700);
+}
+
+function loadUploadedFile(tbl,col,col1,val,format) {
+	let fileResult = getUploadedFile(tbl,col,col1,val);
+    // console.log(fileResult);
+    if(fileResult == "Invalid"){
+		alert("No certificate uploaded by client yet.");
+    }else{
+    	jsonFileData = JSON.parse(fileResult);
+    	if(jsonFileData.length > 0){
+            for(i=0; i<jsonFileData.length; i++){
+                var counter = jsonFileData[i];
+                var report = "";
+                if(format == "pdf"){
+                	report = "<object data=\"data:application/pdf;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" type=\"application/pdf\"></object>";
+                }else if(format == "jpg"){
+                	report = "<img src=\"data:application/jpg;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" />";
+                	//Nothing
+                }
+                $("#fileContent").html(report);
+            }
+        }
+    }
+    
+
+    // showLoader();
+    // $.ajax({
+    //     url: serverURL+"getReportContent.php",
+    //     data: "userId="+userId,
+    //     type: "GET",
+    //     success: function(result){
+    //         hideLoader();
+    //         //console.log(result);
+    //         if(result == "Invalid"){
+    //             alert("No certificate uploaded by client yet.");
+    //         }else{
+    //             var jsonData = JSON.parse(result);
+    //             if(jsonData.length > 0){
+    //                 for(i=0; i<jsonData.length; i++){
+    //                     var counter = jsonData[i];
+    //                     var report = "<object data=\"data:application/pdf;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" type=\"application/pdf\"></object>";
+    //                     $("#reportContent").html(report);
+    //                 }
+    //             }
+    //         }
+    //     },error:function(){
+    //         console.log("error");
+    //         hideLoader();
+    //     }
+    // });
+}
+
+function getUploadedFile(tbl,col,col1,val) {
+	return callAPIService("get_uploaded_file.php","tbl="+tbl+"&col="+col+"&col1="+col1+"&val="+val);
 }

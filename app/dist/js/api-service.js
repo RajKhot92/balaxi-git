@@ -11,8 +11,22 @@ const EXECUTIVE_ROLE = 4;
 const serverURL = "http://localhost/balaxi/balaxi-git/api/";
 // const serverURL = "https://klugerkopf.com/balaxi/api/";
 
+function showLoader(){
+    $("#loader").show();
+    $("#mainContainer").prop("disabled","disabled");
+    // alert("Loading...");
+}
+
+function hideLoader(){
+    $("#loader").hide();
+    $("#mainContainer").show();
+    // alert("Hide loading...");
+}
+
 function callAPIService(url, formData){
+    showLoader();
 	let response = null;
+    // $("body").addClass("loading");
     $.ajax({
         url: serverURL+url,
         type: "GET",
@@ -21,15 +35,18 @@ function callAPIService(url, formData){
         data: formData,
         success: function(result) {
             response = result;
+            hideLoader();
         },
         error: function() {
             response = "API service is not responding. Please try again.";
+            hideLoader();
         }
     });
     return response;
 }
 
 function callAPIServicePost(url, formData){
+    showLoader();
     let response = null;
     $.ajax({
         url: serverURL+url,
@@ -42,9 +59,11 @@ function callAPIServicePost(url, formData){
         data: formData,
         success: function(result) {
             response = result;
+            hideLoader();
         },
         error: function() {
             response = "API service is not responding. Please try again.";
+            hideLoader();
         }
     });
     return response;

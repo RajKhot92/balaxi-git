@@ -37,7 +37,7 @@
               <div class="accordion" id="accordionExample1">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample1headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnQuestionnaire">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnQuestionnaire" onclick="loadQuestionnaire()">
                       Questionnaire
                     </button>
                   </h2>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample1headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnArtworks">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnArtworks" onclick="loadArtworks()">
                       Artworks
                     </button>
                   </h2>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample1headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" id="btnCommercialDocument">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" id="btnCommercialDocument" onclick="loadCommercialDocument()">
                       Commercial Document
                     </button>
                   </h2>
@@ -84,7 +84,7 @@
               <div class="accordion" id="accordionExample2">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample2headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnFinalizationArtwork">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnFinalizationArtwork" onclick="loadFinalizationArtwork()">
                       Finalization Artwork
                     </button>
                   </h2>
@@ -163,7 +163,7 @@
                                           "<td align=\"center\">"+counter.submitted_dt+"</td>"+
                                           "<td align=\"center\">"+counter.received_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.artwork+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.aq_id+"','questionnaire','')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
@@ -192,7 +192,6 @@
                                   questionnaireTbody+
                               "</tbody>"+
                           "</table>");
-    loadArtworks();
   }
 
   function getQuestionnaire(){
@@ -215,10 +214,10 @@
                                           "<td align=\"center\">"+counter.revision_no+"</td>"+
                                           "<td align=\"center\">"+counter.revision_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.artwork_file+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.art_id+"','artwork','artwork_file')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "</td>"+
                                           "<td align=\"center\">"+
-                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.commercial_file+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.art_id+"','artwork','commercial_file')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
@@ -250,7 +249,6 @@
                                   artworksTbody+
                               "</tbody>"+
                           "</table>");
-    loadCommercialDocument();
   }
 
   function getArtworks(){
@@ -269,10 +267,10 @@
                                           "<td align=\"center\">"+(i+1)+"</td>"+
                                           "<td align=\"center\">"+counter.product_code+"</td>"+
                                           "<td align=\"center\">"+
-                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.doc_1+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.cd_id+"','commercial_doc','doc_1')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "</td>"+
                                           "<td align=\"center\">"+
-                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.doc_2+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.cd_id+"','commercial_doc','doc_2')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
@@ -300,7 +298,6 @@
                                   commercialDocumentTbody+
                               "</tbody>"+
                           "</table>");
-    loadFinalizationArtwork();
   }
 
   function getCommercialDocument(){
@@ -357,5 +354,30 @@
   function openFile(URL){
       var win = window.open();
       win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+  }
+
+  function openFile(id,menu,colnm){
+    var tbl="",col="",col1="",format="";
+    switch(menu){
+      case 'questionnaire':
+        tbl = "product_artwork_question";
+        col = "artwork";
+        col1 = "aq_id";
+        format = "pdf";
+        break;
+      case 'artwork':
+        tbl = "product_artwork";
+        col = colnm;
+        col1 = "art_id";
+        format = "pdf";
+        break;
+      case 'commercial_doc':
+        tbl = "product_commercial_doc";
+        col = colnm;
+        col1 = "cd_id";
+        format = "pdf";
+        break;
+    }
+    downloadFile(tbl,col,col1,id,format);
   }
 </script>

@@ -115,7 +115,7 @@
                                             "<td align=\"center\">"+(i+1)+"</td>"+
                                             "<td align=\"center\">"+counter.handed_translator+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.dossier_local+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ps_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
@@ -155,9 +155,8 @@
     	return callAPIService("get_product_translation.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&ps_id=0");
     }
 
-    function openFile(URL){
-        var win = window.open();
-        win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+    function openFile(id){
+        downloadFile('product_translation','dossier_local','ps_id',id,"pdf");
     }
 
     function saveTranslation(){

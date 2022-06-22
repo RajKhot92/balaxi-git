@@ -121,10 +121,10 @@
                                             "<td align=\"center\">"+(i+1)+"</td>"+
                                             "<td align=\"center\">"+counter.product_code+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.doc_1+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile1('"+counter.cd_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.doc_2+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile2('"+counter.cd_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
@@ -187,9 +187,12 @@
         return callAPIService("get_product_artwork_question.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&aq_id=0");
     }
 
-    function openFile(URL){
-        var win = window.open();
-        win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+    function openFile1(id){
+        downloadFile('product_commercial_doc','doc_1','cd_id',id,"pdf");
+    }
+
+    function openFile2(id){
+        downloadFile('product_commercial_doc','doc_2','cd_id',id,"pdf");
     }
 
     function saveCommercialDocument(){

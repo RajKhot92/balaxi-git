@@ -109,6 +109,10 @@
     });
 
     function back() {
-        loadPageContentFromBackButton(9,'menu-data-capture.html');
+        if(sessionStorage.getItem("formFlag") == 2){
+            loadPageContentFromBackButtonDashboard(9,'menu-data-capture.html');
+        }else{
+            loadPageContentFromBackButton(9,'menu-data-capture.html');
+        }
     }
 </script>

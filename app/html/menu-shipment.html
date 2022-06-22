@@ -112,7 +112,7 @@
         if(elementsArray.length > 0){
             currentMenuId = elementsArray[0].id;
         }
-        // alert(sessionStorage.getItem("formFlag"));
+        
         if(sessionStorage.getItem("formFlag") == 1){
             sessionStorage.clear();
             sessionStorage.setItem("formFlag", 1);
@@ -204,7 +204,11 @@
     }
 
     function back() {
-        $(".choose-product").slideDown();
-        $(".selected-product").hide();
+        if(sessionStorage.getItem("formFlag") == 2){
+            loadPageContent(1, 'dashboard.html');
+        }else{
+            $(".choose-product").slideDown();
+            $(".selected-product").hide();
+        }
     }
 </script>

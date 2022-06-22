@@ -135,7 +135,7 @@
                                             "<td align=\"center\">"+counter.batch_details+"</td>"+
                                             "<td align=\"center\">"+counter.validity+"</td>"+
                                             "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.certificate+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ca_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
@@ -176,9 +176,8 @@
     	return callAPIService("get_product_certificate_analysis.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&ca_id=0");
     }
 
-    function openFile(URL){
-        var win = window.open();
-        win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
+    function openFile(id){
+        downloadFile('product_certificate_analysis','certificate','ca_id',id,"pdf");
     }
 
     function saveCertificateAnalysis(){

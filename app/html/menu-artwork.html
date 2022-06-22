@@ -95,6 +95,10 @@
     });
 
     function back() {
-        loadPageContentFromBackButton(12,'menu-sample-finalization.html');
+        if(sessionStorage.getItem("formFlag") == 2){
+            loadPageContentFromBackButtonDashboard(12,'menu-sample-finalization.html');
+        }else{
+            loadPageContentFromBackButton(12,'menu-sample-finalization.html');
+        }
     }
 </script>

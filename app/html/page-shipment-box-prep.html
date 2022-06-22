@@ -200,22 +200,22 @@
                                     "<td align=\"center\">"+(i+1)+"</td>"+
                                     "<td align=\"center\">"+counter.box_list_date+"</td>"+
                                     "<td align=\"center\">"+
-                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.box_list_file+"','box_list_file')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psbp_id+"','box_list_file')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
                                     "</td>"+
                                     "<td align=\"center\">"+
-                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.box+"','box')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psbp_id+"','box')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
                                     "</td>"+
                                     "<td align=\"center\">"+
-                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.finish_product+"','finish_product')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psbp_id+"','finish_product')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
                                     "</td>"+
                                     "<td align=\"center\">"+
-                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.work_standard+"','working_standard')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psbp_id+"','work_standard')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
                                     "</td>"+
                                     "<td align=\"center\">"+
-                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.document+"','documents')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psbp_id+"','document')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
                                     "</td>"+
                                     "<td align=\"center\">"+
-                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.box_list_box+"','box_list_with_box')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psbp_id+"','box_list_box')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
                                     "</td>"+
                                     "<td>"+counter.ent_dt+"</td>"+
                                     "<td align=\"center\">"+
@@ -260,11 +260,8 @@
     	return callAPIService("get_product_shipment_box_prep.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&psbp_id=0");
     }
 
-    function openFile(URL,fileName){
-        const a = document.createElement('a');
-        a.setAttribute('download', fileName);
-        a.setAttribute('href', "data:image/png;base64,"+URL);
-        a.click();
+    function openFile(id,col){
+        downloadFile('product_shipment_box_prep',col,'psbp_id',id,"jpg");
     }
 
     function saveShipmentBoxPreparation(){

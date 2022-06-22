@@ -220,7 +220,11 @@
     }
 
     function back() {
-        $(".choose-product").slideDown();
-        $(".selected-product").hide();
+        if(sessionStorage.getItem("formFlag") == 2){
+            loadPageContent(1, 'dashboard.html');
+        }else{
+            $(".choose-product").slideDown();
+            $(".selected-product").hide();
+        }
     }
 </script>
