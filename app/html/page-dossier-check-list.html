@@ -38,6 +38,7 @@
                                         class="form-control"
                                         id="check_list"
                                         name="check_list"
+                                        accept="application/pdf"
                                         placeholder="Enter check_list"
                                     />
                                 </div>
@@ -201,6 +202,11 @@
 
         // Create a FormData object.
         var formData = new FormData();
+
+        let fileResp = fileValidation('check_list','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('check_list');
         var files = fileSelect.files;

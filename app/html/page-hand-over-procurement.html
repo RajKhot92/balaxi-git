@@ -162,6 +162,11 @@
     		return false;
     	}
 
+        let fileResp = fileValidation('fsc_pp_draft','pdf');
+        if(!fileResp){
+            return false;
+        }
+
         var fileSelect = document.getElementById('fsc_pp_draft');
 
         // Get the files from the input

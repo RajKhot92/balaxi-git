@@ -76,6 +76,7 @@
                                         class="form-control"
                                         id="manual"
                                         name="manual"
+                                        accept="application/pdf"
                                         placeholder="Enter manual"
                                     />
                                 </div>
@@ -207,6 +208,12 @@
         var formData = new FormData();
         
         if($("#manual").val() != ""){
+
+            let fileResp = fileValidation('manual','pdf');
+            if(!fileResp){
+                return false;
+            }
+
             var fileSelect = document.getElementById('manual');
             var files = fileSelect.files;
             var file = files[0];

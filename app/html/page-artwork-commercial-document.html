@@ -51,6 +51,7 @@
                                         class="form-control"
                                         id="doc_1"
                                         name="doc_1"
+                                        accept="application/pdf"
                                         placeholder="Enter commercial document 1"
                                     />
                                 </div>
@@ -60,6 +61,7 @@
                                         class="form-control"
                                         id="doc_2"
                                         name="doc_2"
+                                        accept="application/pdf"
                                         placeholder="Enter commercial document 2"
                                     />
                                 </div>
@@ -218,10 +220,20 @@
         // Create a FormData object.
         var formData = new FormData();
 
+        let fileResp = fileValidation('doc_1','pdf');
+        if(!fileResp){
+            return false;
+        }
+
         var fileSelect = document.getElementById('doc_1');
         var files = fileSelect.files;
         var file = files[0];
         formData.append('doc_1', file, file.name);
+
+        fileResp = fileValidation('doc_2','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('doc_2');
         var files = fileSelect.files;

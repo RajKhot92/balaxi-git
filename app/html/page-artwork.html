@@ -103,6 +103,7 @@
                                         class="form-control"
                                         id="artwork_file"
                                         name="artwork"
+                                        accept="application/pdf"
                                         placeholder="Enter artwork file"
                                     />
                                 </div>
@@ -331,10 +332,20 @@
         // Create a FormData object.
         var formData = new FormData();
 
+        let fileResp = fileValidation('artwork_file','pdf');
+        if(!fileResp){
+            return false;
+        }
+
         var fileSelect = document.getElementById('artwork_file');
         var files = fileSelect.files;
         var file = files[0];
         formData.append('artwork_file', file, file.name);
+
+        fileResp = fileValidation('commercial_file','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('commercial_file');
         var files = fileSelect.files;

@@ -41,7 +41,6 @@
         $row_array['psd_id'] = $row['psd_id'];
         $row_array['product_id'] = $row['product_id'];
         $row_array['dispatch_dt'] = $row['dispatch_dt'];
-        $row_array['dispatch_doc'] = base64_encode($row['dispatch_doc']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

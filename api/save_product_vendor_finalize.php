@@ -13,7 +13,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $vendor_name === "" || $closing_date === "" || $remarks === ""){
+    if($login_id === "" || $product_id === "" || $vendor_name === "" || $closing_date === ""){
         echo "Kindly provide valid input.";
         exit();
     }

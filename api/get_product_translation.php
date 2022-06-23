@@ -41,7 +41,6 @@
         $row_array['ps_id'] = $row['ps_id'];
         $row_array['product_id'] = $row['product_id'];
         $row_array['handed_translator'] = $row['handed_translator'];
-        $row_array['dossier_local'] = base64_encode($row['dossier_local']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

@@ -46,7 +46,6 @@
         $row_array['submitted_dt'] = $row['submitted_dt'];
         $row_array['received_dt'] = $row['received_dt'];
         $row_array['result'] = $row['result'];
-        $row_array['lab_report'] = base64_encode($row['lab_report']);
         $row_array['remarks'] = $row['remarks'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        

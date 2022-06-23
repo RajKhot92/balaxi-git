@@ -44,8 +44,6 @@
         $row_array['submission_slip_no'] = $row['submission_slip_no'];
         $row_array['registration_complete'] = $row['registration_complete'];
         $row_array['registration_certificate'] = $row['registration_certificate'];
-        $row_array['submission_doc'] = base64_encode($row['submission_doc']);
-        $row_array['certificate_file'] = base64_encode($row['certificate_file']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];
         array_push($json_response,$row_array);

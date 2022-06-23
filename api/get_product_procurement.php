@@ -41,7 +41,6 @@
         $row_array['procure_id'] = $row['procure_id'];
         $row_array['product_id'] = $row['product_id'];
         $row_array['research_complete'] = $row['research_complete'];
-        $row_array['fsc_pp_draft'] = base64_encode($row['fsc_pp_draft']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

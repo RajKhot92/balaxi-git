@@ -42,7 +42,7 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['research_complete'] = $row['research_complete'];
         $row_array['conducted_on'] = $row['conducted_on'] == null ? "" : $row['conducted_on'];
-        $row_array['research_report'] = base64_encode($row['research_report']);
+        $row_array['research_report'] = $row['research_report'] == null ? "" : "research_report";
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

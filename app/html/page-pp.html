@@ -123,6 +123,7 @@
                                         class="form-control"
                                         id="pp"
                                         name="pp"
+                                        accept="application/pdf"
                                         placeholder="Enter pp"
                                     />
                                 </div>
@@ -254,6 +255,12 @@
         var formData = new FormData();
 
         if($("#pp").val() != ""){
+
+            let fileResp = fileValidation('pp','pdf');
+            if(!fileResp){
+                return false;
+            }
+            
             var fileSelect = document.getElementById('pp');
             var files = fileSelect.files;
             var file = files[0];

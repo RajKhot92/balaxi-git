@@ -26,7 +26,9 @@
     }
 
     /*  Getting nomenclature    */
-    $get_vendor_finalize_sql = "SELECT * FROM product_vendor_finalization WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_vendor_finalize_sql = "SELECT *,
+                            (SELECT IFNULL(MAX(fsc_id),0) FROM `product_fsc` where product_id=".$product_id." AND ent_by='".$login_id."') fsc
+                             FROM product_vendor_finalization WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
     if($vf_id != 0){
         $get_vendor_finalize_sql .= " AND vf_id = ".$vf_id;
@@ -43,6 +45,7 @@
         $row_array['vendor_name'] = $row['vendor_name'];
         $row_array['closing_date'] = $row['closing_date'];
         $row_array['remarks'] = $row['remarks'];
+        $row_array['fsc'] = $row['fsc'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

@@ -42,7 +42,7 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['composition'] = $row['composition'];
         $row_array['avg_weight'] = $row['avg_weight'];
-        $row_array['formula'] = $row['formula'] == null ? "" : base64_encode($row['formula']);
+        $row_array['formula'] = $row['formula'] == null ? "" : "formula";
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

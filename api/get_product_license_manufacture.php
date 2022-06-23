@@ -43,7 +43,7 @@
         $row_array['manufacture_name'] = $row['manufacture_name'];
         $row_array['validity'] = $row['validity'] == null ? "" : $row['validity'];
         $row_array['received_date'] = $row['received_date'] == null ? "" : $row['received_date'];
-        $row_array['license'] = $row['license'] == null ? "" : base64_encode($row['license']);
+        $row_array['license'] = $row['license'] == null ? "" : "license";
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

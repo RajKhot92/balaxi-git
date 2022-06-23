@@ -70,6 +70,7 @@
                                         class="form-control"
                                         id="cma"
                                         name="cma"
+                                        accept="application/pdf"
                                         placeholder="Enter cma"
                                     />
                                 </div>
@@ -207,6 +208,11 @@
 
         // Create a FormData object.
         var formData = new FormData();
+
+        let fileResp = fileValidation('cma','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('cma');
         var files = fileSelect.files;

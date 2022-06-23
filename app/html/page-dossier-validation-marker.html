@@ -38,6 +38,7 @@
                                         class="form-control"
                                         id="marker_file"
                                         name="marker_file"
+                                        accept="application/pdf"
                                         placeholder="Enter marker file"
                                     />
                                 </div>
@@ -169,6 +170,11 @@
 
         // Create a FormData object.
         var formData = new FormData();
+
+        let fileResp = fileValidation('marker_file','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('marker_file');
         var files = fileSelect.files;

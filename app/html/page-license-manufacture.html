@@ -91,6 +91,7 @@
                                         class="form-control"
                                         id="license"
                                         name="license"
+                                        accept="application/pdf"
                                         placeholder="Enter license"
                                     />
                                 </div>
@@ -218,6 +219,12 @@
         var formData = new FormData();
 
         if($("#license").val() != ""){
+
+            let fileResp = fileValidation('license','pdf');
+            if(!fileResp){
+                return false;
+            }
+            
             var fileSelect = document.getElementById('license');
             var files = fileSelect.files;
             var file = files[0];

@@ -53,6 +53,7 @@
                                         class="form-control"
                                         id="dossier_local"
                                         name="dossier_local"
+                                        accept="application/pdf"
                                         placeholder="Enter dossier local"
                                     />
                                 </div>
@@ -170,6 +171,11 @@
         if($("#dossier_local").val() == ""){
             alert("Please upload dossier local document.");
             $("#dossier_local").focus();
+            return false;
+        }
+
+        let fileResp = fileValidation('dossier_local','pdf');
+        if(!fileResp){
             return false;
         }
 

@@ -42,7 +42,6 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['validity'] = $row['validity'];
         $row_array['received_date'] = $row['received_date'];
-        $row_array['gmp'] = base64_encode($row['gmp']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

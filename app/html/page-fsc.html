@@ -85,6 +85,7 @@
                                         class="form-control"
                                         id="fsc"
                                         name="fsc"
+                                        accept="application/pdf"
                                         placeholder="Enter fsc"
                                     />
                                 </div>
@@ -227,6 +228,11 @@
 
         // Create a FormData object.
         var formData = new FormData();
+
+        let fileResp = fileValidation('fsc','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('fsc');
         var files = fileSelect.files;

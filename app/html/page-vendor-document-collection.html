@@ -250,7 +250,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title text-center">View Added Document Collection</h4>
-                        <div class="card-body" id="divDocumentCollection" class="table-responsive">
+                        <div class="card-body table-responsive" id="divDocumentCollection">
                         
                         </div>
                     </div>
@@ -412,12 +412,6 @@
             return false;
         }
 
-        if($("#gmp_remark").val() == ""){
-            alert("Please enter gmp remark.");
-            $("#gmp_remark").focus();
-            return false;
-        }
-
         if($("#fsc_copp_received_dt").val() == ""){
             alert("Please enter fsc copp received date.");
             $("#fsc_copp_received_dt").focus();
@@ -430,12 +424,6 @@
             return false;
         }
 
-        if($("#fsc_copp_remark").val() == ""){
-            alert("Please enter fsc copp remark.");
-            $("#fsc_copp_remark").focus();
-            return false;
-        }
-
         if($("#cma_received_dt").val() == ""){
             alert("Please enter cma received date.");
             $("#cma_received_dt").focus();
@@ -445,12 +433,6 @@
         if($("#cma_finalize_dt").val() == ""){
             alert("Please enter cma finalization date.");
             $("#cma_finalize_dt").focus();
-            return false;
-        }
-
-        if($("#cma_remark").val() == ""){
-            alert("Please enter cma remark.");
-            $("#cma_remark").focus();
             return false;
         }
 

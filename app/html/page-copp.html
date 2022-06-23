@@ -70,6 +70,7 @@
                                         class="form-control"
                                         id="copp"
                                         name="copp"
+                                        accept="application/pdf"
                                         placeholder="Enter copp"
                                     />
                                 </div>
@@ -207,6 +208,11 @@
 
         // Create a FormData object.
         var formData = new FormData();
+
+        let fileResp = fileValidation('copp','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('copp');
         var files = fileSelect.files;

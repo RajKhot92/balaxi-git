@@ -82,6 +82,7 @@
                                         class="form-control"
                                         id="book_invoice"
                                         name="book_invoice"
+                                        accept="application/pdf"
                                         placeholder="Enter booking invoice"
                                     />
                                 </div>
@@ -214,6 +215,11 @@
         if($("#book_invoice").val() == ""){
             alert("Please upload booking invoice file.");
             $("#book_invoice").focus();
+            return false;
+        }
+
+        let fileResp = fileValidation('book_invoice','pdf');
+        if(!fileResp){
             return false;
         }
 

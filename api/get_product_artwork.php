@@ -51,8 +51,6 @@
         $row_array['package_details'] = $row['package_details'];
         $row_array['revision_no'] = $row['revision_no'];
         $row_array['revision_dt'] = $row['revision_dt'];
-        $row_array['artwork_file'] = base64_encode($row['artwork_file']);
-        $row_array['commercial_file'] = base64_encode($row['commercial_file']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

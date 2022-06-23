@@ -41,7 +41,6 @@
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
         $row_array['dvm_id'] = $row['dvm_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['marker_file'] = base64_encode($row['marker_file']);
         $row_array['score'] = $row['score'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        

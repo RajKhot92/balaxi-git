@@ -70,6 +70,7 @@
                                         class="form-control"
                                         id="certificate"
                                         name="certificate"
+                                        accept="application/pdf"
                                         placeholder="Enter certificate"
                                     />
                                 </div>
@@ -202,6 +203,11 @@
 
         // Create a FormData object.
         var formData = new FormData();
+
+        let fileResp = fileValidation('certificate','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('certificate');
         var files = fileSelect.files;

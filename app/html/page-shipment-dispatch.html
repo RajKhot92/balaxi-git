@@ -53,6 +53,7 @@
                                         class="form-control"
                                         id="dispatch_doc"
                                         name="dispatch_doc"
+                                        accept="application/pdf"
                                         placeholder="Enter dispatch document"
                                     />
                                 </div>
@@ -170,6 +171,11 @@
         if($("#dispatch_doc").val() == ""){
             alert("Please upload dispatch document.");
             $("#dispatch_doc").focus();
+            return false;
+        }
+
+        let fileResp = fileValidation('dispatch_doc','pdf');
+        if(!fileResp){
             return false;
         }
 

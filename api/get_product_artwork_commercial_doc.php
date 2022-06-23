@@ -42,8 +42,6 @@
         $row_array['cd_id'] = $row['cd_id'];
         $row_array['product_id'] = $row['product_id'];
         $row_array['product_code'] = $row['product_code'];
-        $row_array['doc_1'] = base64_encode($row['doc_1']);
-        $row_array['doc_2'] = base64_encode($row['doc_2']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

@@ -41,7 +41,6 @@
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
         $row_array['dw_id'] = $row['dw_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['dossier'] = base64_encode($row['dossier']);
         $row_array['everything_complete'] = $row['everything_complete'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        

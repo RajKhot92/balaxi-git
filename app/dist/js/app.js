@@ -216,35 +216,63 @@ function loadUploadedFile(tbl,col,col1,val,format) {
             }
         }
     }
-    
-
-    // showLoader();
-    // $.ajax({
-    //     url: serverURL+"getReportContent.php",
-    //     data: "userId="+userId,
-    //     type: "GET",
-    //     success: function(result){
-    //         hideLoader();
-    //         //console.log(result);
-    //         if(result == "Invalid"){
-    //             alert("No certificate uploaded by client yet.");
-    //         }else{
-    //             var jsonData = JSON.parse(result);
-    //             if(jsonData.length > 0){
-    //                 for(i=0; i<jsonData.length; i++){
-    //                     var counter = jsonData[i];
-    //                     var report = "<object data=\"data:application/pdf;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" type=\"application/pdf\"></object>";
-    //                     $("#reportContent").html(report);
-    //                 }
-    //             }
-    //         }
-    //     },error:function(){
-    //         console.log("error");
-    //         hideLoader();
-    //     }
-    // });
 }
 
 function getUploadedFile(tbl,col,col1,val) {
 	return callAPIService("get_uploaded_file.php","tbl="+tbl+"&col="+col+"&col1="+col1+"&val="+val);
+}
+
+function fileValidation(fileInput,format){
+	if (!window.FileReader) { // This is VERY unlikely, browser support is near-universal
+        alert("The file API isn't supported on this browser yet.");
+        return false;
+    }
+
+    var input = document.getElementById(fileInput);
+    if (!input.files) { // This is VERY unlikely, browser support is near-universal
+        alert("This browser doesn't seem to support the `files` property of file inputs.");
+        return false;
+    } else if (!input.files[0]) {
+        alert("Please upload file.");
+        return false;
+    } else {
+        var file = input.files[0];
+        if(format == "pdf"){
+        	if(fileInput == "dossier"){
+        		if(file.size >= 20971520){
+	        		alert("Sorry! You can upload a file which is less than 20 MB in size.");
+		        	$("#"+fileInput).focus();
+		        	return false;
+		        }
+        	}else{
+        		if(file.size >= 5242880){
+	        		alert("Sorry! You can upload a file which is less than 5 MB in size.");
+		        	$("#"+fileInput).focus();
+		        	return false;
+		        }
+        	}
+        	if(!file.name.toUpperCase().endsWith(format.toUpperCase())){
+	        	alert("Kindly upload a "+format+" file.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
+        }else{
+        	if(file.size >= 3145728){
+	        	alert("Sorry! You can upload a file which is less than 3 MB in size.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
+        	if(!(file.name.toUpperCase().endsWith("PNG")
+        		|| file.name.toUpperCase().endsWith("JPG")
+        		|| file.name.toUpperCase().endsWith("JPEG")
+        		|| file.name.toUpperCase().endsWith("BMP")
+        		|| file.name.toUpperCase().endsWith("GIF")
+        		|| file.name.toUpperCase().endsWith("SVG")) ){
+	        	alert("Kindly upload a image file.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
+        }
+    }
+    return true;
 }

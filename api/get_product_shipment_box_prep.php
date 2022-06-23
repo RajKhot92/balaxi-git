@@ -41,12 +41,6 @@
         $row_array['psbp_id'] = $row['psbp_id'];
         $row_array['product_id'] = $row['product_id'];
         $row_array['box_list_date'] = $row['box_list_date'];
-        $row_array['box_list_file'] = base64_encode($row['box_list_file']);
-        $row_array['box'] = base64_encode($row['box']);
-        $row_array['finish_product'] = base64_encode($row['finish_product']);
-        $row_array['work_standard'] = base64_encode($row['work_standard']);
-        $row_array['document'] = base64_encode($row['document']);
-        $row_array['box_list_box'] = base64_encode($row['box_list_box']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

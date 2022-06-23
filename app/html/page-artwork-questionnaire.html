@@ -85,6 +85,7 @@
                                         class="form-control"
                                         id="artwork"
                                         name="artwork"
+                                        accept="application/pdf"
                                         placeholder="Enter document"
                                     />
                                 </div>
@@ -223,6 +224,11 @@
         if($("#artwork").val() == ""){
             alert("Please upload document.");
             $("#artwork").focus();
+            return false;
+        }
+
+        let fileResp = fileValidation('artwork','pdf');
+        if(!fileResp){
             return false;
         }
 

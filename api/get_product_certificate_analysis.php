@@ -42,7 +42,6 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['batch_details'] = $row['batch_details'];
         $row_array['validity'] = $row['validity'];
-        $row_array['certificate'] = base64_encode($row['certificate']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

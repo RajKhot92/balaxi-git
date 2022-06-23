@@ -43,7 +43,6 @@
         $row_array['composition'] = $row['composition'];
         $row_array['validity'] = $row['validity'];
         $row_array['received_date'] = $row['received_date'];
-        $row_array['fsc'] = base64_encode($row['fsc']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

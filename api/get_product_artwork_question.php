@@ -43,7 +43,6 @@
         $row_array['product_code'] = $row['product_code'];
         $row_array['submitted_dt'] = $row['submitted_dt'];
         $row_array['received_dt'] = $row['received_dt'];
-        $row_array['artwork'] = base64_encode($row['artwork']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

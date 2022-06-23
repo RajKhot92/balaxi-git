@@ -53,10 +53,7 @@
     </style> -->
   </head>
 
-  <body id="mainContainer">
-    <div id="loader" style="display: none; margin: auto; top: 50%; left: 50%; position: absolute;">
-      <img src="../assets/images/loader.gif" width="200" height="200">
-    </div>
+  <body>
     <!-- <div class="overlay"></div> -->
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -227,8 +224,13 @@
       <!-- ============================================================== -->
       <!-- Page wrapper  -->
       <!-- ============================================================== -->
-      <div id="pageContent">
+      <div class="mainLoader" style="display: none; margin: auto; top: 30%; left: 50%; position: absolute; z-index: 999;">
+        <img src="../assets/images/loader.gif" width="200" height="200">
+      </div>
+      <div class="mainContainer">
+        <div id="pageContent">
         
+        </div>
       </div>
       <!-- ============================================================== -->
       <!-- End Page wrapper  -->
@@ -245,8 +247,10 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="../dist/js/api-service.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
+    <script type="text/javascript"  src="../dist/js/app.js"></script>
+    <script type="text/javascript" src="../dist/js/api-service.js"></script>
+
     <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
     <!-- <script src="../assets/extra-libs/sparkline/sparkline.js"></script> -->
@@ -254,10 +258,10 @@
     <script src="../dist/js/waves.js"></script>
     <!--Custom JavaScript -->
     <script src="../dist/js/custom.min.js"></script>
-    <script src="../dist/js/app.js"></script>
     <!--Menu sidebar -->
     <script src="../dist/js/sidebarmenu.js"></script>
     <script src="../dist/js/bootstrap-datepicker.js"></script>
+    
     <!--This page JavaScript -->
     <!-- <script src="../dist/js/pages/dashboards/dashboard1.js"></script> -->
     <!-- Charts js Files -->

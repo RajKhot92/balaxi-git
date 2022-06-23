@@ -43,7 +43,6 @@
         $row_array['dhl_approval'] = $row['dhl_approval'];
         $row_array['slot_booking'] = $row['slot_booking'];
         $row_array['pick_up_date'] = $row['pick_up_date'];
-        $row_array['book_invoice'] = base64_encode($row['book_invoice']);
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

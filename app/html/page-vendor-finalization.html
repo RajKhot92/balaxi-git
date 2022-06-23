@@ -62,7 +62,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >Remarks <span style="color: red;">*</span></label
+                                  >Remarks</label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -74,8 +74,14 @@
                                         placeholder="Enter remarks"
                                     />
                                 </div>
-                                <div class="col-sm-6">
-                                    &nbsp;
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >FSC Draft</label
+                                >
+                                <div class="col-sm-4 mt-2">
+                                    <i style="cursor: pointer;" 
+                                        title="Click here to download this file" onclick="openFSCFile()" class="fas fa-file-pdf fa-lg text-danger"></i>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +118,7 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+    var fsc_id = 0;
     $(document).ready(function(){
         $("#login_id").val(localStorage.getItem("balaxi_user_id"));
         $("#product_id").val(sessionStorage.getItem("vendor_finalization_product_id"));
@@ -142,6 +149,7 @@
                                             	"<span title=\"Click here to delete this vendor finalization details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteVendorFinalization("+counter.vf_id+")\"></span>"+
                                             "</td>"+
                                         "</tr>";
+                fsc_id = counter.fsc;
             }
         }else{
             vendorFinalizationTbody += "<tr>"+
@@ -190,12 +198,6 @@
             return false;
         }
 
-        if($("#remarks").val() == ""){
-            alert("Please enter remarks.");
-            $("#remarks").focus();
-            return false;
-        }
-
         let vendorFinalizationSaveResult = saveVendorFinalizationData($("#frmVendorFinalization").serialize());
     	if(vendorFinalizationSaveResult != "1" && vendorFinalizationSaveResult != 1){
     		alert(vendorFinalizationSaveResult);
@@ -212,6 +214,15 @@
 
     function resetVendorFinalization(){
     	document.getElementById("frmVendorFinalization").reset();
+    }
+
+    function openFSCFile(){
+        if(fsc_id == 0){
+            alert("Sorry! FSC draft for this product has not yet uploaded.");
+            return false;
+        }else{
+            downloadFile('product_fsc','fsc','fsc_id',fsc_id,"pdf");
+        }
     }
 
     function deleteVendorFinalization(mrId) {

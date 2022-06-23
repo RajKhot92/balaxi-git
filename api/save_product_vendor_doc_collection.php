@@ -25,7 +25,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $gmp_received_dt === "" || $gmp_finalize_dt === "" || $gmp_remark === "" || $fsc_copp_received_dt === "" || $fsc_copp_finalize_dt === "" || $fsc_copp_remark === "" || $cma_received_dt === "" || $cma_finalize_dt === "" || $cma_remark === ""){
+    if($login_id === "" || $product_id === "" || $gmp_received_dt === "" || $gmp_finalize_dt === "" || $fsc_copp_received_dt === "" || $fsc_copp_finalize_dt === "" || $cma_received_dt === "" || $cma_finalize_dt === ""){
         echo "Kindly provide valid input.";
         exit();
     }

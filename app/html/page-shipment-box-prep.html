@@ -53,6 +53,7 @@
                                         class="form-control"
                                         id="box_list_file"
                                         name="box_list_file"
+                                        accept="image/*"
                                         placeholder="Enter box list file"
                                     />
                                 </div>
@@ -75,6 +76,7 @@
                                         class="form-control"
                                         id="box"
                                         name="box"
+                                        accept="image/*"
                                         placeholder="Enter box"
                                     />
                                 </div>
@@ -89,6 +91,7 @@
                                         class="form-control"
                                         id="finish_product"
                                         name="finish_product"
+                                        accept="image/*"
                                         placeholder="Enter finish product"
                                     />
                                 </div>
@@ -105,6 +108,7 @@
                                         class="form-control"
                                         id="work_standard"
                                         name="work_standard"
+                                        accept="image/*"
                                         placeholder="Enter work standard"
                                     />
                                 </div>
@@ -119,6 +123,7 @@
                                         class="form-control"
                                         id="document"
                                         name="document"
+                                        accept="image/*"
                                         placeholder="Enter document"
                                     />
                                 </div>
@@ -135,6 +140,7 @@
                                         class="form-control"
                                         id="box_list_box"
                                         name="box_list_box"
+                                        accept="image/*"
                                         placeholder="Enter box list box"
                                     />
                                 </div>
@@ -309,31 +315,61 @@
         }
         
         var formData = new FormData();
+
+        let fileResp = fileValidation('box_list_file','image');
+        if(!fileResp){
+            return false;
+        }
         
         var fileSelect = document.getElementById('box_list_file');
         var files = fileSelect.files;
         var file = files[0]; 
         formData.append('box_list_file', file, file.name);
 
+        fileResp = fileValidation('box','image');
+        if(!fileResp){
+            return false;
+        }
+
         var fileSelect = document.getElementById('box');
         var files = fileSelect.files;
         var file = files[0]; 
         formData.append('box', file, file.name);
+
+        fileResp = fileValidation('finish_product','image');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('finish_product');
         var files = fileSelect.files;
         var file = files[0]; 
         formData.append('finish_product', file, file.name);
 
+        fileResp = fileValidation('work_standard','image');
+        if(!fileResp){
+            return false;
+        }
+
         var fileSelect = document.getElementById('work_standard');
         var files = fileSelect.files;
         var file = files[0]; 
         formData.append('work_standard', file, file.name);
 
+        fileResp = fileValidation('document','image');
+        if(!fileResp){
+            return false;
+        }
+
         var fileSelect = document.getElementById('document');
         var files = fileSelect.files;
         var file = files[0]; 
         formData.append('document', file, file.name);
+
+        fileResp = fileValidation('box_list_box','image');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('box_list_box');
         var files = fileSelect.files;

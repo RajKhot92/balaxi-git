@@ -64,6 +64,7 @@
                                         class="form-control"
                                         id="research_report"
                                         name="research_report"
+                                        accept="application/pdf"
                                         placeholder="Enter pharmacopeia type"
                                     />
                                 </div>
@@ -196,6 +197,12 @@
         var formData = new FormData();
 
         if(isResearch == "Yes" && $("#research_report").val() != ""){
+
+            let fileResp = fileValidation('research_report','pdf');
+            if(!fileResp){
+                return false;
+            }
+
             var fileSelect = document.getElementById('research_report');
             // Get the files from the input
             var files = fileSelect.files;

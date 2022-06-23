@@ -70,6 +70,7 @@
                                         class="form-control"
                                         id="formula"
                                         name="formula"
+                                        accept="application/pdf"
                                         placeholder="Enter formula"
                                     />
                                 </div>
@@ -194,6 +195,12 @@
         var formData = new FormData();
 
         if($("#formula").val() != ""){
+
+            let fileResp = fileValidation('formula','pdf');
+            if(!fileResp){
+                return false;
+            }
+            
             var fileSelect = document.getElementById('formula');
             var files = fileSelect.files;
             var file = files[0];

@@ -128,6 +128,7 @@
                                         class="form-control"
                                         id="lab_report"
                                         name="lab_report"
+                                        accept="application/pdf"
                                         placeholder="Enter lab report"
                                     />
                                 </div>
@@ -311,6 +312,11 @@
 
         // Create a FormData object.
         var formData = new FormData();
+
+        let fileResp = fileValidation('lab_report','pdf');
+        if(!fileResp){
+            return false;
+        }
 
         var fileSelect = document.getElementById('lab_report');
         var files = fileSelect.files;
