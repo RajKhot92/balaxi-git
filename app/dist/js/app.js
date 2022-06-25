@@ -244,6 +244,12 @@ function fileValidation(fileInput,format){
 		        	$("#"+fileInput).focus();
 		        	return false;
 		        }
+        	}else if(fileInput == "dossier_local"){
+        		if(file.size >= 20971520){
+	        		alert("Sorry! You can upload a file which is less than 20 MB in size.");
+		        	$("#"+fileInput).focus();
+		        	return false;
+		        }
         	}else{
         		if(file.size >= 5242880){
 	        		alert("Sorry! You can upload a file which is less than 5 MB in size.");
