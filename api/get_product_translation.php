@@ -26,7 +26,9 @@
     }
 
     /*  Getting market research    */
-    $get_translation_sql = "SELECT * FROM product_translation WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_translation_sql = "SELECT *,
+                            (SELECT IFNULL(MAX(dw_id),0) FROM `product_dossier_writing` where product_id=".$product_id.") dossier_id
+                             FROM product_translation WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
     if($ps_id != 0){
         $get_translation_sql .= " AND ps_id = ".$ps_id;
@@ -40,6 +42,7 @@
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
         $row_array['ps_id'] = $row['ps_id'];
         $row_array['product_id'] = $row['product_id'];
+        $row_array['dossier_id'] = $row['dossier_id'];
         $row_array['handed_translator'] = $row['handed_translator'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        

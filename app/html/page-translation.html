@@ -30,6 +30,20 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
+                                  >Dossier (English)</label
+                                >
+                                <div class="col-sm-3 mt-2">
+                                    <i style="cursor: pointer;" 
+                                        title="Click here to download this file" onclick="openDossierFile()" class="fas fa-file-pdf fa-lg text-danger"></i>
+                                </div>
+                                <div class="col-sm-6">
+                                    &nbsp;
+                                </div>
+                            </div>    
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
                                   >Handed over to Translator <span style="color: red;">*</span></label
                                 >
                                 <div class="col-sm-3">
@@ -92,6 +106,7 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+    var dossier_id = 0;
     $(document).ready(function(){
         $("#login_id").val(localStorage.getItem("balaxi_user_id"));
         $("#product_id").val(sessionStorage.getItem("submission_product_id"));
@@ -123,6 +138,7 @@
                                             	"<span title=\"Click here to delete this translation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslation("+counter.ps_id+")\"></span>"+
                                             "</td>"+
                                         "</tr>";
+                dossier_id = counter.dossier_id;
             }
         }else{
             translationTbody += "<tr>"+
@@ -212,6 +228,15 @@
 
     function resetTranslation(){
     	document.getElementById("frmTranslation").reset();
+    }
+
+    function openDossierFile(){
+        if(dossier_id == 0){
+            alert("Sorry! FSC draft for this product has not yet uploaded.");
+            return false;
+        }else{
+            downloadFile('product_dossier_writing','dossier','dw_id',dossier_id,"pdf");
+        }
     }
 
     function deleteTranslation(mrId) {
