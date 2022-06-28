@@ -49,6 +49,14 @@
             $total_entries_submission++;
         }
 
+        $get_registration_sql = "SELECT count(*) cnt FROM `product_submission` 
+                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+        $result_registration = mysqli_query($conn,$get_registration_sql);
+        while ($row_registration = mysqli_fetch_array($result_registration, MYSQLI_ASSOC)) {  
+            $total_progress_submission += (int)$row_registration['cnt'] > 0 ? 1 : 0;
+            $total_entries_submission++;
+        }
+
         // echo "progess=".$total_progress_submission;
         // echo "entries=".$total_entries_submission;
         $total_percent_submission = (int)$total_progress_submission / (int)$total_entries_submission * 100;
@@ -63,7 +71,8 @@
         mysqli_free_result($result_validation);
         mysqli_free_result($result_legalization);
         mysqli_free_result($result_submission);
-
+        mysqli_free_result($result_registration);
+        
         /*  Updating Progress     */
         $update_progress_sql = "UPDATE product_step_master 
                                 SET progress=".$progress." 
