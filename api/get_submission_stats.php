@@ -87,6 +87,15 @@
         $total_entries_submission++;
     }
 
+    $get_registration_sql = "SELECT count(*) cnt FROM `product_registration` 
+                            WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+    $result_registration = mysqli_query($conn,$get_registration_sql);
+    while ($row_registration = mysqli_fetch_array($result_registration, MYSQLI_ASSOC)) {  
+        $row_array['registration'] = $row_registration['cnt'] > 0 ? 100 : 0;
+        $total_progress_submission += (int)$row_registration['cnt'] > 0 ? 1 : 0;
+        $total_entries_submission++;
+    }
+
     $get_queries_sql = "SELECT count(*) cnt FROM `product_submission_query` 
                             WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
     $result_queries = mysqli_query($conn,$get_queries_sql);
@@ -112,6 +121,7 @@
     mysqli_free_result($result_validation);
     mysqli_free_result($result_legalization);
     mysqli_free_result($result_submission);
+    mysqli_free_result($result_registration);
 
     $conn->close();
 

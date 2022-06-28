@@ -54,9 +54,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-queries.html')">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-registration.html')">
                 <div class="bg-dark p-15 text-white text-center">
                     <h4>4.</h4>
+                    <h5 class="mb-1 mt-1">Registration</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divRegistration">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-queries.html')">
+                <div class="bg-dark p-15 text-white text-center">
+                    <h4>5.</h4>
                     <h5 class="mb-1 mt-1">Queries</h5>
                     <hr>
                     <div class="row">
@@ -84,6 +96,7 @@
         // console.log(sessionStorage.getItem("legalization"));
         // console.log(sessionStorage.getItem("submission"));
         // console.log(sessionStorage.getItem("validation"));
+        // console.log(sessionStorage.getItem("registration"));
 
         $("#divValidation").html("<h4>"+sessionStorage.getItem("validation")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
@@ -100,6 +113,12 @@
         $("#divSubmission").html("<h4>"+sessionStorage.getItem("submission")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+
                                         "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("submission")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("submission")+"%;\">"+
+                                        "</div>"+
+                                    "</div>");
+
+        $("#divRegistration").html("<h4>"+sessionStorage.getItem("registration")+"%</h4>"+
+                                    "<div class=\"progress\" style=\"height: 20px;\">"+
+                                        "<div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\""+sessionStorage.getItem("registration")+"\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width:"+sessionStorage.getItem("registration")+"%;\">"+
                                         "</div>"+
                                     "</div>");
 

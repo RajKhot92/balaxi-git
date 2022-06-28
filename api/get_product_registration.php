@@ -5,7 +5,7 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $ps_id = mysqli_real_escape_string($conn, $_REQUEST['ps_id']);
+    $pr_id = mysqli_real_escape_string($conn, $_REQUEST['pr_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -26,22 +26,22 @@
     }
 
     /*  Getting market research    */
-    $get_submission_sql = "SELECT * FROM product_submission WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_registration_sql = "SELECT * FROM product_registration WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
-    if($ps_id != 0){
-        $get_submission_sql .= " AND ps_id = ".$ps_id;
+    if($pr_id != 0){
+        $get_registration_sql .= " AND pr_id = ".$pr_id;
     }
 
-    $get_submission_sql .= " ORDER BY ps_id DESC ";
+    $get_registration_sql .= " ORDER BY pr_id DESC ";
 
-    $result = mysqli_query($conn,$get_submission_sql);  
+    $result = mysqli_query($conn,$get_registration_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['ps_id'] = $row['ps_id'];
+        $row_array['pr_id'] = $row['pr_id'];
         $row_array['product_id'] = $row['product_id'];
-        $row_array['submitted_moh'] = $row['submitted_moh'];
-        $row_array['submission_slip_no'] = $row['submission_slip_no'];
+        $row_array['registration_complete'] = $row['registration_complete'];
+        $row_array['registration_expired'] = $row['registration_expired'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];
         array_push($json_response,$row_array);
