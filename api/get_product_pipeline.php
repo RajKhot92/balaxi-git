@@ -47,7 +47,7 @@
     $result_submitted = mysqli_query($conn,$get_submitted_sql);
     $submitted = mysqli_num_rows($result_submitted);
 
-    $get_registered_sql = "SELECT product_id, count(*) FROM `product_submission`";
+    $get_registered_sql = "SELECT product_id, count(*) FROM `product_registration`";
 
     if($country_id != ""){
         $get_registered_sql .= " WHERE product_id IN (SELECT DISTINCT product_id FROM product_master WHERE country_id = ".$country_id.") ";

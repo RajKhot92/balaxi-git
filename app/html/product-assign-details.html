@@ -137,8 +137,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id ="divSubmission" class="col-md-3" style="cursor: not-allowed;">
-                                <div class="card">
+                            <div id ="divSubmission" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-submission-view.html')">
+                                <div class="card card-hover">
                                     <div class="box bg-success text-center">
                                         <h3 class="font-light text-white">
                                             <i class="fas fa-check"></i>
@@ -255,12 +255,10 @@
         $("#spnSubmissionUser").html(sessionStorage.getItem("submission_assigned_to"));
         $("#spnSubmissionUserName").html(submissionUserName);
 
-        // if(submissionUserName == "Not Assigned" || parseFloat($("#spnSubmission").text()) == 0){
-        //     $("#divSubmission").removeAttr("style");
-        //     $("#divSubmission").removeAttr("onclick");
-        // }
-        $("#divSubmission").attr("style","cursor: not-allowed");
-        $("#divSubmission").removeAttr("onclick");
+        if(submissionUserName == "Not Assigned" || parseFloat($("#spnSubmission").text()) == 0){
+            $("#divSubmission").removeAttr("style");
+            $("#divSubmission").removeAttr("onclick");
+        }
     }
 
     function loadProductSteps(productId) {

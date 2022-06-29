@@ -1,0 +1,449 @@
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Product Details - Submission</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Submission
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" style="background-color: #2c3136; color: #ffffff;">
+              <a class="nav-link active" data-bs-toggle="tab" href="#subStep1" role="tab" aria-selected="false"><span class="hidden-sm-up"></span>
+                <span class="hidden-xs-down" id="spnSubStep1">Translation</span></a>
+            </li>
+            <li class="nav-item" style="background-color: #2c3136; color: #ffffff;">
+              <a class="nav-link" data-bs-toggle="tab" href="#subStep2" role="tab" aria-selected="false"><span class="hidden-sm-up"></span>
+                <span class="hidden-xs-down" id="spnSubStep2">Submission</span></a>
+            </li>
+          </ul>
+          <div class="tab-content tabcontent-border">
+            <div class="tab-pane active" id="subStep1" role="tabpanel">
+              
+              <div class="accordion" id="accordionExample1">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample1headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnTranslation" onclick="loadTranslation()">
+                      Translation
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="accordionExample1headingOne" data-bs-parent="#accordionExample1">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divTranslation" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="subStep2" role="tabpanel">  
+              <div class="accordion" id="accordionExample2">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnValidation" onclick="loadValidation()">
+                      Validation
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingOne" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divValidation" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="btnLegalization" onclick="loadLegalization()">
+                      Legalization (DC)
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="accordionExample2headingTwo" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divLegalization" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" id="btnSubmission" onclick="loadSubmission()">
+                      Submission
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingThree" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divSubmission" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingFour">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour" id="btnRegistration" onclick="loadRegistration()">
+                      Registration
+                    </button>
+                  </h2>
+                  <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingFour" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divRegistration" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingFive">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive" id="btnQueries" onclick="loadDossierWriting()">
+                      Queries
+                    </button>
+                  </h2>
+                  <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingFive" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divDossierWriting" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="border-top">
+            <div class="card-body text-center">
+                <button type="button" onclick="loadSubPageContent('product-assign-details.html')" id="btnBack" name="btnBack" class="btn btn-dark">
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var loginId = 0, productId = 0;
+  $(document).ready(function(){
+    loginId = sessionStorage.getItem("submission_assigned_to");
+    productId = sessionStorage.getItem("product_details_product_id");
+    loadProductProgress();
+  });
+
+  function loadProductProgress(){
+    let productProgressResult = getProductProgress();
+    // console.log(productProgressResult);
+    jsonProductProgressData = JSON.parse(productProgressResult);
+    // console.log(jsonProductProgressData);
+    if(jsonProductProgressData.length > 0){
+      for(i=0; i<jsonProductProgressData.length; i++){
+        var counter = jsonProductProgressData[i];
+        // console.log(counter.define_product);
+        // console.log(counter.data_capture);
+
+        $("#spnSubStep1").html("<b>Translation ("+counter.translation_main.toFixed(2)+"%)</b>");
+        $("#spnSubStep2").html("<b>Submission ("+counter.submission_main.toFixed(2)+"%)</b>");
+
+        $("#btnTranslation").html("<b>Translation ("+counter.translation.toFixed(2)+"%)</b>");
+
+        $("#btnValidation").html("<b>Validation ("+counter.validation.toFixed(2)+"%)</b>");
+        $("#btnLegalization").html("<b>Legalization (DC) ("+counter.legalization.toFixed(2)+"%)</b>");
+        $("#btnSubmission").html("<b>Submission ("+counter.submission.toFixed(2)+"%)</b>");
+        $("#btnRegistration").html("<b>Registration ("+counter.registration.toFixed(2)+"%)</b>");
+        $("#btnQueries").html("<b>Queries ("+counter.queries.toFixed(2)+"%)</b>");
+      }
+    }
+
+    loadTranslation();
+  }
+
+  function getProductProgress() {
+    return callAPIService("get_submission_stats.php","user_id="+loginId+"&product_id="+productId+"&menu_id="+SUBMISSION_MENU_ID);
+  }
+
+  function loadTranslation(){
+      let translationResult = getTranslation();
+      // console.log(translationResult);
+      var jsonTranslationData = JSON.parse(translationResult);
+      var translationTbody = "";
+      if(jsonTranslationData.length > 0){
+          for(i=0; i<jsonTranslationData.length; i++){
+              var counter = jsonTranslationData[i];
+              translationTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.handed_translator+"</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ps_id+"','translation')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this translation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslation("+counter.ps_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+              dossier_id = counter.dossier_id;
+          }
+      }else{
+          translationTbody += "<tr>"+
+                          "<td colspan=\"5\" align=\"center\">No translation details found.</td>"
+                      "</tr>";
+      }
+      $("#divTranslation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"translationTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Handed over to Translator</th>"+
+                                      "<th>Dossier (Local Langauge)</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  translationTbody+
+                              "</tbody>"+
+                          "</table>");
+  }
+
+  function getTranslation(){
+    return callAPIService("get_product_translation.php","login_id="+loginId+"&product_id="+productId+"&ps_id=0");
+  }
+
+  function loadValidation(){
+      let validationResult = getValidation();
+      // console.log(validationResult);
+      var jsonValidationData = JSON.parse(validationResult);
+      var validationTbody = "";
+      if(jsonValidationData.length > 0){
+          for(i=0; i<jsonValidationData.length; i++){
+              var counter = jsonValidationData[i];
+              validationTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.gmp+"</td>"+
+                                          "<td align=\"center\">"+counter.fsc+"</td>"+
+                                          "<td align=\"center\">"+counter.copp+"</td>"+
+                                          "<td align=\"center\">"+counter.pp+"</td>"+
+                                          "<td align=\"center\">"+counter.license_manufacture+"</td>"+
+                                          "<td align=\"center\">"+counter.cma+"</td>"+
+                                          "<td align=\"center\">"+counter.box+"</td>"+
+                                          "<td align=\"center\">"+counter.ws_finish_product+"</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this validation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteValidation("+counter.psv_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          validationTbody += "<tr>"+
+                          "<td colspan=\"11\" align=\"center\">No validation details found.</td>"
+                      "</tr>";
+      }
+      $("#divValidation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"validationTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>GMP</th>"+
+                                      "<th>FSC</th>"+
+                                      "<th>CoPP</th>"+
+                                      "<th>PP</th>"+
+                                      "<th>License of Manufacturing</th>"+
+                                      "<th>CMA</th>"+
+                                      "<th>Box</th>"+
+                                      "<th>WS & Finished Product</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  validationTbody+
+                              "</tbody>"+
+                          "</table>");
+  }
+
+  function getValidation(){
+    return callAPIService("get_product_validation.php","login_id="+loginId+"&product_id="+productId+"&psv_id=0");
+  }
+
+  function loadLegalization(){
+      let legalizationResult = getLegalization();
+      // console.log(legalizationResult);
+      var jsonLegalizationData = JSON.parse(legalizationResult);
+      var legalizationTbody = "";
+      if(jsonLegalizationData.length > 0){
+          for(i=0; i<jsonLegalizationData.length; i++){
+              var counter = jsonLegalizationData[i];
+              legalizationTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.handed_fa+"</td>"+
+                                          "<td align=\"center\">"+counter.handed_notary+"</td>"+
+                                          "<td align=\"center\">"+counter.received_fa+"</td>"+
+                                          "<td align=\"center\">"+counter.received_notary+"</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this legalization details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteLegalization("+counter.psl_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          legalizationTbody += "<tr>"+
+                          "<td colspan=\"7\" align=\"center\">No legalization details found.</td>"
+                      "</tr>";
+      }
+      $("#divLegalization").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"legalizationTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Handed Over to FA</th>"+
+                                      "<th>Handed Over to Notary</th>"+
+                                      "<th>Received from FA</th>"+
+                                      "<th>Received from Notary</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  legalizationTbody+
+                              "</tbody>"+
+                          "</table>");
+  }
+
+  function getLegalization(){
+    return callAPIService("get_product_legalization.php","login_id="+loginId+"&product_id="+productId+"&psl_id=0");
+  }
+
+  function loadSubmission(){
+      let submissionResult = getSubmission();
+      // console.log(submissionResult);
+      var jsonSubmissionData = JSON.parse(submissionResult);
+      var submissionTbody = "";
+      if(jsonSubmissionData.length > 0){
+          for(i=0; i<jsonSubmissionData.length; i++){
+              var counter = jsonSubmissionData[i];
+              submissionTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.submitted_moh+"</td>"+
+                                          "<td align=\"center\">"+counter.submission_slip_no+"</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ps_id+"','submission')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this submission details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteSubmission("+counter.ps_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          submissionTbody += "<tr>"+
+                          "<td colspan=\"6\" align=\"center\">No submission details found.</td>"
+                      "</tr>";
+      }
+      $("#divSubmission").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"submissionTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Submitted to MOH</th>"+
+                                      "<th>Submission Slip No/Document</th>"+
+                                      "<th>Submission Document</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  submissionTbody+
+                              "</tbody>"+
+                          "</table>");
+  }
+
+  function getSubmission(){
+    return callAPIService("get_product_submission.php","login_id="+loginId+"&product_id="+productId+"&ps_id=0");
+  }
+
+  function loadRegistration(){
+      let registrationResult = getRegistration();
+      // console.log(registrationResult);
+      var jsonRegistrationData = JSON.parse(registrationResult);
+      var registrationTbody = "";
+      if(jsonRegistrationData.length > 0){
+          for(i=0; i<jsonRegistrationData.length; i++){
+              var counter = jsonRegistrationData[i];
+              registrationTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.registration_complete+"</td>"+
+                                          "<td align=\"center\">"+counter.registration_expired+"</td>"+
+                                          "</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.pr_id+"','registration')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                          "</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this registration details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteRegistration("+counter.ps_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+          }
+      }else{
+          registrationTbody += "<tr>"+
+                          "<td colspan=\"6\" align=\"center\">No registration details found.</td>"
+                      "</tr>";
+      }
+      $("#divRegistration").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"registrationTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Registration Completed</th>"+
+                                      "<th>Registration Expired</th>"+
+                                      "<th>Registration Certificate</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  registrationTbody+
+                              "</tbody>"+
+                          "</table>");
+  }
+
+  function getRegistration(){
+    return callAPIService("get_product_registration.php","login_id="+loginId+"&product_id="+productId+"&pr_id=0");
+  }
+
+  function openFile(id,menu){
+    var tbl="",col="",col1="",format="";
+    switch(menu){
+      case 'translation':
+        tbl = "product_translation";
+        col = "dossier_local";
+        col1 = "ps_id";
+        format = "pdf";
+        break;
+      case 'submission':
+        tbl = "product_submission";
+        col = "submission_doc";
+        col1 = "ps_id";
+        format = "pdf";
+        break;
+      case 'registration':
+        tbl = "product_registration";
+        col = "certificate_file";
+        col1 = "pr_id";
+        format = "pdf";
+        break;
+    }
+    downloadFile(tbl,col,col1,id,format);
+  }
+</script>
