@@ -68,6 +68,26 @@
                                     
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >Deadline Date</label
+                                >
+                                <div class="col-sm-4">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                        id="deadline_dt"
+                                        name="deadline_dt"
+                                        placeholder="Enter deadline date"
+                                    />
+                                </div>
+                                <div class="col-sm-6">
+                                    &nbsp;
+                                </div>
+                            </div>
                         </div>
                         <div class="border-top">
                             <div class="card-body text-center">
@@ -106,6 +126,11 @@
     var optionsCountryData = "";
     $(document).ready(function(){
         $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        $("#deadline_dt").datepicker().on(
+            'changeDate', function(e){
+                $(this).datepicker('hide');
+            }
+        );
         loadProductCategory();
     });
 
@@ -158,8 +183,13 @@
                                         "</span>"+
                                         "<span class=\"viewProductCountry"+counter.product_id+"\">"+counter.country_name+"</span>"+
                                     "</td>"+
+                                    "<td>"+
+                                        "<span style=\"display:none;\" class=\"editDeadlineDate"+counter.product_id+"\">"+
+                                        "<input type=\"text\" readonly class=\"form-control\" id=\"edit_deadline_date"+counter.product_id+"\" name=\"edit_deadline_date"+counter.product_id+"\" value=\""+counter.deadline_dt+"\"></span>"+
+                                        "<span class=\"viewDeadlineDate"+counter.product_id+"\">"+counter.deadline_dt+"</span>"+
+                                    "</td>"+
                                     "<td align=\"center\">"+
-                                    	"<span title=\"Click here to edit this product\" class=\"fas fa-pencil-alt fa-lg text-warning editButton"+counter.product_id+"\" style=\"cursor:pointer;\" onclick=\"updateProduct("+counter.product_id+","+counter.product_category+","+counter.product_owner+","+counter.country_id+")\"></span>"+
+                                    	"<span title=\"Click here to edit this product\" class=\"fas fa-pencil-alt fa-lg text-warning editButton"+counter.product_id+"\" style=\"cursor:pointer;\" onclick=\"updateProduct("+counter.product_id+","+counter.product_category+","+counter.product_owner+","+counter.country_id+",'"+counter.deadline_dt+"')\"></span>"+
                                     	"<span title=\"Click here to save this product\" class=\"fas fa-save fa-lg text-success saveButton"+counter.product_id+"\" style=\"cursor:pointer; display:none;\" onclick=\"editProduct("+counter.product_id+")\"></span>"+
                                     "</td>"+
                                     "<td align=\"center\">"+
@@ -174,12 +204,13 @@
                         "product_category":counter.product_category,
                         "product_owner":counter.product_owner,
                         "product_country":counter.country_id,
+                        "product_deadline":counter.deadline_dt,
                     }
                 );
             }
         }else{
             productTbody += "<tr>"+
-                            "<td colspan=\"7\" align=\"center\">No product details found.</td>"
+                            "<td colspan=\"8\" align=\"center\">No product details found.</td>"
                         "</tr>";
         }
         $("#divProducts").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"productTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -190,6 +221,7 @@
                                         "<th>Product Category</th>"+
                                         "<th>Product Owner</th>"+
                                         "<th>Product Country</th>"+
+                                        "<th>Deadline Date</th>"+
                                         "<th>Edit</th>"+
                                         "<th>Delete</th>"+
                                     "</tr>"+
@@ -201,8 +233,8 @@
         if(jsonProductData.length > 0){
             $("#productTable").DataTable({
             	"columnDefs": [
-	            	{"targets": 5,"orderable": false},
-	            	{"targets": 6,"orderable": false}
+	            	{"targets": 6,"orderable": false},
+	            	{"targets": 7,"orderable": false}
             	]
             });
         }
@@ -301,11 +333,18 @@
             return false;
         }
 
+        if($("#deadline_dt").val() == ""){
+            alert("Please enter deadline date.");
+            $("#deadline_dt").focus();
+            return false;
+        }
+
         let existProduct = existProductList.find(
             e => e.product_name == $("#product_name").val().trim().toLowerCase()
             && e.product_category == $("#product_category").val()
             && e.product_owner == $("#product_owner").val()
             && e.product_country == $("#product_country").val()
+            && e.deadline_dt == $("#deadline_dt").val()
             )
         if(existProduct !== undefined){
             alert("Entered product details are already exists. Please try another product.");
@@ -351,8 +390,14 @@
             return false;
         }
 
+        if($("#edit_deadline_date"+productId).val() == ""){
+            alert("Please enter valid deadline date.");
+            $("#edit_deadline_date"+productId).focus();
+            return false;
+        }
+
     	if(confirm("Are you sure want to update this product?")){
-			var updateData = "login_id="+$("#login_id").val()+"&product_id="+productId+"&product_name="+$("#edit_product_name"+productId).val()+"&product_category="+$("#edit_product_category"+productId).val()+"&product_owner="+$("#edit_product_owner"+productId).val()+"&country_id="+$("#edit_product_country"+productId).val();
+			var updateData = "login_id="+$("#login_id").val()+"&product_id="+productId+"&product_name="+$("#edit_product_name"+productId).val()+"&product_category="+$("#edit_product_category"+productId).val()+"&product_owner="+$("#edit_product_owner"+productId).val()+"&country_id="+$("#edit_product_country"+productId).val()+"&deadline_dt="+$("#edit_deadline_date"+productId).val();
 
 	    	let productUpdateResult = editProductData(updateData);
 	    	if(productUpdateResult != "1"){
@@ -364,21 +409,32 @@
 		}
     }
 
-    function updateProduct(productId,categoryId,userId,countryId){
+    function updateProduct(productId,categoryId,userId,countryId,deadlineDt){
 		$(".viewProductName"+productId).hide();
 		$(".viewProductCategory"+productId).hide();
         $(".viewProductOwner"+productId).hide();
         $(".viewProductCountry"+productId).hide();
+        $(".viewDeadlineDate"+productId).hide();
         $(".editButton"+productId).hide();
         $(".editProductName"+productId).show();
     	$(".editProductCategory"+productId).show();
         $(".editProductOwner"+productId).show();
         $(".editProductCountry"+productId).show();
+        $(".editDeadlineDate"+productId).show();
 
         $("#edit_product_category"+productId).val(categoryId);
         $("#edit_product_owner"+productId).val(userId);
         $("#edit_product_country"+productId).val(countryId);
+        $("#edit_deadline_date"+productId).val(deadlineDt);
         
+        $("#edit_deadline_date"+productId).datepicker(
+                "setDate", new Date(deadlineDt)
+            ).on(
+            'changeDate', function(e){
+                $(this).datepicker('hide');
+            }
+        );
+
         $(".saveButton"+productId).show();
     }
 
@@ -391,6 +447,7 @@
         $("#product_category").val("");
         $("#product_owner").val("");
         $("#product_country").val("");
+        $("#deadline_dt").val("");
     }
 
     function deleteProduct(productId){

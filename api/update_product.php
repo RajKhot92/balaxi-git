@@ -9,10 +9,11 @@
     $product_category = mysqli_real_escape_string($conn, $_REQUEST['product_category']);
     $product_owner = mysqli_real_escape_string($conn, $_REQUEST['product_owner']);
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
+    $deadline_dt = mysqli_real_escape_string($conn, $_REQUEST['deadline_dt']);
 
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $product_name === "" || $product_category === "" || $product_owner === "" || $country_id === ""){
+    if($login_id === "" || $product_id === "" || $product_name === "" || $product_category === "" || $product_owner === "" || $country_id === "" || $deadline_dt === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -73,7 +74,7 @@
                     AND product_category = ".$product_category."
                     AND product_owner = ".$product_owner."
                     AND country_id = ".$country_id."
-                    AND product_id != ".$product_id." 
+                    AND product_id != ".$product_id."
                     AND del_by IS NULL";
     $product_response = mysqli_query($conn, $product_exist);
     if (mysqli_num_rows($product_response) > 0){
@@ -86,7 +87,8 @@
                         SET product_name='".$product_name."',
                         product_category=".$product_category.",
                         product_owner=".$product_owner.",
-                        country_id=".$country_id."
+                        country_id=".$country_id.",
+                        deadline_dt=STR_TO_DATE('".$deadline_dt."', '%m/%d/%Y')
                         WHERE product_id=".$product_id;
 
     if ($conn->query($update_product_sql) !== TRUE) {

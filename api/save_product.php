@@ -8,10 +8,11 @@
     $product_category = mysqli_real_escape_string($conn, $_REQUEST['product_category']);
     $product_owner = mysqli_real_escape_string($conn, $_REQUEST['product_owner']);
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
+    $deadline_dt = mysqli_real_escape_string($conn, $_REQUEST['deadline_dt']);
 
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_name === "" || $product_category === "" || $product_owner === "" || $country_id === ""){
+    if($login_id === "" || $product_name === "" || $product_category === "" || $product_owner === "" || $country_id === "" || $deadline_dt == ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -70,8 +71,8 @@
     }
     
     /*  Adding new product     */
-    $add_product_sql = "INSERT INTO product_master (product_name,product_category,product_owner, country_id,ent_by,ent_dt,del_by,del_dt)
-                    VALUES ('".$product_name."',".$product_category.",".$product_owner.",".$country_id.",".$login_id.",NOW(),null,null)";
+    $add_product_sql = "INSERT INTO product_master (product_name,product_category,product_owner, country_id,deadline_dt,ent_by,ent_dt,del_by,del_dt)
+                    VALUES ('".$product_name."',".$product_category.",".$product_owner.",".$country_id.",STR_TO_DATE('".$deadline_dt."', '%m/%d/%Y'),".$login_id.",NOW(),null,null)";
 
     if ($conn->query($add_product_sql) !== TRUE) {
         echo "Some error occurred while adding new product. Please try again later.";

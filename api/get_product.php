@@ -11,7 +11,7 @@
     
     /*  Getting user    */
     $get_product_sql = "SELECT a.`product_id`,a.`product_name`,a.`product_category`,
-                    a.`product_owner`,a.`country_id`,a.`ent_by`,a.`ent_dt`,
+                    a.`product_owner`,a.`country_id`,a.`deadline_dt`,a.`ent_by`,a.`ent_dt`,
                     b.`category_name`,c.`user_name`,d.`country_name` 
                     FROM product_master a 
                     INNER JOIN product_category b ON a.`product_category`=b.`category_id` 
@@ -95,6 +95,7 @@
         $row_array['product_owner'] = $row['product_owner'];
         $row_array['country_id'] = $row['country_id'];
         $row_array['category_name'] = $row['category_name'];
+        $row_array['deadline_dt'] = $row['deadline_dt'];
         $row_array['user_name'] = $row['user_name'];
         $row_array['country_name'] = $row['country_name'];
         $row_array['ent_by'] = $row['ent_by'];
