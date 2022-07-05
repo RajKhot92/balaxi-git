@@ -1,0 +1,396 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Queries</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Queries
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" method="post" id="frmQueries" name="frmQueries" enctype="multipart/form-data">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <input type="hidden" id="product_id" name="product_id">
+                        <div class="card-body">
+                            <!-- <h4 class="card-title text-center">Add Queries</h4> -->
+                            <div class="form-group row">    
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Received Date <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                        id="received_date"
+                                        name="received_date"
+                                        placeholder="Enter received date"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Total No. of Queries <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="total_queries"
+                                        name="total_queries"
+                                        maxlength="3"
+                                        placeholder="Enter number of queries"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">    
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Queries File <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="file"
+                                        class="form-control"
+                                        id="queries_file"
+                                        name="queries_file"
+                                        accept="application/pdf"
+                                        placeholder="Upload queries file"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Queries <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <textarea
+                                        class="form-control"
+                                        id="queries"
+                                        name="queries"
+                                        cols="3"
+                                        rows="2"
+                                        maxlength="1000"
+                                        placeholder="Enter queries">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">    
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Solution Received <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                        id="solution_received"
+                                        name="solution_received"
+                                        placeholder="Enter solution received date"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Solution Submitted <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                        id="solution_submitted"
+                                        name="solution_submitted"
+                                        placeholder="Enter solution submitted date"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">    
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Submission Slip <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="file"
+                                        class="form-control"
+                                        id="submission_slip"
+                                        name="submission_slip"
+                                        accept="application/pdf"
+                                        placeholder="Upload submission slip"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Submission Slip Date <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                        id="submission_slip_date"
+                                        name="submission_slip_date"
+                                        placeholder="Enter submission slip date"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-warning" onclick="loadSubPageContent('menu-submission-2.html')">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                                <button type="button" onclick="saveQueries()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetQueries()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added Queries</h4>
+                        <div class="card-body table-responsive" id="divQueries">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        $("#product_id").val(sessionStorage.getItem("submission_product_id"));
+        $("#received_date").datepicker().on(
+            'changeDate', function(e){
+                $(this).datepicker('hide');
+            }
+        );
+        $("#solution_received").datepicker().on(
+            'changeDate', function(e){
+                $(this).datepicker('hide');
+            }
+        );
+        $("#solution_submitted").datepicker().on(
+            'changeDate', function(e){
+                $(this).datepicker('hide');
+            }
+        );
+        $("#submission_slip_date").datepicker().on(
+            'changeDate', function(e){
+                $(this).datepicker('hide');
+            }
+        );
+        $("#queries").val("");
+        loadQueries();
+    });
+
+    function loadQueries(){
+        let queriesResult = getQueries();
+        // console.log(queriesResult);
+        var jsonQueriesData = JSON.parse(queriesResult);
+        var queriesTbody = "";
+        if(jsonQueriesData.length > 0){
+            for(i=0; i<jsonQueriesData.length; i++){
+                var counter = jsonQueriesData[i];
+                queriesTbody += "<tr>"+
+                                    "<td align=\"center\">"+(i+1)+"</td>"+
+                                    "<td align=\"center\">"+counter.received_date+"</td>"+
+                                    "<td align=\"center\">"+counter.total_queries+"</td>"+
+                                    "<td align=\"center\">"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile1('"+counter.psq_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+counter.queries+"</td>"+
+                                    "<td align=\"center\">"+counter.solution_received+"</td>"+
+                                    "<td align=\"center\">"+counter.solution_submitted+"</td>"+
+                                    "<td align=\"center\">"+
+                                        "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile2('"+counter.psq_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+counter.submission_slip_date+"</td>"+
+                                    "<td>"+counter.ent_dt+"</td>"+
+                                    "<td align=\"center\">"+
+                                    	"<span title=\"Click here to delete this queries details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQueries("+counter.ps_id+")\"></span>"+
+                                    "</td>"+
+                                "</tr>";
+            }
+        }else{
+            queriesTbody += "<tr>"+
+                            "<td colspan=\"11\" align=\"center\">No queries details found.</td>"
+                        "</tr>";
+        }
+        $("#divQueries").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"queriesTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>Received Date</th>"+
+                                        "<th>Total Queries</th>"+
+                                        "<th>Queries File</th>"+
+                                        "<th>Queries</th>"+
+                                        "<th>Solution Received</th>"+
+                                        "<th>Solution Submitted</th>"+
+                                        "<th>Submission Slip</th>"+
+                                        "<th>Submission Slip Date</th>"+
+                                        "<th>Entry Date</th>"+
+                                        "<th>Delete</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    queriesTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonQueriesData.length > 0){
+            $("#queriesTable").DataTable({
+            	"columnDefs": [
+	            	{"targets": 10,"orderable": false}
+            	]
+            });
+        }
+    }
+
+    function getQueries(){
+    	return callAPIService("get_product_queries.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&psq_id=0");
+    }
+
+    function openFile1(id){
+        downloadFile('product_submission_query','queries_file','psq_id',id,"pdf");
+    }
+
+    function openFile2(id){
+        downloadFile('product_submission_query','submission_slip','psq_id',id,"pdf");
+    }
+
+    function saveQueries(){
+    	
+        if($("#received_date").val() == ""){
+            alert("Please enter received date.");
+            $("#received_date").focus();
+            return false;
+        }
+
+        if($("#total_queries").val() == ""){
+            alert("Please enter total queries.");
+            $("#total_queries").focus();
+            return false;
+        }
+
+        if($("#queries_file").val() == ""){
+            alert("Please upload queries file.");
+            $("#queries_file").focus();
+            return false;
+        }
+
+        if($("#queries").val() == ""){
+            alert("Please enter queries.");
+            $("#queries").focus();
+            return false;
+        }
+
+        if($("#solution_received").val() == ""){
+            alert("Please enter solution received date.");
+            $("#solution_received").focus();
+            return false;
+        }
+
+        if($("#solution_submitted").val() == ""){
+            alert("Please enter solution submitted date.");
+            $("#solution_submitted").focus();
+            return false;
+        }
+
+        if($("#submission_slip").val() == ""){
+            alert("Please upload submission slip.");
+            $("#submission_slip").focus();
+            return false;
+        }
+
+        if($("#submission_slip_date").val() == ""){
+            alert("Please enter submission slip date.");
+            $("#submission_slip_date").focus();
+            return false;
+        }
+
+        // Create a FormData object.
+        var formData = new FormData();
+
+        let fileResp = fileValidation('queries_file','pdf');
+        if(!fileResp){
+            return false;
+        }
+
+        var fileSelect = document.getElementById('queries_file');
+        var files = fileSelect.files;
+        var file = files[0]; 
+        formData.append('queries_file', file, file.name);
+
+        fileResp = fileValidation('submission_slip','pdf');
+        if(!fileResp){
+            return false;
+        }
+
+        var fileSelect = document.getElementById('submission_slip');
+        var files = fileSelect.files;
+        var file = files[0]; 
+        formData.append('submission_slip', file, file.name);
+
+        formData.append("login_id", $("#login_id").val());
+        formData.append("product_id", $("#product_id").val());
+        formData.append("received_date", $("#received_date").val());
+        formData.append("total_queries", $("#total_queries").val());
+        formData.append("queries", $("#queries").val());
+        formData.append("solution_received", $("#solution_received").val());
+        formData.append("solution_submitted", $("#solution_submitted").val());
+        formData.append("submission_slip_date", $("#submission_slip_date").val());
+        
+    	let queriesSaveResult = saveQueriesData(formData);
+    	if(queriesSaveResult != "1" || queriesSaveResult != 1){
+    		alert(queriesSaveResult);
+    	}else{
+    		resetQueries();
+    		alert("Queries details has been saved successfully.");
+    		loadQueries();
+    	}
+    }
+
+    function saveQueriesData(queriesData){
+    	return callAPIServicePost("save_product_queries.php",queriesData);
+    }
+
+    function resetQueries(){
+        document.getElementById("frmQueries").reset();
+    }
+
+    function deleteQueries(mrId) {
+        alert("This feature is not yet implemented.");
+    }
+</script>
