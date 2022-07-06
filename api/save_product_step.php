@@ -91,16 +91,16 @@
     }
 
     /*  Assigning steps     */
-    $assign_step_sql = "INSERT INTO product_step_master (product_id,menu_id,user_id,ent_by,ent_dt)
+    $assign_step_sql = "INSERT INTO product_step_master (product_id,menu_id,user_id,ent_by,ent_dt,updt_by,updt_dt)
                     VALUES ";
     if(count($user_id_arr) == 1){
-        $assign_step_sql .= "(".$product_id_arr[0].",".$menu_id_arr[0].",".$user_id_arr[0].",".$login_id.",CURDATE())";
+        $assign_step_sql .= "(".$product_id_arr[0].",".$menu_id_arr[0].",".$user_id_arr[0].",".$login_id.",CURDATE(),null,null)";
     }else if(count($user_id_arr) > 1){
         for ($i = 0; $i < count($user_id_arr); $i++) {
             if($i == count($user_id_arr)-1){
-                $assign_step_sql .= "(".$product_id_arr[$i].",".$menu_id_arr[$i].",".$user_id_arr[$i].",".$login_id.",CURDATE())";
+                $assign_step_sql .= "(".$product_id_arr[$i].",".$menu_id_arr[$i].",".$user_id_arr[$i].",".$login_id.",CURDATE(),null,null)";
             }else{
-                $assign_step_sql .= "(".$product_id_arr[$i].",".$menu_id_arr[$i].",".$user_id_arr[$i].",".$login_id.",CURDATE()),";
+                $assign_step_sql .= "(".$product_id_arr[$i].",".$menu_id_arr[$i].",".$user_id_arr[$i].",".$login_id.",CURDATE(),null,null),";
             }
         }
     }
