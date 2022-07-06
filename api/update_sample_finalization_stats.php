@@ -64,7 +64,9 @@
 
         /*  Updating Progress     */
         $update_progress_sql = "UPDATE product_step_master 
-                                SET progress=".$progress." 
+                                SET progress=".$progress.",
+                                updt_by=".$user_id.",
+                                updt_dt=NOW()  
                                 WHERE product_id=".$product_id." 
                                 AND user_id=".$user_id." 
                                 AND menu_id=".$SAMPLE_FINALIZATION_MENU_ID;
