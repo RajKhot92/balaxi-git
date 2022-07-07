@@ -1,0 +1,218 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Weekly Progress</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Weekly Progress
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <label for="fname"
+                class="col-1 text-end control-label col-form-label">
+                Country
+              </label>
+              <div class="col-md-3">
+                <div id="divCountry">
+
+                </div>
+              </div>
+              <div class="col-md-2">
+                
+              </div>
+              <label for="fname"
+                class="col-3 text-end control-label col-form-label">
+                Period
+              </label>
+              <div class="col-md-3 mt-1">
+                Since Last &nbsp;&nbsp;
+                <input type="number" style="width: 50px; text-align: center;" id="txtDays" name="txtDays" maxlength="2" onchange="changeDays()" onkeypress="onlyNumberKey()">
+                &nbsp;Days
+              </div>
+            </div>
+            <hr>
+            <div id="divProgress">
+          
+            </div>
+            
+            <hr>
+            <h4 class="card-title mb-0">WIP Products (Country Wise Other Products)</h4>
+            <br/>
+            <div id="divWIP">
+          
+            </div>
+          </div>
+          <div class="border-top">
+            <div class="card-body text-center">
+              <button type="button" class="btn btn-dark" onclick="loadPageContent(19,'menu-report.html')">
+                  <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#txtDays").val(7);
+    loadCountry();
+  });
+
+  function loadCountry() {
+    jsonCountryData = new Array();
+    let countryResult = getCountry();
+    // console.log(countryResult);
+    jsonCountryData = JSON.parse(countryResult);
+    // console.log(jsonCountryData);
+    var optionsCountryData = "";
+    if(jsonCountryData.length > 0){
+        for(i=0; i<jsonCountryData.length; i++){
+            var counter = jsonCountryData[i];
+            optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
+        }
+        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchWeeklyProgress()\">"+
+                                   "<option value=\"0\">All</option>"+
+                                   optionsCountryData+
+                                "</select>");
+    }
+
+    fetchWeeklyProgress();
+  }
+
+  function getCountry() {
+    return callAPIService("get_country.php","country_id=0");
+  }
+
+  function changeDays(){
+    if(isNaN($("#txtDays").val())){
+      alert("Please enter number only.");
+      return false;
+    }
+
+    if(parseInt($("#txtDays").val()) < 0){
+      $("#txtDays").val(0);
+    }else if(parseInt($("#txtDays").val()) > 30){
+      $("#txtDays").val(30);
+    }else{
+      //Nothing
+    }
+    fetchWeeklyProgress();
+  }
+
+  function fetchWeeklyProgress(){
+    loadWeeklyProgress($("#country_id").val(),$("#txtDays").val());
+  }
+
+  function loadWeeklyProgress(countryId,lastDays){
+    let weeklyProgressResult = getWeeklyProgress(countryId,lastDays);
+    // console.log(weeklyProgressResult);
+    var jsonWeeklyProgressData = JSON.parse(weeklyProgressResult);
+    // var wip = 0, dispatch = 0, registered = 0, submitted = 0;
+    var progressTbody = "";
+    if(jsonWeeklyProgressData.length > 0){
+      for(i=0; i<jsonWeeklyProgressData.length; i++){
+        var counter = jsonWeeklyProgressData[i];
+        progressTbody += "<tr>"+
+                          "<td align=\"center\">"+counter.product_name+"</td>"+
+                          "<td align=\"center\">"+counter.category_name+"</td>"+
+                          "<td align=\"center\">"+counter.product_owner+"</td>"+
+                          "<td align=\"center\">"+counter.executive+"</td>"+
+                          "<td align=\"center\">"+counter.menu_name+"</td>"+
+                          "<td align=\"center\">"+(counter.updt_dt == null ? "" : counter.updt_dt)+"</td>"+
+                          "<td align=\"center\">"+counter.progress+"</td>"+
+                        "</tr>";  
+      }
+    }else{
+      progressTbody += "<tr>"+
+                        "<td colspan=\"7\" align=\"center\">No details found.</td>"
+                      "</tr>";
+    }
+    $("#divProgress").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"queriesTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Product Name</th>"+
+                                    "<th>Category Name</th>"+
+                                    "<th>Product Owner</th>"+
+                                    "<th>Step Owner</th>"+
+                                    "<th>Step</th>"+
+                                    "<th>Last Update Date</th>"+
+                                    "<th>Total %</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                progressTbody+
+                            "</tbody>"+
+                        "</table>");
+    if(jsonWeeklyProgressData.length > 0){
+        $("#queriesTable").DataTable();
+    }
+
+    loadWeeklyProgressWIP(countryId);
+  }
+
+  function getWeeklyProgress(countryId,lastDays) {
+    return callAPIService("get_weekly_progress.php","country_id="+countryId+"&last_days="+lastDays);
+  }
+
+  function loadWeeklyProgressWIP(countryId){
+    let weeklyProgressWIPResult = getWeeklyProgressWIP(countryId);
+    // console.log(weeklyProgressWIPResult);
+    var jsonWeeklyProgressWIPData = JSON.parse(weeklyProgressWIPResult);
+    var progressTbody = "";
+    if(jsonWeeklyProgressWIPData.length > 0){
+      for(i=0; i<jsonWeeklyProgressWIPData.length; i++){
+        var counter = jsonWeeklyProgressWIPData[i];
+        progressTbody += "<tr>"+
+                          "<td align=\"center\">"+counter.product_name+"</td>"+
+                          "<td align=\"center\">"+counter.category_name+"</td>"+
+                          "<td align=\"center\">"+(counter.deadline_dt == null ? "" : counter.deadline_dt)+"</td>"+
+                          "<td align=\"center\">"+counter.product_owner+"</td>"+
+                          "<td align=\"center\">"+counter.progress+"</td>"+
+                        "</tr>";  
+      }
+    }else{
+      progressTbody += "<tr>"+
+                        "<td colspan=\"5\" align=\"center\">No details found.</td>"
+                      "</tr>";
+    }
+    $("#divWIP").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"progressWIPTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Product Name</th>"+
+                                    "<th>Category Name</th>"+
+                                    "<th>Deadline</th>"+
+                                    "<th>Product Owner</th>"+
+                                    "<th>Total %</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                progressTbody+
+                            "</tbody>"+
+                        "</table>");
+    if(jsonWeeklyProgressWIPData.length > 0){
+        $("#progressWIPTable").DataTable();
+    }
+  }
+
+  function getWeeklyProgressWIP(countryId){
+    return callAPIService("get_weekly_progress_wip.php","country_id="+countryId);
+  }
+</script>
