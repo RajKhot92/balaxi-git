@@ -1,0 +1,132 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Total Registrations</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Total Registrations
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <label for="fname"
+                class="col-1 text-end control-label col-form-label">
+                Country
+              </label>
+              <div class="col-md-3">
+                <div id="divCountry">
+
+                </div>
+              </div>
+              <div class="col-md-8">
+                
+              </div>
+            </div>
+            <hr>
+            <div id="divRegistrations">
+          
+            </div>
+          </div>
+          <div class="border-top">
+            <div class="card-body text-center">
+              <button type="button" class="btn btn-dark" onclick="loadPageContent(19,'menu-report.html')">
+                  <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    loadCountry();
+  });
+
+  function loadCountry() {
+    jsonCountryData = new Array();
+    let countryResult = getCountry();
+    // console.log(countryResult);
+    jsonCountryData = JSON.parse(countryResult);
+    // console.log(jsonCountryData);
+    var optionsCountryData = "";
+    if(jsonCountryData.length > 0){
+        for(i=0; i<jsonCountryData.length; i++){
+            var counter = jsonCountryData[i];
+            optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
+        }
+        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchTotalRegistrations()\">"+
+                                   "<option value=\"0\">All</option>"+
+                                   optionsCountryData+
+                                "</select>");
+    }
+
+    fetchTotalRegistrations();
+  }
+
+  function getCountry() {
+    return callAPIService("get_country.php","country_id=0");
+  }
+
+  function fetchTotalRegistrations(){
+    loadTotalRegistrations($("#country_id").val());
+  }
+
+  function loadTotalRegistrations(countryId){
+    let totalRegistrationsResult = getTotalRegistrations(countryId);
+    // console.log(totalRegistrationsResult);
+    var jsonTotalRegistrationsData = JSON.parse(totalRegistrationsResult);
+    var progressTbody = "";
+    if(jsonTotalRegistrationsData.length > 0){
+      for(i=0; i<jsonTotalRegistrationsData.length; i++){
+        var counter = jsonTotalRegistrationsData[i];
+        progressTbody += "<tr>"+
+                          "<td align=\"center\">"+counter.product_name+"</td>"+
+                          "<td align=\"center\">"+counter.registration_complete+"</td>"+
+                          "<td align=\"center\">"+counter.registration_expired+"</td>"+
+                          "<td align=\"center\">"+counter.product_owner+"</td>"+
+                        "</tr>";  
+      }
+    }else{
+      progressTbody += "<tr>"+
+                        "<td colspan=\"4\" align=\"center\">No details found.</td>"
+                      "</tr>";
+    }
+    $("#divRegistrations").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"milestonesTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Product Name</th>"+
+                                    "<th>Registration Date</th>"+
+                                    "<th>Expiry Date</th>"+
+                                    "<th>Product Owner</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                progressTbody+
+                            "</tbody>"+
+                        "</table>");
+    if(jsonTotalRegistrationsData.length > 0){
+        $("#milestonesTable").DataTable();
+    }
+  }
+
+  function getTotalRegistrations(countryId) {
+    return callAPIService("get_total_registrations.php","country_id="+countryId);
+  }
+</script>

@@ -1,0 +1,128 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Halted Products</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Halted Products
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <label for="fname"
+                class="col-1 text-end control-label col-form-label">
+                Country
+              </label>
+              <div class="col-md-3">
+                <div id="divCountry">
+
+                </div>
+              </div>
+              <div class="col-md-8">
+                
+              </div>
+            </div>
+            <hr>
+            <div id="divHaltedProducts">
+          
+            </div>
+          </div>
+          <div class="border-top">
+            <div class="card-body text-center">
+              <button type="button" class="btn btn-dark" onclick="loadPageContent(19,'menu-report.html')">
+                  <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    loadCountry();
+  });
+
+  function loadCountry() {
+    jsonCountryData = new Array();
+    let countryResult = getCountry();
+    // console.log(countryResult);
+    jsonCountryData = JSON.parse(countryResult);
+    // console.log(jsonCountryData);
+    var optionsCountryData = "";
+    if(jsonCountryData.length > 0){
+        for(i=0; i<jsonCountryData.length; i++){
+            var counter = jsonCountryData[i];
+            optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
+        }
+        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchHaltedProducts()\">"+
+                                   "<option value=\"0\">All</option>"+
+                                   optionsCountryData+
+                                "</select>");
+    }
+
+    fetchHaltedProducts();
+  }
+
+  function getCountry() {
+    return callAPIService("get_country.php","country_id=0");
+  }
+
+  function fetchHaltedProducts(){
+    loadHaltedProducts($("#country_id").val());
+  }
+
+  function loadHaltedProducts(countryId){
+    let haltedProductsResult = getHaltedProducts(countryId);
+    // console.log(haltedProductsResult);
+    var jsonHaltedProductsData = JSON.parse(haltedProductsResult);
+    var progressTbody = "";
+    if(jsonHaltedProductsData.length > 0){
+      for(i=0; i<jsonHaltedProductsData.length; i++){
+        var counter = jsonHaltedProductsData[i];
+        progressTbody += "<tr>"+
+                          "<td align=\"center\">"+counter.product_name+"</td>"+
+                          "<td align=\"center\">"+counter.product_owner+"</td>"+
+                        "</tr>";  
+      }
+    }else{
+      progressTbody += "<tr>"+
+                        "<td colspan=\"2\" align=\"center\">No details found.</td>"
+                      "</tr>";
+    }
+    $("#divHaltedProducts").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"haltedTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Product Name</th>"+
+                                    "<th>Product Owner</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                progressTbody+
+                            "</tbody>"+
+                        "</table>");
+    if(jsonHaltedProductsData.length > 0){
+        $("#haltedTable").DataTable();
+    }
+  }
+
+  function getHaltedProducts(countryId) {
+    return callAPIService("get_halted_products.php","country_id="+countryId);
+  }
+</script>
