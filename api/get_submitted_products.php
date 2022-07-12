@@ -8,9 +8,9 @@
     /*  Getting roles    */
     $get_progress_sql = "SELECT DISTINCT a.`product_id`,a.`product_name`,
                         (SELECT CONCAT(submitted_moh,'@#$',submission_slip_no) FROM product_submission 
-                         WHERE ps_id=(SELECT max(ps_id) FROM `product_submission` WHERE product_id=a.product_id)) submitted_data,
-                        IF((SELECT COUNT(*) FROM product_registration pr WHERE pr.product_id=a.product_id) > 0, 'Registered', 'Not Registered') registration_status
-                        from product_master a INNER JOIN product_submission b ON a.product_id=b.product_id";
+                         WHERE ps_id=(SELECT max(ps_id) FROM `product_submission` WHERE product_id=a.`product_id`)) submitted_data,
+                        IF((SELECT COUNT(*) FROM product_registration pr WHERE pr.`product_id`=a.`product_id`) > 0, 'Registered', 'Not Registered') registration_status
+                        from product_master a INNER JOIN product_submission b ON a.`product_id`=b.`product_id` ";
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;
