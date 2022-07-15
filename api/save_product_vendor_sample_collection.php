@@ -16,7 +16,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $work_standard_received_dt === "" || $work_standard_finalize_dt === "" || || $finish_product_received_dt === "" || $finish_product_finalize_dt === ""){
+    if($login_id === "" || $product_id === "" || $work_standard_received_dt === "" || $work_standard_finalize_dt === "" || $finish_product_received_dt === "" || $finish_product_finalize_dt === ""){
         echo "Kindly provide valid input.";
         exit();
     }
