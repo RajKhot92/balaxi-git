@@ -28,16 +28,17 @@
                         FROM `product_master` a 
                         INNER JOIN `user_master` b ON a.`product_owner`=b.`user_id`
                         INNER JOIN `country_master` c ON a.`country_id`=c.`country_id`
-                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` ";
+                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` 
+                        WHERE UPPER(d.`category_name`)!=UPPER('REGISTERED') ";
     if($role_id == 3){
-        $get_products_sql .= "WHERE a.`product_owner`=".$login_id." ";
+        $get_products_sql .= "AND a.`product_owner`=".$login_id." ";
 
         if($product_id != "0"){
             $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
         }
     }else{
         if($product_id != "0"){
-            $get_products_sql .= "WHERE a.`product_id`=".$product_id." ";   
+            $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
         }
     }
 

@@ -17,7 +17,8 @@
                     INNER JOIN product_category b ON a.`product_category`=b.`category_id` 
                     INNER JOIN user_master c ON a.`product_owner`=c.`user_id`
                     INNER JOIN country_master d ON a.`country_id`=d.`country_id`
-                    WHERE a.`del_by` IS NULL";
+                    WHERE a.`del_by` IS NULL 
+                    AND UPPER(b.`category_name`)!=UPPER('REGISTERED')";
 
     if($login_id != 0){
         /*  Checking product already exists     */

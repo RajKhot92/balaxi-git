@@ -143,11 +143,14 @@
                 var counter = jsonProductData[i];
                 optionsProductData += "<option value=\""+counter.product_id+"\">"+counter.product_name+" ["+counter.category_name+"] ["+counter.country_name+"]</option>";
             }
-            $("#divProduct").html("<select id=\"product_id\" name=\"product_id\" class=\"form-control\">"+
-                                       "<option value=\"\">Select Product</option>"+
-                                       optionsProductData+
-                                    "</select>");
+        }else{
+            optionsProductData = "";
         }
+
+        $("#divProduct").html("<select id=\"product_id\" name=\"product_id\" class=\"form-control\">"+
+                                   "<option value=\"\">Select Product</option>"+
+                                   optionsProductData+
+                                "</select>");
 
         console.log(sessionStorage.getItem("dossier_development_product_id"));
         if(sessionStorage.getItem("dossier_development_product_id") !== undefined && sessionStorage.getItem("dossier_development_product_id") != null){
