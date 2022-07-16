@@ -47,12 +47,29 @@
         exit();
     }
 
+    $register_category = 0;
+    $register_category_sql = "SELECT category_id FROM product_category 
+                WHERE UPPER(category_name) = UPPER('REGISTERED')
+                AND del_by IS NULL";
+    $register_category_response = mysqli_query($conn, $register_category_sql);
+    if (mysqli_num_rows($register_category_response) == 0){
+        echo "Category details not found for category name Registered in the system.";
+        exit();
+    }else{
+        while ($row_category = mysqli_fetch_array($register_category_response, MYSQLI_ASSOC)) {
+            $register_category = $row_category['category_id'];
+        }
+    }
+
     /*  Adding product registration    */
     $add_registration_sql = "INSERT INTO product_registration (`product_id`, `registration_complete`, `registration_expired`, `certificate_file`, `ent_by`, `ent_dt`)
                             VALUES (".$product_id.",STR_TO_DATE('".$registration_complete."', '%m/%d/%Y'),STR_TO_DATE('".$registration_expired."', '%m/%d/%Y'),'".$file_content_certificate."',".$login_id.",NOW())";
 
-    if ($conn->query($add_registration_sql) !== TRUE) {
-        echo "Some error occurred while adding submission details. Please try again later.";
+    $update_category_sql = "UPDATE product_master 
+                            SET product_category=".$register_category." WHERE product_id=".$product_id;
+
+    if ($conn->query($add_registration_sql) !== TRUE || $conn->query($update_category_sql) !== TRUE) {
+        echo "Some error occurred while adding registration details. Please try again later.";
         exit();
     }
     

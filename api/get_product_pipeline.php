@@ -23,12 +23,11 @@
         $wip = $row_wip['cnt'];
     }
 
-    $get_dispatch_sql = "SELECT DISTINCT a.product_id,COUNT(*) from product_shipment_booking a 
-                        INNER JOIN product_shipment_box_prep b ON a.product_id=b.product_id
-                        INNER JOIN product_shipment_dispatch c ON a.product_id=c.product_id ";
+    $get_dispatch_sql = "SELECT DISTINCT a.`product_id`,COUNT(*) from 
+                        product_shipment_dispatch a ";
     
     if($country_id != ""){
-        $get_dispatch_sql .= " AND a.product_id IN (SELECT DISTINCT product_id FROM product_master WHERE country_id = ".$country_id.") ";
+        $get_dispatch_sql .= " WHERE a.`product_id` IN (SELECT DISTINCT product_id FROM product_master WHERE country_id = ".$country_id.") ";
     }
 
     $get_dispatch_sql .= " GROUP by a.product_id";

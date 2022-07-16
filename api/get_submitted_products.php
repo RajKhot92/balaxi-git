@@ -7,6 +7,8 @@
     
     /*  Getting roles    */
     $get_progress_sql = "SELECT DISTINCT a.`product_id`,a.`product_name`,
+                        (SELECT `box` FROM product_submission_valid 
+                         WHERE psv_id=(SELECT max(psv_id) FROM `product_submission_valid` WHERE product_id=a.`product_id`)) box_date,
                         (SELECT CONCAT(submitted_moh,'@#$',submission_slip_no) FROM product_submission 
                          WHERE ps_id=(SELECT max(ps_id) FROM `product_submission` WHERE product_id=a.`product_id`)) submitted_data,
                         IF((SELECT COUNT(*) FROM product_registration pr WHERE pr.`product_id`=a.`product_id`) > 0, 'Registered', 'Not Registered') registration_status
@@ -19,14 +21,17 @@
     $result = mysqli_query($conn,$get_progress_sql);  
     $json_response = array();  
     
-    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['product_id'] = $row['product_id'];
-        $row_array['product_name'] = $row['product_name'];
-        $submission_data = explode("@#$", $row['submitted_data']);
-        $row_array['submitted_moh'] = $submission_data[0];
-        $row_array['submission_slip_no'] = $submission_data[1];
-        $row_array['registration_status'] = $row['registration_status'];
-        array_push($json_response,$row_array);  
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        if($row['registration_status'] == "Not Registered"){
+            $row_array['product_id'] = $row['product_id'];
+            $row_array['product_name'] = $row['product_name'];
+            $row_array['box_date'] = $row['box_date'];
+            $submission_data = explode("@#$", $row['submitted_data']);
+            $row_array['submitted_moh'] = $submission_data[0];
+            $row_array['submission_slip_no'] = $submission_data[1];
+            $row_array['registration_status'] = $row['registration_status'];
+            array_push($json_response,$row_array);
+        }  
     }
 
     echo json_encode($json_response); 
