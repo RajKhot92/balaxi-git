@@ -17,8 +17,7 @@
                     INNER JOIN product_category b ON a.`product_category`=b.`category_id` 
                     INNER JOIN user_master c ON a.`product_owner`=c.`user_id`
                     INNER JOIN country_master d ON a.`country_id`=d.`country_id`
-                    WHERE a.`del_by` IS NULL 
-                    AND UPPER(b.`category_name`)!=UPPER('REGISTERED')";
+                    WHERE a.`del_by` IS NULL ";
 
     if($login_id != 0){
         /*  Checking product already exists     */
@@ -31,7 +30,9 @@
             exit();
         }
 
-        $get_product_sql .= " AND a.`ent_by` = ".$login_id;
+        $get_product_sql .= " AND a.`ent_by` = ".$login_id." ";
+    }else{
+        $get_product_sql .= " AND UPPER(b.`category_name`)!=UPPER('REGISTERED') ";
     }
 
     if($product_id != 0){
@@ -45,7 +46,7 @@
             exit();
         }
 
-        $get_product_sql .= " AND product_id = ".$product_id;
+        $get_product_sql .= " AND product_id = ".$product_id." ";
     }
 
     if($product_owner != 0){
@@ -59,7 +60,7 @@
             exit();
         }
 
-        $get_product_sql .= " AND product_owner = ".$product_owner;
+        $get_product_sql .= " AND product_owner = ".$product_owner." ";
     }
 
     if($product_assigned_to != 0 && $assigned_menu_id != 0){
@@ -81,7 +82,7 @@
             exit();
         }
 
-        $get_product_sql .= " AND a.`product_id` IN (SELECT DISTINCT psm.`product_id` FROM `product_step_master` psm WHERE psm.`menu_id`=".$assigned_menu_id." AND psm.`user_id`=".$product_assigned_to.")";
+        $get_product_sql .= " AND a.`product_id` IN (SELECT DISTINCT psm.`product_id` FROM `product_step_master` psm WHERE psm.`menu_id`=".$assigned_menu_id." AND psm.`user_id`=".$product_assigned_to.") ";
     }
 
     $get_product_sql .= " ORDER BY product_name ";
@@ -96,7 +97,7 @@
         $row_array['product_owner'] = $row['product_owner'];
         $row_array['country_id'] = $row['country_id'];
         $row_array['category_name'] = $row['category_name'];
-        $row_array['deadline_dt'] = $row['deadline_dt'];
+        $row_array['deadline_dt'] = $row['deadline_dt'] == null ? "" : $row['deadline_dt'];
         $row_array['user_name'] = $row['user_name'];
         $row_array['country_name'] = $row['country_name'];
         $row_array['ent_by'] = $row['ent_by'];
