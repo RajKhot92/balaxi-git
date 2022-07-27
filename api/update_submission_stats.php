@@ -17,6 +17,14 @@
             $total_entries_translation++;
         }
 
+        $get_translation_received_sql = "SELECT count(*) cnt FROM `product_translation_received` 
+                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+        $result_translation_received = mysqli_query($conn,$get_translation_received_sql);
+        while ($row_translation_received = mysqli_fetch_array($result_translation_received, MYSQLI_ASSOC)) {  
+            $total_progress_translation += (int)$row_translation_received['cnt'] > 0 ? 1 : 0;
+            $total_entries_translation++;
+        }
+
         // echo "progess=".$total_progress_translation;
         // echo "entries=".$total_entries_translation;
         $total_percent_translation = (int)$total_progress_translation / (int)$total_entries_translation * 100;

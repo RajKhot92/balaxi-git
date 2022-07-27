@@ -5,7 +5,7 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $dw_id = mysqli_real_escape_string($conn, $_REQUEST['dw_id']);
+    $ptr_id = mysqli_real_escape_string($conn, $_REQUEST['ptr_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -25,25 +25,24 @@
         exit();
     }
 
-    /*  Getting artwork question    */
-    $get_writing_sql = "SELECT * FROM product_dossier_writing 
-                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."'";
+    /*  Getting market research    */
+    $get_translation_received_sql = "SELECT * FROM product_translation_received WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
 
-    if($dw_id != 0){
-        $get_writing_sql .= " AND dw_id = ".$dw_id;
+    if($ptr_id != 0){
+        $get_translation_received_sql .= " AND ptr_id = ".$ptr_id;
     }
 
-    $get_writing_sql .= " ORDER BY dw_id DESC ";
+    $get_translation_received_sql .= " ORDER BY ptr_id DESC ";
 
-    $result = mysqli_query($conn,$get_writing_sql);  
+    $result = mysqli_query($conn,$get_translation_received_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['dw_id'] = $row['dw_id'];
+        $row_array['ptr_id'] = $row['ptr_id'];
         $row_array['product_id'] = $row['product_id'];
+        $row_array['received_translator'] = $row['received_translator'];
         $row_array['file_type'] = $row['file_type'];
         $row_array['file_url'] = $row['file_url'];
-        $row_array['everything_complete'] = $row['everything_complete'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

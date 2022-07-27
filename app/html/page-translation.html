@@ -36,11 +36,6 @@
                                     <i style="cursor: pointer;" 
                                         title="Click here to download this file" onclick="openDossierFile()" class="fas fa-file-pdf fa-lg text-danger"></i>
                                 </div>
-                                <div class="col-sm-6">
-                                    &nbsp;
-                                </div>
-                            </div>    
-                            <div class="form-group row">
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
@@ -54,21 +49,6 @@
                                         id="handed_translator"
                                         name="handed_translator"
                                         placeholder="Enter handed over to translator date"
-                                    />
-                                </div>
-                                <label
-                                    for="fname"
-                                    class="col-sm-2 text-end control-label col-form-label"
-                                  >Dossier (Local Langauge) <span style="color: red;">*</span></label
-                                >
-                                <div class="col-sm-4">
-                                    <input
-                                        type="file"
-                                        class="form-control"
-                                        id="dossier_local"
-                                        name="dossier_local"
-                                        accept="application/pdf"
-                                        placeholder="Enter dossier local"
                                     />
                                 </div>
                             </div>
@@ -130,9 +110,6 @@
                 translationTbody += "<tr>"+
                                             "<td align=\"center\">"+(i+1)+"</td>"+
                                             "<td align=\"center\">"+counter.handed_translator+"</td>"+
-                                            "<td align=\"center\">"+
-                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ps_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
-                                            "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
                                             	"<span title=\"Click here to delete this translation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslation("+counter.ps_id+")\"></span>"+
@@ -142,7 +119,7 @@
             }
         }else{
             translationTbody += "<tr>"+
-                            "<td colspan=\"5\" align=\"center\">No translation details found.</td>"
+                            "<td colspan=\"4\" align=\"center\">No translation details found.</td>"
                         "</tr>";
         }
         $("#divTranslation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"translationTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -150,7 +127,6 @@
                                     "<tr>"+
                                         "<th>Sr.No.</th>"+
                                         "<th>Handed over to Translator</th>"+
-                                        "<th>Dossier (Local Langauge)</th>"+
                                         "<th>Entry Date</th>"+
                                         "<th>Delete</th>"+
                                     "</tr>"+
@@ -162,7 +138,7 @@
         if(jsonTranslationData.length > 0){
             $("#translationTable").DataTable({
             	"columnDefs": [
-	            	{"targets": 4,"orderable": false}
+	            	{"targets": 3,"orderable": false}
             	]
             });
         }
@@ -170,10 +146,6 @@
 
     function getTranslation(){
     	return callAPIService("get_product_translation.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&ps_id=0");
-    }
-
-    function openFile(id){
-        downloadFile('product_translation','dossier_local','ps_id',id,"pdf");
     }
 
     function saveTranslation(){
@@ -184,29 +156,8 @@
             return false;
         }
 
-        if($("#dossier_local").val() == ""){
-            alert("Please upload dossier local document.");
-            $("#dossier_local").focus();
-            return false;
-        }
-
-        let fileResp = fileValidation('dossier_local','pdf');
-        if(!fileResp){
-            return false;
-        }
-
-        var fileSelect = document.getElementById('dossier_local');
-
-        // Get the files from the input
-        var files = fileSelect.files;
-        
         // Create a FormData object.
         var formData = new FormData();
-
-        //Grab only one file since this script disallows multiple file uploads.
-        var file = files[0]; 
-
-        formData.append('dossier_local', file, file.name);
 
         formData.append("login_id", $("#login_id").val());
         formData.append("product_id", $("#product_id").val());

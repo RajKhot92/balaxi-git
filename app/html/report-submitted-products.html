@@ -50,7 +50,7 @@
           </div>
           <div class="border-top">
             <div class="card-body text-center">
-              <button type="button" class="btn btn-dark" onclick="loadPageContent(19,'menu-report.html')">
+              <button type="button" class="btn btn-dark" onclick="back()">
                   <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
               </button>
             </div>
@@ -185,5 +185,13 @@
 
   function getSubmittedProductsWIP(countryId){
     return callAPIService("get_weekly_progress_wip.php","country_id="+countryId);
+  }
+
+  function back(){
+    if(localStorage.getItem("balaxi_user_role") == 4){
+      loadPageContent(19,"menu-report-executive.html");
+    }else{
+      loadPageContent(19,"menu-report.html");
+    }
   }
 </script>

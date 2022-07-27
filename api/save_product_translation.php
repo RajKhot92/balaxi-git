@@ -8,16 +8,6 @@
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $handed_translator = mysqli_real_escape_string($conn, $_REQUEST['handed_translator']);
-    if (!empty($_FILES['dossier_local']['name'])) {
-        if ($_FILES['dossier_local']['error'] != 0) {
-            echo 'Something wrong with the file.';
-            exit();
-        }
-
-        $file_name = $_FILES['dossier_local']['name'];
-        $file_tmp = $_FILES['dossier_local']['tmp_name'];
-        $file_content = addslashes(file_get_contents($_FILES['dossier_local']['tmp_name']));
-    }
     
     $conn -> autocommit(FALSE);
 
@@ -46,8 +36,8 @@
     }
 
     /*  Adding product translation     */
-    $add_translation_sql = "INSERT INTO product_translation (`product_id`, `handed_translator`, `dossier_local`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",STR_TO_DATE('".$handed_translator."', '%m/%d/%Y'),'".$file_content."',".$login_id.",NOW())";
+    $add_translation_sql = "INSERT INTO product_translation (`product_id`, `handed_translator`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",STR_TO_DATE('".$handed_translator."', '%m/%d/%Y'),".$login_id.",NOW())";
 
     if ($conn->query($add_translation_sql) !== TRUE) {
         echo "Some error occurred while adding translation details. Please try again later.";

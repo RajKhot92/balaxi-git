@@ -113,14 +113,31 @@ function loadUserMenus() {
 
 	              	// }
 				}else{
-					menuContent += "<li class=\"sidebar-item\">"+
-	                		"<a id=\""+menu.menu_id+"\" class=\"sidebar-link waves-effect waves-dark sidebar-link theme-menu\""+
-	                  		"href=\"#\""+
-	                  		"onclick=\"loadPageContent("+menu.menu_id+",'"+menu.menu_link+"')\""+
-	                  		"aria-expanded=\"false\">"+
-	                  		"<i class=\""+menu.menu_icon+"\"></i>&nbsp;"+
-	                  		"<span class=\"hide-menu\">"+menu.menu_name+"</span></a>"+
-              			"</li>";
+					if(menu.menu_name === "Reports"){
+						let menuLinkDynamic = "";
+						if(localStorage.getItem("balaxi_user_role") == 4){
+							menuLinkDynamic = "menu-report-executive.html";
+						}else{
+							menuLinkDynamic = "menu-report.html";
+						}
+						menuContent += "<li class=\"sidebar-item\">"+
+					                		"<a id=\""+menu.menu_id+"\" class=\"sidebar-link waves-effect waves-dark sidebar-link theme-menu\""+
+					                  		"href=\"#\""+
+					                  		"onclick=\"loadPageContent("+menu.menu_id+",'"+menuLinkDynamic+"')\""+
+					                  		"aria-expanded=\"false\">"+
+					                  		"<i class=\""+menu.menu_icon+"\"></i>&nbsp;"+
+					                  		"<span class=\"hide-menu\">"+menu.menu_name+"</span></a>"+
+				              			"</li>";
+					}else{
+						menuContent += "<li class=\"sidebar-item\">"+
+					                		"<a id=\""+menu.menu_id+"\" class=\"sidebar-link waves-effect waves-dark sidebar-link theme-menu\""+
+					                  		"href=\"#\""+
+					                  		"onclick=\"loadPageContent("+menu.menu_id+",'"+menu.menu_link+"')\""+
+					                  		"aria-expanded=\"false\">"+
+					                  		"<i class=\""+menu.menu_icon+"\"></i>&nbsp;"+
+					                  		"<span class=\"hide-menu\">"+menu.menu_name+"</span></a>"+
+				              			"</li>";
+					}
 				}
 			}
 		}
@@ -195,6 +212,13 @@ function downloadFile(tbl,col,col1,val,format) {
     popupwindow(queryString, "Report", "_blank", 1000, 700);
 }
 
+function downloadFileByURL(url){
+	const a = document.createElement('a');
+	a.href = serverURL+url;
+	a.target = "_blank";
+	a.click();
+}
+
 function loadUploadedFile(tbl,col,col1,val,format) {
 	let fileResult = getUploadedFile(tbl,col,col1,val);
     // console.log(fileResult);
@@ -210,6 +234,7 @@ function loadUploadedFile(tbl,col,col1,val,format) {
                 	report = "<object data=\"data:application/pdf;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" type=\"application/pdf\"></object>";
                 }else if(format == "jpg"){
                 	report = "<img src=\"data:application/jpg;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" />";
+                }else{
                 	//Nothing
                 }
                 $("#fileContent").html(report);
@@ -238,27 +263,26 @@ function fileValidation(fileInput,format){
     } else {
         var file = input.files[0];
         if(format == "pdf"){
-        	if(fileInput == "dossier"){
-        		if(file.size >= 20971520){
-	        		alert("Sorry! You can upload a file which is less than 20 MB in size.");
-		        	$("#"+fileInput).focus();
-		        	return false;
-		        }
-        	}else if(fileInput == "dossier_local"){
-        		if(file.size >= 20971520){
-	        		alert("Sorry! You can upload a file which is less than 20 MB in size.");
-		        	$("#"+fileInput).focus();
-		        	return false;
-		        }
-        	}else{
-        		if(file.size >= 5242880){
-	        		alert("Sorry! You can upload a file which is less than 5 MB in size.");
-		        	$("#"+fileInput).focus();
-		        	return false;
-		        }
-        	}
+        	if(file.size >= 5242880){
+        		alert("Sorry! You can upload a file which is less than 5 MB in size.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
         	if(!file.name.toUpperCase().endsWith(format.toUpperCase())){
 	        	alert("Kindly upload a "+format+" file.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
+	    }else if("dossier"){
+	        if(file.size >= 20971520){
+        		alert("Sorry! You can upload a file which is less than 20 MB in size.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
+        	if(!(file.name.toUpperCase().endsWith("PDF")
+        		|| file.name.toUpperCase().endsWith("DOC")
+        		|| file.name.toUpperCase().endsWith("DOCX")) ){
+	        	alert("Kindly upload a pdf or word document file.");
 	        	$("#"+fileInput).focus();
 	        	return false;
 	        }

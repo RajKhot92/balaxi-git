@@ -12,7 +12,13 @@
 
     $get_wip_sql = "SELECT count(*) cnt FROM `product_master` 
                     WHERE `product_id` IN (
-                    SELECT DISTINCT `product_id` FROM `product_step_master`) ";
+                    SELECT DISTINCT `product_id` FROM `product_step_master`) 
+                    AND product_id NOT IN (
+                    SELECT product_id FROM product_shipment_dispatch)
+                    AND product_id NOT IN (
+                    SELECT product_id FROM product_submission)
+                    AND product_id NOT IN (
+                    SELECT product_id FROM product_registration) ";
     
     if($country_id != ""){
         $get_wip_sql .= "AND country_id = ".$country_id;
@@ -24,10 +30,14 @@
     }
 
     $get_dispatch_sql = "SELECT DISTINCT a.`product_id`,COUNT(*) from 
-                        product_shipment_dispatch a ";
+                        product_shipment_dispatch a 
+                        WHERE product_id NOT IN (
+                        SELECT product_id FROM product_submission)
+                        AND product_id NOT IN (
+                        SELECT product_id FROM product_registration) ";
     
     if($country_id != ""){
-        $get_dispatch_sql .= " WHERE a.`product_id` IN (SELECT DISTINCT product_id FROM product_master WHERE country_id = ".$country_id.") ";
+        $get_dispatch_sql .= " AND a.`product_id` IN (SELECT DISTINCT product_id FROM product_master WHERE country_id = ".$country_id.") ";
     }
 
     $get_dispatch_sql .= " GROUP by a.product_id";
@@ -35,10 +45,12 @@
     $result_dispatch = mysqli_query($conn,$get_dispatch_sql);
     $dispatch = mysqli_num_rows($result_dispatch);
 
-    $get_submitted_sql = "SELECT product_id, count(*) FROM `product_submission` ";
+    $get_submitted_sql = "SELECT product_id, count(*) FROM `product_submission`
+                        WHERE product_id NOT IN (
+                        SELECT product_id FROM product_registration) ";
 
     if($country_id != ""){
-        $get_submitted_sql .= " WHERE product_id IN (SELECT DISTINCT product_id FROM product_master WHERE country_id = ".$country_id.") ";
+        $get_submitted_sql .= " AND product_id IN (SELECT DISTINCT product_id FROM product_master WHERE country_id = ".$country_id.") ";
     }
 
     $get_submitted_sql .= " GROUP by product_id";
@@ -61,14 +73,10 @@
     // echo "dispatch=".$dispatch;
     // echo "submitted=".$submitted;
     // echo "registered=".$registered;
-    
-    $submitted_new = $submitted - $registered;
-    $dispatch_new = $dispatch - $submitted_new;
-    $wip_new = $wip - $dispatch_new;
 
-    $row_array['wip'] = $wip_new;
-    $row_array['dispatch'] = $dispatch_new;
-    $row_array['submitted'] = $submitted_new;
+    $row_array['wip'] = $wip;
+    $row_array['dispatch'] = $dispatch;
+    $row_array['submitted'] = $submitted;
     $row_array['registered'] = $registered;
 
     $json_response = array();

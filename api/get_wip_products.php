@@ -16,10 +16,18 @@
                         (SELECT ROUND(IFNULL(SUM(progress)/7,0),2) from product_step_master WHERE product_id = a.`product_id`) progress
                         FROM `product_master` a 
                         INNER JOIN `country_master` b ON a.`country_id`=b.`country_id`
-                        INNER JOIN `user_master` c ON a.`product_owner`=c.`user_id` ";
+                        INNER JOIN `user_master` c ON a.`product_owner`=c.`user_id`
+                        WHERE a.`product_id` IN (
+                        SELECT `product_id` FROM product_step_master) 
+                        AND a.`product_id` NOT IN (
+                        SELECT `product_id` FROM product_shipment_dispatch)
+                        AND a.`product_id` NOT IN (
+                        SELECT `product_id` FROM product_submission)
+                        AND a.`product_id` NOT IN (
+                        SELECT `product_id` FROM product_registration) ";
 
     if($country_id != 0){
-        $get_product_report_sql .= "WHERE a.`country_id`=".$country_id;
+        $get_product_report_sql .= "AND a.`country_id`=".$country_id;
     }
 
     $result = mysqli_query($conn,$get_product_report_sql);  

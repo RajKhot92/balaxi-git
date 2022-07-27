@@ -1,0 +1,117 @@
+<div class="page-wrapper">
+  <div class="page-breadcrumb">
+    <div class="row">
+      <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Reports</h4>
+        <div class="ms-auto text-end">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Reports
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-3">
+                <div class="card card-hover">
+                  <div class="box bg-warning text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">Queries</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3" style="cursor: pointer;" onclick="loadSubPageContent('report-registration.html')">
+                <div class="card card-hover">
+                  <div class="box bg-cyan text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">Total Registrations</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3" style="cursor: pointer;" onclick="loadSubPageContent('report-wip-products.html')">
+                <div class="card card-hover">
+                  <div class="box bg-success text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">WIP</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3" style="cursor: pointer;" onclick="loadSubPageContent('report-pipeline-products.html')">
+                <div class="card card-hover">
+                  <div class="box bg-warning text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">Pipeline</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3" style="cursor: pointer;" onclick="loadSubPageContent('report-submitted-products.html')">
+                <div class="card card-hover">
+                  <div class="box bg-danger text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">Submitted Products</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3" style="cursor: pointer;" onclick="loadSubPageContent('report-dispatched-submitted.html')">
+                <div class="card card-hover">
+                  <div class="box bg-info text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">Dispatched vs Submitted</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3" style="cursor: pointer;" onclick="loadSubPageContent('report-halted-products.html')">
+                <div class="card card-hover">
+                  <div class="box bg-cyan text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">Products on Halt</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3" style="cursor: pointer;" onclick="loadSubPageContent('report-expiry-documents.html')">
+                <div class="card card-hover">
+                  <div class="box bg-success text-center">
+                    <h1 class="font-light text-white">
+                      <i class="mdi mdi-view-dashboard"></i>
+                    </h1>
+                    <h6 class="text-white">Expiry Documents</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    
+  });
+</script>

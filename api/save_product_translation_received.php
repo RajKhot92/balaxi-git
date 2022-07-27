@@ -2,27 +2,27 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
-    include "update_dossier_development_stats.php";
+    include "update_submission_stats.php";
 
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $everything_complete = mysqli_real_escape_string($conn, $_REQUEST['everything_complete']);
+    $received_translator = mysqli_real_escape_string($conn, $_REQUEST['received_translator']);
     $file_type = mysqli_real_escape_string($conn, $_REQUEST['file_type']);
-    if (!empty($_FILES['dossier']['name'])) {
-        if ($_FILES['dossier']['error'] != 0) {
+    if (!empty($_FILES['dossier_local']['name'])) {
+        if ($_FILES['dossier_local']['error'] != 0) {
             echo 'Something wrong with the file.';
             exit();
         }
 
-        $file_name = $_FILES['dossier']['name'];
-        $file_tmp = $_FILES['dossier']['tmp_name'];
-        $file_content = addslashes(file_get_contents($_FILES['dossier']['tmp_name']));
+        $file_name = $_FILES['dossier_local']['name'];
+        $file_tmp = $_FILES['dossier_local']['tmp_name'];
+        $file_content = addslashes(file_get_contents($_FILES['dossier_local']['tmp_name']));
     }
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $everything_complete === ""){
+    if($login_id === "" || $product_id === "" || $received_translator === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -46,32 +46,32 @@
         exit();
     }
 
-    /*  Adding artwork question     */
-    $new_dossier_id = 0;
-    $dossier_id_result = mysqli_query($conn, "SELECT IFNULL(MAX(dw_id),0)+1 AS new_dossier_id FROM product_dossier_writing");
-    while ($row_did = mysqli_fetch_array($dossier_id_result, MYSQLI_ASSOC)) {
-        $new_dossier_id = $row_did["new_dossier_id"];
+    /*  Adding product translation     */
+    $new_translation_received_id = 0;
+    $translation_received_id_result = mysqli_query($conn, "SELECT IFNULL(MAX(ptr_id),0)+1 AS new_translation_received_id FROM product_translation_received");
+    while ($row_trid = mysqli_fetch_array($translation_received_id_result, MYSQLI_ASSOC)) {
+        $new_translation_received_id = $row_trid["new_translation_received_id"];
     }
     
-    $target_dir = "dossier/";
-    $target_file = $target_dir . $new_dossier_id . "-" . basename($_FILES["dossier"]["name"]);
-    if(move_uploaded_file($_FILES["dossier"]["tmp_name"], $target_file)){
+    $target_dir = "translation-received/";
+    $target_file = $target_dir . $new_translation_received_id . "-" . basename($_FILES["dossier_local"]["name"]);
+    if(move_uploaded_file($_FILES["dossier_local"]["tmp_name"], $target_file)){
         //File successfully uploaded
     }else{
         echo "Some error occurred while uploading file.";
         exit();
     }
 
-    $add_writing_sql = "INSERT INTO product_dossier_writing (`dw_id`, `product_id`, `file_type`, `file_url`, `everything_complete`, `ent_by`, `ent_dt`)
-                            VALUES (".$new_dossier_id.",".$product_id.",'".$file_type."','".$target_file."',STR_TO_DATE('".$everything_complete."', '%m/%d/%Y'),".$login_id.",NOW())";
+    $add_translation_received_sql = "INSERT INTO product_translation_received (`ptr_id`, `product_id`, `received_translator`, `file_type`, `file_url`, `ent_by`, `ent_dt`)
+                            VALUES (".$new_translation_received_id.",".$product_id.",STR_TO_DATE('".$received_translator."', '%m/%d/%Y'),'".$file_type."','".$target_file."',".$login_id.",NOW())";
 
-    if ($conn->query($add_writing_sql) !== TRUE) {
-        echo "Some error occurred while adding dossier writing details. Please try again later.";
+    if ($conn->query($add_translation_received_sql) !== TRUE) {
+        echo "Some error occurred while adding translation received details. Please try again later.";
         exit();
     }
     
     if (!$conn -> commit()) {
-        echo "Some error occurred while adding dossier writing details. Please try again later.";
+        echo "Some error occurred while adding translation received details. Please try again later.";
         exit();
     }else{
         $retval = processStats($login_id,$product_id,$conn);
@@ -87,4 +87,4 @@
     }
 
     $conn->close();
-?>
+?>  
