@@ -32,7 +32,7 @@
 
         $get_product_sql .= " AND a.`ent_by` = ".$login_id." ";
     }else{
-        $get_product_sql .= " AND UPPER(b.`category_name`)!=UPPER('REGISTERED') ";
+        $get_product_sql .= " AND UPPER(b.`category_name`)!=UPPER('REGISTERED') AND UPPER(b.`category_name`)!=UPPER('CLOSED') ";
     }
 
     if($product_id != 0){

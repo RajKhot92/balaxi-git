@@ -29,7 +29,8 @@
                         INNER JOIN `user_master` b ON a.`product_owner`=b.`user_id`
                         INNER JOIN `country_master` c ON a.`country_id`=c.`country_id`
                         INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` 
-                        WHERE UPPER(d.`category_name`)!=UPPER('REGISTERED') ";
+                        WHERE UPPER(d.`category_name`)!=UPPER('REGISTERED') 
+                        AND UPPER(d.`category_name`)!=UPPER('CLOSED')";
     if($role_id == 3){
         $get_products_sql .= "AND a.`product_owner`=".$login_id." ";
 

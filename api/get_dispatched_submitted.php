@@ -11,7 +11,9 @@
                             IF((SELECT COUNT(*) FROM product_submission ps WHERE ps.`product_id`=a.`product_id`) > 0, 'Submitted', 'Not Submitted') submission_status
                             from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id`
                             INNER JOIN product_shipment_dispatch c ON a.`product_id`=c.`product_id`
-                            WHERE c.`psd_id` IN (SELECT MAX(psd_id) from product_shipment_dispatch GROUP by product_id) ";
+                            WHERE c.`psd_id` IN (SELECT MAX(psd_id) from product_shipment_dispatch GROUP by product_id)
+                            AND a.`product_id` NOT IN (
+                                SELECT `product_id` FROM product_registration)  ";
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;

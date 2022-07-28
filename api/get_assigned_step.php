@@ -17,7 +17,7 @@
 					INNER JOIN `country_master` d ON b.`country_id`=d.`country_id` 
 					INNER JOIN `menu_master` e ON a.`menu_id`=e.`menu_id` 
 					WHERE a.`user_id`=".$login_id." 
-                    AND b.`product_category` != (SELECT `category_id` FROM `product_category` WHERE UPPER(`category_name`)=UPPER('REGISTERED'))";
+                    AND b.`product_category` NOT IN (SELECT `category_id` FROM `product_category` WHERE UPPER(`category_name`)=UPPER('REGISTERED') OR UPPER(`category_name`)=UPPER('CLOSED'))";
 
     $result = mysqli_query($conn,$get_steps_sql);  
     $json_response = array();  
