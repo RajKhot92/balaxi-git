@@ -15,7 +15,14 @@
                         FROM `product_master` a 
                         INNER JOIN `country_master` b ON a.`country_id`=b.`country_id`
                         INNER JOIN `user_master` c ON a.`product_owner`=c.`user_id` 
-                        WHERE a.`product_category`!=(SELECT `category_id` FROM `product_category` WHERE UPPER(`category_name`)=UPPER('REGISTERED'))";
+                        WHERE a.`product_id` IN (
+                        SELECT `product_id` FROM product_step_master) 
+                        AND a.`product_id` NOT IN (
+                        SELECT `product_id` FROM product_shipment_dispatch) 
+                        AND a.`product_id` NOT IN (
+                        SELECT `product_id` FROM product_submission) 
+                        AND a.`product_id` NOT IN (
+                        SELECT `product_id` FROM product_registration) ";
 
     $result = mysqli_query($conn,$get_product_report_sql);  
     $json_response = array();  
