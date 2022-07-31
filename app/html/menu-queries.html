@@ -1,0 +1,88 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Queries</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Queries
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-queries-received.html')">
+                <div class="bg-dark p-15 text-white text-center">
+                    <h4>1.</h4>
+                    <h5 class="mb-1 mt-1">Queries Received</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divQueriesReceived">
+                            <h4>N/A</h4>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax="100" style="width:100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 mt-4" style="cursor: pointer;" onclick="loadSubPageContent('page-queries-solution-received.html')">
+                <div class="bg-dark p-15 text-white text-center">
+                    <h4>2.</h4>
+                    <h5 class="mb-1 mt-1">Solution Received</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divSolutionReceived">
+                            <h4>N/A</h4>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax="100" style="width:100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 mt-4" style="cursor: pointer;"  onclick="loadSubPageContent('page-queries-solution-submitted.html')">
+                <div class="bg-dark p-15 text-white text-center">
+                    <h4>3.</h4>
+                    <h5 class="mb-1 mt-1">Solution Submitted</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divSolutionSubmitted">
+                            <h4>N/A</h4>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax="100" style="width:100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-top">
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-danger" onclick="back()">
+                        <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                    </button>      
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+    });
+
+    function back() {
+        loadPageContentFromBackButton(15,'menu-submission.html');
+    }
+</script>

@@ -2,17 +2,14 @@
 	header('Access-Control-Allow-Origin: *');
 	include "db_connect.php";
 
-    include "update_submission_stats.php";
-
     /*  Taking user input     */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $received_date = mysqli_real_escape_string($conn, $_REQUEST['received_date']);
-    $total_queries = mysqli_real_escape_string($conn, $_REQUEST['total_queries']);
-    $queries = mysqli_real_escape_string($conn, $_REQUEST['queries']);
-    $solution_received = mysqli_real_escape_string($conn, $_REQUEST['solution_received']);
-    $solution_submitted = mysqli_real_escape_string($conn, $_REQUEST['solution_submitted']);
-    $submission_slip_date = mysqli_real_escape_string($conn, $_REQUEST['submission_slip_date']);
+    $query_no = mysqli_real_escape_string($conn, $_REQUEST['query_no']);
+    $desc_box = mysqli_real_escape_string($conn, $_REQUEST['desc_box']);
+    $query_category = mysqli_real_escape_string($conn, $_REQUEST['query_category']);
+    $deadline_dt = mysqli_real_escape_string($conn, $_REQUEST['deadline_dt']);
     
     if (!empty($_FILES['queries_file']['name'])) {
         if ($_FILES['queries_file']['error'] != 0) {
@@ -24,21 +21,10 @@
         $file_tmp = $_FILES['queries_file']['tmp_name'];
         $file_content_queries = addslashes(file_get_contents($_FILES['queries_file']['tmp_name']));
     }
-
-    if (!empty($_FILES['submission_slip']['name'])) {
-        if ($_FILES['submission_slip']['error'] != 0) {
-            echo 'Something wrong with the file.';
-            exit();
-        }
-
-        $file_name = $_FILES['submission_slip']['name'];
-        $file_tmp = $_FILES['submission_slip']['tmp_name'];
-        $file_content_submission = addslashes(file_get_contents($_FILES['submission_slip']['tmp_name']));
-    }
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $received_date === "" || $total_queries === "" || $queries === "" || $solution_received === "" || $solution_submitted === "" || $submission_slip_date === ""){
+    if($login_id === "" || $product_id === "" || $received_date === "" || $query_no === "" || $desc_box === "" || $query_category === "" || $deadline_dt === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -63,28 +49,19 @@
     }
 
     /*  Adding product queries     */
-    $add_queries_sql = "INSERT INTO product_submission_query (`product_id`, `received_date`, `total_queries`, `queries_file`, `queries`, `solution_received`, `solution_submitted`, `submission_slip`, `submission_slip_date`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",STR_TO_DATE('".$received_date."', '%m/%d/%Y'),".$total_queries.",'".$file_content_queries."','".$queries."',STR_TO_DATE('".$solution_received."', '%m/%d/%Y'),STR_TO_DATE('".$solution_submitted."', '%m/%d/%Y'),'".$file_content_submission."',STR_TO_DATE('".$submission_slip_date."', '%m/%d/%Y'),".$login_id.",NOW())";
+    $add_queries_sql = "INSERT INTO product_queries_received (`product_id`, `received_date`, `query_no`, `queries_file`, `desc_box`, `query_category`, `deadline_dt`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",STR_TO_DATE('".$received_date."', '%m/%d/%Y'),'".$query_no."','".$file_content_queries."','".$desc_box."',".$query_category.",STR_TO_DATE('".$deadline_dt."', '%m/%d/%Y'),".$login_id.",NOW())";
 
     if ($conn->query($add_queries_sql) !== TRUE) {
-        echo "Some error occurred while adding queries details. Please try again later.";
+        echo "Some error occurred while adding query received details. Please try again later.";
         exit();
     }
     
     if (!$conn -> commit()) {
-        echo "Some error occurred while adding queries details. Please try again later.";
+        echo "Some error occurred while adding query received details. Please try again later.";
         exit();
     }else{
-        $retval = processStats($login_id,$product_id,$conn);
-        if($retval == "0"){
-            echo "Some error occurred while updating progress details. Please try again later.";
-            exit();
-        }else if($retval != "1"){
-            echo $retval;
-            exit();
-        }else{
-            echo $retval;
-        }
+        echo "1";
     }
 
     $conn->close();

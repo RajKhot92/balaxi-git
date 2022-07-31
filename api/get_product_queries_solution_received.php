@@ -25,36 +25,36 @@
         exit();
     }
 
-    /*  Getting market research    */
-    $get_queries_sql = "SELECT a.`psq_id`,a.`product_id`,a.`received_date`,a.`query_no`,
-                        a.`desc_box`,a.`deadline_dt`,a.`ent_by`,a.`ent_dt`,
-                        b.`category_name`,c.`product_name`,d.`country_name`
-                        FROM product_queries_received a 
-                        INNER JOIN query_category b ON a.`query_category`=b.`category_id`
+    /*  Getting artwork question    */
+    $get_solution_sql = "SELECT a.`psq_id`,a.`product_id`,c.`product_name`, 
+                        a.`query_no`,a.`desc_box`,b.`pqs_id`,b.`solution_desc`, 
+                        b.`file_url`,b.`file_type`,b.`ent_dt` 
+                        FROM `product_queries_received` a 
+                        INNER JOIN product_queries_solution b ON a.`psq_id`=b.`psq_id`
                         INNER JOIN product_master c ON a.`product_id`=c.`product_id` 
-                        INNER JOIN country_master d ON c.`country_id`=d.`country_id`
-                        WHERE a.`product_id`=".$product_id." AND a.`ent_by`=".$login_id." ";
+                        WHERE b.`pqs_id` IN (
+                        SELECT MAX(pqs_id) FROM `product_queries_solution` GROUP by psq_id) 
+                        AND a.`product_id`=".$product_id." AND a.`ent_by`=".$login_id;
 
     if($psq_id != 0){
-        $get_queries_sql .= " AND a.`psq_id` = ".$psq_id;
+        $get_solution_sql .= " AND a.`psq_id` = ".$psq_id;
     }
 
-    $get_queries_sql .= " ORDER BY a.`psq_id` DESC ";
-
-    $result = mysqli_query($conn,$get_queries_sql);  
+    $get_solution_sql .= " ORDER BY a.`psq_id` DESC ";
+    
+    $result = mysqli_query($conn,$get_solution_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
         $row_array['psq_id'] = $row['psq_id'];
         $row_array['product_id'] = $row['product_id'];
         $row_array['product_name'] = $row['product_name'];
-        $row_array['received_date'] = $row['received_date'];
         $row_array['query_no'] = $row['query_no'];
         $row_array['desc_box'] = $row['desc_box'];
-        $row_array['category_name'] = $row['category_name'];
-        $row_array['deadline_dt'] = $row['deadline_dt'];
-        $row_array['country_name'] = $row['country_name'];
-        $row_array['ent_by'] = $row['ent_by'];
+        $row_array['pqs_id'] = $row['pqs_id'];
+        $row_array['solution_desc'] = $row['solution_desc'];
+        $row_array['file_url'] = $row['file_url'];
+        $row_array['file_type'] = $row['file_type'];
         $row_array['ent_dt'] = $row['ent_dt'];
         array_push($json_response,$row_array);
     }

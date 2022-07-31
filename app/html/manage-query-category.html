@@ -1,0 +1,213 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Query Category Master</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Query Category Master
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" id="frmCategory" name="frmCategory">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Add Query Category</h4>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-6 text-end control-label col-form-label"
+                                  >Query Category</label
+                                >
+                                <div class="col-sm-4">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="category_name"
+                                        name="category_name"
+                                        maxlength="50"
+                                        placeholder="Enter query category"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" onclick="saveQueryCategory()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetQueryCategory()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added Query Category</h4>
+                        <div class="card-body" id="divQueryCategory" class="table-responsive">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    var existCategoryList = new Array();
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        loadCategories();
+    });
+
+    function loadCategories(){
+    	existCategoryList = new Array();
+        let categoryResult = getCategories();
+        // console.log(categoryResult);
+        var jsonCategoryData = JSON.parse(categoryResult);
+        var categoryTbody = "";
+        if(jsonCategoryData.length > 0){
+            for(i=0; i<jsonCategoryData.length; i++){
+                var counter = jsonCategoryData[i];
+                categoryTbody += "<tr>"+
+                                    "<td align=\"center\">"+(i+1)+"</td>"+
+                                    "<td>"+
+                                    	"<span style=\"display:none;\" class=\"editCategory"+counter.category_id+"\">"+
+                                    	"<input type=\"text\" class=\"form-control\" id=\"edit_category_name"+counter.category_id+"\" name=\"edit_category_name"+counter.category_id+"\" value=\""+counter.category_name+"\"></span>"+
+                                    	"<span class=\"viewCategory"+counter.category_id+"\">"+counter.category_name+"</span>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+
+                                    	"<span title=\"Click here to edit this query category\" class=\"fas fa-pencil-alt fa-lg text-warning editButton"+counter.category_id+"\" style=\"cursor:pointer;\" onclick=\"updateCategory("+counter.category_id+")\"></span>"+
+                                    	"<span title=\"Click here to save this query category\" class=\"fas fa-save fa-lg text-success saveButton"+counter.category_id+"\" style=\"cursor:pointer; display:none;\" onclick=\"editCategory("+counter.category_id+")\"></span>"+
+                                    "</td>"+
+                                    "<td align=\"center\">"+
+                                    	"<span title=\"Click here to delete this query category\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteCategory("+counter.category_id+")\"></span>"+
+                                    "</td>"+
+                                "</tr>";      
+
+                //Adding existing category
+                existCategoryList.push(
+                    {
+                        "category_name":counter.category_name.toLowerCase()
+                    }
+                );
+            }
+        }else{
+            categoryTbody += "<tr>"+
+                            "<td colspan=\"4\" align=\"center\">No query category details found.</td>"
+                        "</tr>";
+        }
+        $("#divQueryCategory").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"categoryTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>Query Category</th>"+
+                                        "<th>Edit</th>"+
+                                        "<th>Delete</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    categoryTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonCategoryData.length > 0){
+            $("#categoryTable").DataTable({
+            	"columnDefs": [
+	            	{"targets": 2,"orderable": false},
+	            	{"targets": 3,"orderable": false}
+            	]
+            });
+        }
+    }
+
+    function getCategories(){
+    	return callAPIService("get_query_category.php","&category_id=0");
+    }
+
+    function saveQueryCategory(){
+    	
+        if($("#category_name").val() == ""){
+    		alert("Please enter valid query category name.");
+    		$("#category_name").focus();
+    		return false;
+    	}
+
+        let existCategoryName = existCategoryList.find(e => e.category_name == $("#category_name").val().trim().toLowerCase())
+        if(existCategoryName !== undefined){
+            alert("Entered query category name is already exists. Please enter another query category name.");
+         $("#category_name").focus();
+         return false;    
+        }
+
+    	let categorySaveResult = saveCategoryData($("#frmCategory").serialize());
+    	if(categorySaveResult != "1"){
+    		alert(categorySaveResult);
+    	}else{
+    		resetQueryCategory();
+    		alert("Query category details has been saved successfully.");
+    		loadCategories();
+    	}
+    }
+
+    function saveCategoryData(categoryData){
+    	return callAPIService("save_query_category.php",categoryData);
+    }
+
+    function editCategory(categoryId){
+    	if($("#edit_category_name"+categoryId).val() == ""){
+    		alert("Please enter valid query category name.");
+    		$("#edit_category_name"+categoryId).focus();
+    		return false;
+    	}
+
+    	if(confirm("Are you sure want to update this query category?")){
+			var updateData = "login_id="+localStorage.getItem("balaxi_user_id")+"&category_id="+categoryId+"&category_name="+$("#edit_category_name"+categoryId).val();
+
+	    	let categoryUpdateResult = editCategoryData(updateData);
+	    	if(categoryUpdateResult != "1"){
+	    		alert(categoryUpdateResult);
+	    	}else{
+	    		alert("Query category details has been updated successfully.");
+	    		loadCategories();
+	    	}
+		}
+    }
+
+    function updateCategory(categoryId){
+		$(".viewCategory"+categoryId).hide();
+		$(".editButton"+categoryId).hide();
+        $(".editCategory"+categoryId).show();
+    	$(".saveButton"+categoryId).show();
+    }
+
+    function editCategoryData(data){
+    	return callAPIService("update_query_category.php",data);
+    }
+
+    function resetQueryCategory(){
+    	$("#category_name").val("");
+    }
+
+    function deleteCategory(categoryId) {
+        alert("This feature is not yet implemented.");
+    }
+</script>
