@@ -130,8 +130,16 @@
     if(jsonWeeklyProgressData.length > 0){
       for(i=0; i<jsonWeeklyProgressData.length; i++){
         var counter = jsonWeeklyProgressData[i];
+        var clickable = "";
+        if(localStorage.getItem("balaxi_user_role") == 4){
+          clickable = counter.product_name;
+        }else{
+          clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
+        }
         progressTbody += "<tr>"+
-                          "<td align=\"center\">"+counter.product_name+"</td>"+
+                          "<td align=\"center\">"+
+                            clickable+
+                          "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
                           "<td align=\"center\">"+counter.executive+"</td>"+
@@ -180,8 +188,16 @@
     if(jsonWeeklyProgressWIPData.length > 0){
       for(i=0; i<jsonWeeklyProgressWIPData.length; i++){
         var counter = jsonWeeklyProgressWIPData[i];
+        var clickable = "";
+        if(localStorage.getItem("balaxi_user_role") == 4){
+          clickable = counter.product_name;
+        }else{
+          clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
+        }
         progressTbody += "<tr>"+
-                          "<td align=\"center\">"+counter.product_name+"</td>"+
+                          "<td align=\"center\">"+
+                            clickable+
+                          "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
                           "<td align=\"center\">"+(counter.deadline_dt == null ? "" : counter.deadline_dt)+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
@@ -214,5 +230,14 @@
 
   function getWeeklyProgressWIP(countryId){
     return callAPIService("get_weekly_progress_wip.php","country_id="+countryId);
+  }
+
+  function loadProductDetails(productId){
+    sessionStorage.clear();
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",3);
+    sessionStorage.setItem("product_details_product_id",productId);
+    sessionStorage.setItem("current_report","report-weekly-progress.html");
+    loadSubPageContent("product-assign-details.html");
   }
 </script>

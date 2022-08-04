@@ -5,11 +5,12 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
+    $show_all = mysqli_real_escape_string($conn, $_REQUEST['show_all']);
 
     /*  Checking role access    */
     $login_exist = "SELECT user_role FROM user_master 
                     WHERE user_id = ".$login_id." 
-                    AND user_role IN (1,2,3) AND del_by IS NULL";
+                    AND del_by IS NULL";
     $login_response = mysqli_query($conn, $login_exist);
     if (mysqli_num_rows($login_response) == 0){
         echo "Invalid login id. User not found for given login id.";
@@ -28,18 +29,29 @@
                         FROM `product_master` a 
                         INNER JOIN `user_master` b ON a.`product_owner`=b.`user_id`
                         INNER JOIN `country_master` c ON a.`country_id`=c.`country_id`
-                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` 
-                        WHERE UPPER(d.`category_name`)!=UPPER('REGISTERED') 
-                        AND UPPER(d.`category_name`)!=UPPER('CLOSED')";
-    if($role_id == 3){
-        $get_products_sql .= "AND a.`product_owner`=".$login_id." ";
+                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` ";
+    if($show_all == "0"){
+        $get_products_sql .= "WHERE UPPER(d.`category_name`)!=UPPER('REGISTERED') 
+                        AND UPPER(d.`category_name`)!=UPPER('CLOSED') ";
 
-        if($product_id != "0"){
-            $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
+        if($role_id == 3){
+            $get_products_sql .= "AND a.`product_owner`=".$login_id." ";
+
+            if($product_id != "0"){
+                $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
+            }
         }
     }else{
-        if($product_id != "0"){
-            $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
+        if($role_id == 3){
+            $get_products_sql .= "WHERE a.`product_owner`=".$login_id." ";
+
+            if($product_id != "0"){
+                $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
+            }
+        }else{
+            if($product_id != "0"){
+                $get_products_sql .= "WHERE a.`product_id`=".$product_id." ";   
+            }
         }
     }
 

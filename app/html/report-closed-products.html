@@ -3,13 +3,13 @@
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">Weekly Milestones</h4>
+        <h4 class="page-title">Closed Products</h4>
         <div class="ms-auto text-end">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">
-                Weekly Milestones
+                Closed Products
               </li>
             </ol>
           </nav>
@@ -32,21 +32,12 @@
 
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-8">
                 
-              </div>
-              <label for="fname"
-                class="col-3 text-end control-label col-form-label">
-                Period
-              </label>
-              <div class="col-md-3 mt-1">
-                Since Last &nbsp;&nbsp;
-                <input type="number" style="width: 50px; text-align: center;" id="txtDays" name="txtDays" maxlength="2" onchange="changeDays()" onkeypress="onlyNumberKey()">
-                &nbsp;Days
               </div>
             </div>
             <hr>
-            <div id="divMilestones">
+            <div id="divClosedProducts">
           
             </div>
           </div>
@@ -65,7 +56,6 @@
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#txtDays").val(7);
     loadCountry();
   });
 
@@ -81,94 +71,65 @@
             var counter = jsonCountryData[i];
             optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
         }
-        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchWeeklyMilestones()\">"+
+        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchClosedProducts()\">"+
                                    "<option value=\"0\">All</option>"+
                                    optionsCountryData+
                                 "</select>");
     }
 
-    fetchWeeklyMilestones();
+    fetchClosedProducts();
   }
 
   function getCountry() {
     return callAPIService("get_country.php","country_id=0");
   }
 
-  function changeDays(){
-    if(isNaN($("#txtDays").val())){
-      alert("Please enter number only.");
-      return false;
-    }
-
-    if(parseInt($("#txtDays").val()) < 0){
-      $("#txtDays").val(0);
-    }else if(parseInt($("#txtDays").val()) > 30){
-      $("#txtDays").val(30);
-    }else{
-      //Nothing
-    }
-    fetchWeeklyMilestones();
+  function fetchClosedProducts(){
+    loadClosedProducts($("#country_id").val());
   }
 
-  function fetchWeeklyMilestones(){
-    loadWeeklyMilestones($("#country_id").val(),$("#txtDays").val());
-  }
-
-  function loadWeeklyMilestones(countryId,lastDays){
-    let weeklyMilestonesResult = getWeeklyMilestones(countryId,lastDays);
-    // console.log(weeklyMilestonesResult);
-    var jsonWeeklyMilestonesData = JSON.parse(weeklyMilestonesResult);
-    // var wip = 0, dispatch = 0, registered = 0, submitted = 0;
+  function loadClosedProducts(countryId){
+    let closedProductsResult = getClosedProducts(countryId);
+    // console.log(closedProductsResult);
+    var jsonClosedProductsData = JSON.parse(closedProductsResult);
     var progressTbody = "";
-    if(jsonWeeklyMilestonesData.length > 0){
-      for(i=0; i<jsonWeeklyMilestonesData.length; i++){
-        var counter = jsonWeeklyMilestonesData[i];
-        var clickable = "";
-        if(localStorage.getItem("balaxi_user_role") == 4){
-          clickable = counter.product_name;
-        }else{
-          clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
-        }
+    if(jsonClosedProductsData.length > 0){
+      for(i=0; i<jsonClosedProductsData.length; i++){
+        var counter = jsonClosedProductsData[i];
         progressTbody += "<tr>"+
                           "<td align=\"center\">"+
-                            clickable+
+                            "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>"+
                           "</td>"+
-                          "<td align=\"center\">"+counter.category_name+"</td>"+
-                          "<td align=\"center\">"+(counter.deadline_dt == null ? "" : counter.deadline_dt)+"</td>"+
+                          "<td align=\"center\">"+counter.registration_complete+"</td>"+
+                          "<td align=\"center\">"+counter.registration_expired+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
-                          "<td align=\"center\">"+counter.menu_name+"</td>"+
-                          "<td align=\"center\">"+(counter.updt_dt == null ? "" : counter.updt_dt)+"</td>"+
-                          "<td align=\"center\">"+counter.progress+"</td>"+
                         "</tr>";  
       }
     }else{
       progressTbody += "<tr>"+
-                        "<td colspan=\"7\" align=\"center\">No details found.</td>"
+                        "<td colspan=\"4\" align=\"center\">No details found.</td>"
                       "</tr>";
     }
-    $("#divMilestones").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"milestonesTable\" width=\"100%\" cellspacing=\"0\">"+
+    $("#divClosedProducts").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"milestonesTable\" width=\"100%\" cellspacing=\"0\">"+
                             "<thead>"+
                                 "<tr>"+
                                     "<th>Product Name</th>"+
-                                    "<th>Category Name</th>"+
-                                    "<th>Deadline Date</th>"+
+                                    "<th>Registration Date</th>"+
+                                    "<th>Expiry Date</th>"+
                                     "<th>Product Owner</th>"+
-                                    "<th>Completed Step</th>"+
-                                    "<th>Last Update Date</th>"+
-                                    "<th>Total %</th>"+
                                 "</tr>"+
                             "</thead>"+
                             "<tbody>"+
                                 progressTbody+
                             "</tbody>"+
                         "</table>");
-    if(jsonWeeklyMilestonesData.length > 0){
+    if(jsonClosedProductsData.length > 0){
         $("#milestonesTable").DataTable();
     }
   }
 
-  function getWeeklyMilestones(countryId,lastDays) {
-    return callAPIService("get_weekly_milestones.php","country_id="+countryId+"&last_days="+lastDays);
+  function getClosedProducts(countryId) {
+    return callAPIService("get_closed_products.php","country_id="+countryId);
   }
 
   function loadProductDetails(productId){
@@ -176,7 +137,7 @@
     sessionStorage.removeItem("product_details_form_flag");
     sessionStorage.setItem("product_details_form_flag",3);
     sessionStorage.setItem("product_details_product_id",productId);
-    sessionStorage.setItem("current_report","report-weekly-milestones.html");
+    sessionStorage.setItem("current_report","report-closed-products.html");
     loadSubPageContent("product-assign-details.html");
   }
 </script>

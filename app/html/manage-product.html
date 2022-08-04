@@ -377,6 +377,13 @@
             $("#edit_product_category"+productId).focus();
             return false;
         }
+        
+        if($(".viewProductCategory"+productId).html() != "REGISTERED"){
+            if($("#edit_product_category"+productId+" option:selected").text() == "CLOSED"){
+                alert("You can not change category to CLOSED. Only REGISTERED products can be CLOSED.");
+                return false;
+            }
+        }
 
         if($("#edit_product_owner"+productId).val() == ""){
             alert("Please select valid product owner.");

@@ -170,7 +170,8 @@
     var optionsProductData = "";
     $(document).ready(function(){
 
-        if(sessionStorage.getItem("product_details_form_flag") == "1"){
+        if(sessionStorage.getItem("product_details_form_flag") == "1" || 
+            sessionStorage.getItem("product_details_form_flag") == "3"){
             // alert("dashboard");
             if(sessionStorage.getItem("product_details_product_id") != null && sessionStorage.getItem("product_details_product_id") != ""){
                 // alert(sessionStorage.getItem("product_details_product_id"));
@@ -363,7 +364,11 @@
     }
 
     function getProductSteps(productId) {
-        return callAPIService("get_assigned_step_tabular.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+productId);
+        var showAll = 0;
+        if(sessionStorage.getItem("product_details_form_flag") == "3"){
+            showAll = 1;
+        }
+        return callAPIService("get_assigned_step_tabular.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+productId+"&show_all="+showAll);
     }
 
     function resetProduct() {
@@ -374,6 +379,8 @@
         if(sessionStorage.getItem("product_details_form_flag") != ""){
             if(sessionStorage.getItem("product_details_form_flag") == "1"){
                 loadPageContent(1,"dashboard.html");
+            }else if(sessionStorage.getItem("product_details_form_flag") == "3"){
+                loadPageContent(20,sessionStorage.getItem("current_report"));
             }else{
                 loadPageContent(19,"product-assign-view.html");
             }

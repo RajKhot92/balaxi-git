@@ -122,9 +122,17 @@
     if(jsonExpiryDocumentsData.length > 0){
       for(i=0; i<jsonExpiryDocumentsData.length; i++){
         var counter = jsonExpiryDocumentsData[i];
+        var clickable = "";
+        if(localStorage.getItem("balaxi_user_role") == 4){
+          clickable = counter.product_name;
+        }else{
+          clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
+        }
         if(counter.cma != null){
           progressTbody += "<tr>"+
-                              "<td align=\"center\">"+counter.product_name+"</td>"+
+                              "<td align=\"center\">"+
+                                clickable+
+                              "</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.supplier_name+"</td>"+
                               "<td align=\"center\">CMA</td>"+
@@ -134,7 +142,9 @@
         }
         if(counter.copp != null){
           progressTbody += "<tr>"+
-                              "<td align=\"center\">"+counter.product_name+"</td>"+
+                              "<td align=\"center\">"+
+                                clickable+
+                              "</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.supplier_name+"</td>"+
                               "<td align=\"center\">CoPP</td>"+
@@ -144,7 +154,9 @@
         }
         if(counter.fsc != null){
           progressTbody += "<tr>"+
-                              "<td align=\"center\">"+counter.product_name+"</td>"+
+                              "<td align=\"center\">"+
+                                clickable+
+                              "</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.supplier_name+"</td>"+
                               "<td align=\"center\">FSC</td>"+
@@ -154,7 +166,9 @@
         }
         if(counter.gmp != null){
           progressTbody += "<tr>"+
-                              "<td align=\"center\">"+counter.product_name+"</td>"+
+                              "<td align=\"center\">"+
+                                clickable+
+                              "</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.supplier_name+"</td>"+
                               "<td align=\"center\">GMP</td>"+
@@ -164,7 +178,9 @@
         }
         if(counter.registration != null){
           progressTbody += "<tr>"+
-                              "<td align=\"center\">"+counter.product_name+"</td>"+
+                              "<td align=\"center\">"+
+                                clickable+
+                              "</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.supplier_name+"</td>"+
                               "<td align=\"center\">REGISTRATION</td>"+
@@ -174,7 +190,9 @@
         }
         if(counter.finish_product != null){
           progressTbody += "<tr>"+
-                              "<td align=\"center\">"+counter.product_name+"</td>"+
+                              "<td align=\"center\">"+
+                                clickable+
+                              "</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.supplier_name+"</td>"+
                               "<td align=\"center\">SAMPLE PRODUCT</td>"+
@@ -218,5 +236,14 @@
     }else{
       loadPageContent(19,"menu-report.html");
     }
+  }
+
+  function loadProductDetails(productId){
+    sessionStorage.clear();
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",3);
+    sessionStorage.setItem("product_details_product_id",productId);
+    sessionStorage.setItem("current_report","report-expiry-documents.html");
+    loadSubPageContent("product-assign-details.html");
   }
 </script>

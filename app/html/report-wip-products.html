@@ -96,11 +96,17 @@
     if(jsonWIPProductsData.length > 0){
       for(i=0; i<jsonWIPProductsData.length; i++){
         var counter = jsonWIPProductsData[i];
+        var clickable = "";
+        if(localStorage.getItem("balaxi_user_role") == 4){
+          clickable = counter.product_name;
+        }else{
+          clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
+        }
         progressTbody += "<tr>"+
                           "<td align=\"center\">"+(i+1)+"</td>"+
                           "<td>"+
                             ((counter.progress > 0)?
-                            ("<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>"):
+                            (clickable):
                             (counter.product_name))+
                           "</td>"+
                           "<td>"+counter.country_name+"</td>"+
@@ -180,5 +186,14 @@
     }else{
       loadPageContent(19,"menu-report.html");
     }
+  }
+
+  function loadProductDetails(productId){
+    sessionStorage.clear();
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",3);
+    sessionStorage.setItem("product_details_product_id",productId);
+    sessionStorage.setItem("current_report","report-wip-products.html");
+    loadSubPageContent("product-assign-details.html");
   }
 </script>
