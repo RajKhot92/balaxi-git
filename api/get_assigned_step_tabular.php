@@ -33,26 +33,14 @@
     if($show_all == "0"){
         $get_products_sql .= "WHERE UPPER(d.`category_name`)!=UPPER('REGISTERED') 
                         AND UPPER(d.`category_name`)!=UPPER('CLOSED') ";
+    }
 
-        if($role_id == 3){
-            $get_products_sql .= "AND a.`product_owner`=".$login_id." ";
-
-            if($product_id != "0"){
-                $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
-            }
-        }
-    }else{
-        if($role_id == 3){
-            $get_products_sql .= "WHERE a.`product_owner`=".$login_id." ";
-
-            if($product_id != "0"){
-                $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
-            }
-        }else{
-            if($product_id != "0"){
-                $get_products_sql .= "WHERE a.`product_id`=".$product_id." ";   
-            }
-        }
+    if($role_id == 3){
+        $get_products_sql .= "AND a.`product_owner`=".$login_id." ";
+    }
+    
+    if($product_id != "0"){
+        $get_products_sql .= "AND a.`product_id`=".$product_id." ";   
     }
 
     $get_products_sql .= "ORDER BY a.`product_id`";
