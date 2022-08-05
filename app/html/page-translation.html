@@ -32,9 +32,8 @@
                                     class="col-sm-3 text-end control-label col-form-label"
                                   >Dossier (English)</label
                                 >
-                                <div class="col-sm-3 mt-2">
-                                    <i style="cursor: pointer;" 
-                                        title="Click here to download this file" onclick="openDossierFile()" class="fas fa-file-pdf fa-lg text-danger"></i>
+                                <div class="col-sm-3 mt-2" id="divDossier">
+                                    
                                 </div>
                                 <label
                                     for="fname"
@@ -95,9 +94,33 @@
                 $(this).datepicker('hide');
             }
         );
-
-        loadTranslation();
+        loadDossier();
     });
+
+    function loadDossier(){
+        let dossierResult = getDossier();
+        // console.log(dossierResult);
+        var jsonDossierData = JSON.parse(dossierResult);
+        if(jsonDossierData.length > 0){
+            for(i=0; i<jsonDossierData.length; i++){
+                var counter = jsonDossierData[i];
+                var fileTypeIcon = "fas fa-file-pdf";
+                if(counter.file_type == "pdf"){
+                    fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+                }else{
+                    fileTypeIcon = "fas fa-file-word fa-lg text-info";
+                }
+                $("#divDossier").html("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>");
+            }
+        }else{
+            $("#divDossier").html("No file uploaded yet.");
+        }
+        loadTranslation();
+    }
+
+    function getDossier(){
+        return callAPIService("get_product_dossier_writing_by_product.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val());
+    }
 
     function loadTranslation(){
         let translationResult = getTranslation();
@@ -181,13 +204,8 @@
     	document.getElementById("frmTranslation").reset();
     }
 
-    function openDossierFile(){
-        if(dossier_id == 0){
-            alert("Sorry! Dossier (English) copy for this product has not yet uploaded.");
-            return false;
-        }else{
-            downloadFile('product_dossier_writing','dossier','dw_id',dossier_id,"pdf");
-        }
+    function openFile(url){
+        downloadFileByURL(url);
     }
 
     function deleteTranslation(mrId) {

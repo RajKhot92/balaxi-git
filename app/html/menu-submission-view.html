@@ -38,12 +38,26 @@
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="accordionExample1headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="btnTranslation" onclick="loadTranslation()">
-                      Translation
+                      Translation Submitted
                     </button>
                   </h2>
                   <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="accordionExample1headingOne" data-bs-parent="#accordionExample1">
                     <div class="accordion-body">
                       <div class="col-12" id="divTranslation" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample1headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="btnTranslationReceived" onclick="loadTranslationReceived()">
+                      Translation Received
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="accordionExample1headingTwo" data-bs-parent="#accordionExample1">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divTranslationReceived" style="height: 200px; overflow: scroll;">
                     
                       </div>
                     </div>
@@ -110,20 +124,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="accordionExample2headingFive">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive" id="btnQueries" onclick="loadDossierWriting()">
-                      Queries
-                    </button>
-                  </h2>
-                  <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingFive" data-bs-parent="#accordionExample2">
-                    <div class="accordion-body">
-                      <div class="col-12" id="divDossierWriting" style="height: 200px; overflow: scroll;">
-                    
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
 
             </div>
@@ -164,12 +164,12 @@
         $("#spnSubStep2").html("<b>Submission ("+counter.submission_main.toFixed(2)+"%)</b>");
 
         $("#btnTranslation").html("<b>Translation ("+counter.translation.toFixed(2)+"%)</b>");
+        $("#btnTranslationReceived").html("<b>Translation Received ("+counter.translation_received.toFixed(2)+"%)</b>");
 
         $("#btnValidation").html("<b>Validation ("+counter.validation.toFixed(2)+"%)</b>");
         $("#btnLegalization").html("<b>Legalization (DC) ("+counter.legalization.toFixed(2)+"%)</b>");
         $("#btnSubmission").html("<b>Submission ("+counter.submission.toFixed(2)+"%)</b>");
         $("#btnRegistration").html("<b>Registration ("+counter.registration.toFixed(2)+"%)</b>");
-        $("#btnQueries").html("<b>Queries ("+counter.queries.toFixed(2)+"%)</b>");
       }
     }
 
@@ -224,6 +224,69 @@
 
   function getTranslation(){
     return callAPIService("get_product_translation.php","login_id="+loginId+"&product_id="+productId+"&ps_id=0");
+  }
+
+  function loadTranslationReceived(){
+      let translationReceivedResult = getTranslationReceived();
+      // console.log(translationReceivedResult);
+      var jsonTranslationReceivedData = JSON.parse(translationReceivedResult);
+      var translationReceivedTbody = "";
+      if(jsonTranslationReceivedData.length > 0){
+          for(i=0; i<jsonTranslationReceivedData.length; i++){
+              var counter = jsonTranslationReceivedData[i];
+              var fileTypeIcon = "fas fa-file-pdf";
+              if(counter.file_type == "pdf"){
+                  fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+              }else{
+                  fileTypeIcon = "fas fa-file-word fa-lg text-info";
+              }
+              translationReceivedTbody += "<tr>"+
+                                          "<td align=\"center\">"+(i+1)+"</td>"+
+                                          "<td align=\"center\">"+counter.received_translator+"</td>"+
+                                          "<td align=\"center\">"+
+                                              "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFileByURL('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"+
+                                          "</td>"+
+                                          "<td>"+counter.ent_dt+"</td>"+
+                                          "<td align=\"center\">"+
+                                            "<span title=\"Click here to delete this translation received details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslationReceived("+counter.ptr_id+")\"></span>"+
+                                          "</td>"+
+                                      "</tr>";
+              dossier_id = counter.dossier_id;
+          }
+      }else{
+          translationReceivedTbody += "<tr>"+
+                          "<td colspan=\"5\" align=\"center\">No translation received details found.</td>"
+                      "</tr>";
+      }
+      $("#divTranslationReceived").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"translationReceivedTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>Received From Translator</th>"+
+                                      "<th>Dossier (Local Langauge)</th>"+
+                                      "<th>Entry Date</th>"+
+                                      "<th>Delete</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  translationReceivedTbody+
+                              "</tbody>"+
+                          "</table>");
+      if(jsonTranslationReceivedData.length > 0){
+          $("#translationReceivedTable").DataTable({
+            "columnDefs": [
+              {"targets": 4,"orderable": false}
+            ]
+          });
+      }
+  }
+
+  function getTranslationReceived(){
+    return callAPIService("get_product_translation_received.php","login_id="+loginId+"&product_id="+productId+"&ptr_id=0");
+  }
+
+  function openFileByURL(url){
+      downloadFileByURL(url);
   }
 
   function loadValidation(){

@@ -5,7 +5,6 @@
     /*  Taking user input   */
     $login_id = mysqli_real_escape_string($conn, $_REQUEST['login_id']);
     $product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
-    $ps_id = mysqli_real_escape_string($conn, $_REQUEST['ps_id']);
 
     $login_exist = "SELECT user_id FROM user_master 
                     WHERE user_id = ".$login_id."
@@ -25,26 +24,21 @@
         exit();
     }
 
-    /*  Getting market research    */
-    $get_translation_sql = "SELECT *
-                             FROM product_translation WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    /*  Getting product details    */
+    $get_dossier_details_sql = "SELECT dw_id,file_type,file_url
+    							FROM `product_dossier_writing`
+    							WHERE dw_id=(
+    							SELECT MAX(dw_id) FROM `product_dossier_writing` 
+    							WHERE product_id=".$product_id.")";
 
-    if($ps_id != 0){
-        $get_translation_sql .= " AND ps_id = ".$ps_id;
-    }
-
-    $get_translation_sql .= " ORDER BY ps_id DESC ";
-
-    $result = mysqli_query($conn,$get_translation_sql);  
+    $result = mysqli_query($conn,$get_dossier_details_sql);  
     $json_response = array();  
     
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
-        $row_array['ps_id'] = $row['ps_id'];
-        $row_array['product_id'] = $row['product_id'];
-        $row_array['handed_translator'] = $row['handed_translator'];
-        $row_array['ent_by'] = $row['ent_by'];
-        $row_array['ent_dt'] = $row['ent_dt'];        
-        array_push($json_response,$row_array);
+        $row_array['dw_id'] = $row['dw_id'];
+        $row_array['file_type'] = $row['file_type'];
+        $row_array['file_url'] = $row['file_url'];     
+        array_push($json_response,$row_array);  
     }
 
     echo json_encode($json_response); 
