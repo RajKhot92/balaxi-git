@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_physical_check_sql = "SELECT * FROM product_physical_check WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_physical_check_sql = "SELECT * FROM product_physical_check WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($pc_id != 0){
         $get_physical_check_sql .= " AND pc_id = ".$pc_id;

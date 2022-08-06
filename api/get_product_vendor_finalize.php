@@ -28,7 +28,9 @@
     /*  Getting nomenclature    */
     $get_vendor_finalize_sql = "SELECT *,
                             (SELECT IFNULL(MAX(fsc_id),0) FROM `product_fsc` where product_id=".$product_id." AND ent_by='".$login_id."') fsc
-                             FROM product_vendor_finalization WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+                             FROM product_vendor_finalization 
+                             WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                             AND del_by IS NULL";
 
     if($vf_id != 0){
         $get_vendor_finalize_sql .= " AND vf_id = ".$vf_id;

@@ -12,7 +12,7 @@
     					INNER JOIN user_master c on a.`product_owner`=c.`user_id`
                         WHERE a.`product_id` NOT IN (
                             SELECT DISTINCT `product_id` FROM `product_step_master`
-                        ) ";
+                        ) AND a.`del_by` IS NULL  ";
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;

@@ -29,7 +29,7 @@
     							FROM `product_dossier_writing`
     							WHERE dw_id=(
     							SELECT MAX(dw_id) FROM `product_dossier_writing` 
-    							WHERE product_id=".$product_id.")";
+    							WHERE product_id=".$product_id." AND `del_by` IS NULL) ";
 
     $result = mysqli_query($conn,$get_dossier_details_sql);  
     $json_response = array();  

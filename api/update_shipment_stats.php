@@ -10,7 +10,7 @@
         $total_entries = 0;
 
         $get_booking_sql = "SELECT count(*) cnt FROM `product_shipment_booking` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_booking = mysqli_query($conn,$get_booking_sql);
         while ($row_booking = mysqli_fetch_array($result_booking, MYSQLI_ASSOC)) {  
             $total_progress += (int)$row_booking['cnt'] > 0 ? 1 : 0;
@@ -18,7 +18,7 @@
         }
 
         $get_box_sql = "SELECT count(*) cnt FROM `product_shipment_box_prep` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_box = mysqli_query($conn,$get_box_sql);
         while ($row_box = mysqli_fetch_array($result_box, MYSQLI_ASSOC)) {  
             $total_progress += (int)$row_box['cnt'] > 0 ? 1 : 0;
@@ -26,7 +26,7 @@
         }
 
         $get_dipatch_sql = "SELECT count(*) cnt FROM `product_shipment_dispatch` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_dispatch = mysqli_query($conn,$get_dipatch_sql);
         while ($row_dispatch = mysqli_fetch_array($result_dispatch, MYSQLI_ASSOC)) {  
             $total_progress += (int)$row_dispatch['cnt'] > 0 ? 1 : 0;

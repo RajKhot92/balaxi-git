@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_certificate_analysis_sql = "SELECT * FROM product_certificate_analysis WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_certificate_analysis_sql = "SELECT * FROM product_certificate_analysis WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($ca_id != 0){
         $get_certificate_analysis_sql .= " AND ca_id = ".$ca_id;

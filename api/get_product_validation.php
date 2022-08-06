@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_validation_sql = "SELECT * FROM product_submission_valid WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_validation_sql = "SELECT * FROM product_submission_valid WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($psv_id != 0){
         $get_validation_sql .= " AND psv_id = ".$psv_id;

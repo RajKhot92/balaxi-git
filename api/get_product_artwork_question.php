@@ -26,7 +26,8 @@
     }
 
     /*  Getting artwork question    */
-    $get_artwork_question_sql = "SELECT * FROM product_artwork_question WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_artwork_question_sql = "SELECT * FROM product_artwork_question WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($aq_id != 0){
         $get_artwork_question_sql .= " AND aq_id = ".$aq_id;

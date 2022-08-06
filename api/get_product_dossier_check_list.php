@@ -27,7 +27,8 @@
 
     /*  Getting artwork question    */
     $get_check_list_sql = "SELECT * FROM product_dossier_check 
-                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."'";
+                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($dc_id != 0){
         $get_check_list_sql .= " AND dc_id = ".$dc_id;

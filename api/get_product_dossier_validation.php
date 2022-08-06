@@ -27,7 +27,8 @@
 
     /*  Getting artwork question    */
     $get_writing_sql = "SELECT * FROM product_dossier_valid_marker 
-                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."'";
+                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($dvm_id != 0){
         $get_writing_sql .= " AND dvm_id = ".$dvm_id;

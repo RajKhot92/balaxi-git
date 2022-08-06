@@ -26,7 +26,9 @@
     }
 
     /*  Getting nomenclature    */
-    $get_nomenclature_sql = "SELECT * FROM product_nomenclature WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_nomenclature_sql = "SELECT * FROM product_nomenclature 
+                            WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                            AND del_by IS NULL ";
 
     if($nom_id != 0){
         $get_nomenclature_sql .= " AND nom_id = ".$nom_id;

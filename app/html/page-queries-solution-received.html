@@ -60,6 +60,8 @@
         var fileTypeIcon = "fas fa-file-pdf";
         if(counter.file_type == "pdf"){
             fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+        }else if(counter.file_type == "zip" || counter.file_type == "rar"){
+            fileTypeIcon = "far fa-file-archive fa-lg text-warning";
         }else{
             fileTypeIcon = "fas fa-file-word fa-lg text-info";
         }

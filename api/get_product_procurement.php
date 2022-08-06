@@ -26,7 +26,9 @@
     }
 
     /*  Getting nomenclature    */
-    $get_procurement_sql = "SELECT * FROM product_procurement WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_procurement_sql = "SELECT * FROM product_procurement 
+                            WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($procure_id != 0){
         $get_procurement_sql .= " AND procure_id = ".$procure_id;

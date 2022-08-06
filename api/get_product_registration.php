@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_registration_sql = "SELECT * FROM product_registration WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_registration_sql = "SELECT * FROM product_registration WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($pr_id != 0){
         $get_registration_sql .= " AND pr_id = ".$pr_id;

@@ -281,8 +281,10 @@ function fileValidation(fileInput,format){
 	        }
         	if(!(file.name.toUpperCase().endsWith("PDF")
         		|| file.name.toUpperCase().endsWith("DOC")
-        		|| file.name.toUpperCase().endsWith("DOCX")) ){
-	        	alert("Kindly upload a pdf or word document file.");
+        		|| file.name.toUpperCase().endsWith("DOCX")
+        		|| file.name.toUpperCase().endsWith("ZIP")
+        		|| file.name.toUpperCase().endsWith("RAR")) ){
+	        	alert("Kindly upload a pdf/word/zip/rar document file.");
 	        	$("#"+fileInput).focus();
 	        	return false;
 	        }
@@ -313,4 +315,24 @@ function onlyNumberKey(evt) {
     if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
         return false;
     return true;
+}
+
+function deleteExecutiveEntry(tblNm,colId,colVal) {
+	let response = 0;
+	if(confirm("Are you sure want to delete this entry?")){
+		let deleteResult = deleteEntry(tblNm,colId,colVal);
+	    // console.log(deleteResult);
+	    if(deleteResult == "1" || deleteResult == '1' || deleteResult == 1){
+			alert("Executive entry successfully deleted.");
+			response = 1;
+	    }else{
+	    	alert(deleteResult);
+	    	response = 0;
+	    }
+	}
+    return response;
+}
+
+function deleteEntry(tblNm,colId,colVal) {
+	return callAPIService("delete_executive_entry.php","login_id="+localStorage.getItem("balaxi_user_id")+"&tbl_nm="+tblNm+"&col_id="+colId+"&col_val="+colVal);
 }

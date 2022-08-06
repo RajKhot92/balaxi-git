@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_fsc_sql = "SELECT * FROM product_fsc WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_fsc_sql = "SELECT * FROM product_fsc WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($fsc_id != 0){
         $get_fsc_sql .= " AND fsc_id = ".$fsc_id;

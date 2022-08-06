@@ -14,7 +14,8 @@
                     INNER JOIN product_category c ON b.`product_category`=c.`category_id`
                     INNER JOIN user_master d on b.`product_owner`=d.`user_id`
                     INNER JOIN menu_master f on a.`menu_id`=f.`menu_id`
-                    WHERE a.`progress`=100 
+                    WHERE a.`progress`=100
+                    AND b.`del_by` IS NULL 
                     AND a.`updt_dt` between DATE_SUB(NOW(), INTERVAL ".$last_month." MONTH) AND NOW() ";
 
     if($country_id != 0){

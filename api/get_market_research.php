@@ -26,7 +26,9 @@
     }
 
     /*  Getting market research    */
-    $get_market_research_sql = "SELECT * FROM product_market_research WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_market_research_sql = "SELECT * FROM product_market_research 
+                                WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($mr_id != 0){
         $get_market_research_sql .= " AND mr_id = ".$mr_id;

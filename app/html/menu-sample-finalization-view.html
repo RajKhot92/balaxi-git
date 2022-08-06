@@ -167,7 +167,7 @@
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this artwork questionnaire details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQuestionnaire("+counter.aq_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this artwork questionnaire details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQuestionnaire('product_artwork_question','aq_id',"+counter.aq_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -221,7 +221,7 @@
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this artwork artworks details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteArtworks("+counter.art_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this artwork artworks details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteArtworks('product_artwork','art_id',"+counter.art_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -274,7 +274,7 @@
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this artwork commercial document details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteCommercialDocument("+counter.cd_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this artwork commercial document details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteCommercialDocument('product_commercial_doc','cd_id',"+counter.cd_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -320,7 +320,7 @@
                                           "<td align=\"center\">"+counter.document+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this finalization artwork details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteFinalizationArtwork("+counter.aq_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this finalization artwork details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteFinalizationArtwork('product_artwork_finalize','aq_id',"+counter.aq_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -379,5 +379,33 @@
         break;
     }
     downloadFile(tbl,col,col1,id,format);
+  }
+
+  function deleteQuestionnaire(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadQuestionnaire();
+    }
+  }
+
+  function deleteArtworks(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadArtworks();
+    }
+  }
+
+  function deleteCommercialDocument(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadCommercialDocument();
+    }
+  }
+
+  function deleteFinalizationArtwork(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadFinalizationArtwork();
+    }
   }
 </script>

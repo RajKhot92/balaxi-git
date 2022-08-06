@@ -22,7 +22,8 @@
                         AND a.`product_id` NOT IN (
                         SELECT `product_id` FROM product_submission) 
                         AND a.`product_id` NOT IN (
-                        SELECT `product_id` FROM product_registration) ";
+                        SELECT `product_id` FROM product_registration) 
+                        AND a.`del_by` IS NULL ";
 
     $result = mysqli_query($conn,$get_product_report_sql);  
     $json_response = array();  

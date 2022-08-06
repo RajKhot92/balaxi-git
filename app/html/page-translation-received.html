@@ -55,7 +55,10 @@
                                         name="dossier_local"
                                         accept="application/pdf,
                                         application/msword,
-                                        application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                        application/x-zip-compressed,
+                                        application/zip,
+                                        .rar"
                                         placeholder="Enter dossier local"
                                     />
                                 </div>
@@ -118,6 +121,8 @@
                 var fileTypeIcon = "fas fa-file-pdf";
                 if(counter.file_type == "pdf"){
                     fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+                }else if(counter.file_type == "zip" || counter.file_type == "rar"){
+                    fileTypeIcon = "far fa-file-archive fa-lg text-warning";
                 }else{
                     fileTypeIcon = "fas fa-file-word fa-lg text-info";
                 }
@@ -205,8 +210,17 @@
             fileType = "doc";
         }else if(file.name.toUpperCase().endsWith("DOCX")){
             fileType = "docx";
+        }else if(file.name.toUpperCase().endsWith("ZIP")){
+            fileType = "zip";
+        }else if(file.name.toUpperCase().endsWith("RAR")){
+            fileType = "rar";
         }else{
             fileType = "";
+        }
+
+        if(fileType == ""){
+            alert("Kindly upload a pdf/word/zip/rar document file.");
+            return false;
         }
 
         formData.append('dossier_local', file, file.name);

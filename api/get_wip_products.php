@@ -24,7 +24,8 @@
                         AND a.`product_id` NOT IN (
                         SELECT `product_id` FROM product_submission)
                         AND a.`product_id` NOT IN (
-                        SELECT `product_id` FROM product_registration) ";
+                        SELECT `product_id` FROM product_registration)
+                        AND a.`del_by` IS NULL  ";
 
     if($country_id != 0){
         $get_product_report_sql .= "AND a.`country_id`=".$country_id;

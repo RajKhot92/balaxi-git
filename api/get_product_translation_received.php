@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_translation_received_sql = "SELECT * FROM product_translation_received WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_translation_received_sql = "SELECT * FROM product_translation_received WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($ptr_id != 0){
         $get_translation_received_sql .= " AND ptr_id = ".$ptr_id;

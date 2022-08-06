@@ -27,7 +27,8 @@
 
     /*  Getting artwork question    */
     $get_writing_sql = "SELECT * FROM product_dossier_writing 
-                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."'";
+                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($dw_id != 0){
         $get_writing_sql .= " AND dw_id = ".$dw_id;

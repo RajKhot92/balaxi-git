@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_pp_sql = "SELECT * FROM product_pp WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_pp_sql = "SELECT * FROM product_pp WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($pp_id != 0){
         $get_pp_sql .= " AND pp_id = ".$pp_id;

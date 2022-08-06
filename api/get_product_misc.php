@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_misc_sql = "SELECT * FROM product_misc WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_misc_sql = "SELECT * FROM product_misc WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($misc_id != 0){
         $get_misc_sql .= " AND misc_id = ".$misc_id;

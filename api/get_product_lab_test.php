@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_lab_test_sql = "SELECT * FROM product_lab_test WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_lab_test_sql = "SELECT * FROM product_lab_test WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($lt_id != 0){
         $get_lab_test_sql .= " AND lt_id = ".$lt_id;

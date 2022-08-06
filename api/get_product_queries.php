@@ -33,7 +33,8 @@
                         INNER JOIN query_category b ON a.`query_category`=b.`category_id`
                         INNER JOIN product_master c ON a.`product_id`=c.`product_id` 
                         INNER JOIN country_master d ON c.`country_id`=d.`country_id`
-                        WHERE a.`product_id`=".$product_id." AND a.`ent_by`=".$login_id." ";
+                        WHERE a.`product_id`=".$product_id." AND a.`ent_by`=".$login_id."  
+                                AND a.del_by IS NULL ";
 
     if($psq_id != 0){
         $get_queries_sql .= " AND a.`psq_id` = ".$psq_id;

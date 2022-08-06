@@ -26,7 +26,9 @@
     }
 
     /*  Getting product details    */
-    $get_product_details_sql = "SELECT * FROM product_details WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_product_details_sql = "SELECT * FROM product_details 
+                                WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($det_id != 0){
         $get_product_details_sql .= " AND det_id = ".$det_id;

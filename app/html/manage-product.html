@@ -458,6 +458,16 @@
     }
 
     function deleteProduct(productId){
-        alert("This feature is not yet implemented.");
+        let productDeleteResult = deleteProductData(productId);
+        if(productDeleteResult != "1" || productDeleteResult != 1 || productDeleteResult != '1'){
+            alert(productDeleteResult);
+        }else{
+            alert("Product details has been deleted successfully.");
+            loadProducts();
+        }
+    }
+
+    function deleteProductData(productId){
+        return callAPIService("delete_product.php","login_id="+$("#login_id").val()+"&product_id="+productId);
     }
 </script>

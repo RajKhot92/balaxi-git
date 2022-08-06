@@ -10,7 +10,7 @@
         $total_entries = 0;
 
         $get_finalization_sql = "SELECT count(*) cnt FROM `product_vendor_finalization` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL AND product_id=".$product_id;
         $result_finalization = mysqli_query($conn,$get_finalization_sql);
         while ($row_finalization = mysqli_fetch_array($result_finalization, MYSQLI_ASSOC)) {  
             $total_progress += (int)$row_finalization['cnt'] > 0 ? 1 : 0;
@@ -18,7 +18,7 @@
         }
 
         $get_doc_collection_sql = "SELECT count(*) cnt FROM `product_vendor_doc_collection` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_doc_collection = mysqli_query($conn,$get_doc_collection_sql);
         while ($row_doc_collection = mysqli_fetch_array($result_doc_collection, MYSQLI_ASSOC)) {  
             $total_progress += (int)$row_doc_collection['cnt'] > 0 ? 1 : 0;
@@ -26,7 +26,7 @@
         }
 
         $get_sample_collection_sql = "SELECT count(*) cnt FROM `product_vendor_sample_collection` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_sample_collection = mysqli_query($conn,$get_sample_collection_sql);
         while ($row_sample_collection = mysqli_fetch_array($result_sample_collection, MYSQLI_ASSOC)) {  
             $total_progress += (int)$row_sample_collection['cnt'] > 0 ? 1 : 0;

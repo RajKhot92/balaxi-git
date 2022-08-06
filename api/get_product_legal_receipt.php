@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_legal_receipt_sql = "SELECT * FROM product_legal_receipt WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_legal_receipt_sql = "SELECT * FROM product_legal_receipt WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($lr_id != 0){
         $get_legal_receipt_sql .= " AND lr_id = ".$lr_id;

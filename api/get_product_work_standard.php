@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_work_standard_sql = "SELECT * FROM product_work_standard WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_work_standard_sql = "SELECT * FROM product_work_standard WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($ws_id != 0){
         $get_work_standard_sql .= " AND ws_id = ".$ws_id;

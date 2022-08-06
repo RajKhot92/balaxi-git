@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_qnq_formula_sql = "SELECT * FROM product_qnq_formula WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_qnq_formula_sql = "SELECT * FROM product_qnq_formula WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($qnq_id != 0){
         $get_qnq_formula_sql .= " AND qnq_id = ".$qnq_id;

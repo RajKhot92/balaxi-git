@@ -29,9 +29,9 @@
                         FROM `product_master` a 
                         INNER JOIN `user_master` b ON a.`product_owner`=b.`user_id`
                         INNER JOIN `country_master` c ON a.`country_id`=c.`country_id`
-                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` ";
+                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` WHERE a.`del_by` IS NULL ";
     if($show_all == "0"){
-        $get_products_sql .= "WHERE UPPER(d.`category_name`)!=UPPER('REGISTERED') 
+        $get_products_sql .= "AND UPPER(d.`category_name`)!=UPPER('REGISTERED') 
                         AND UPPER(d.`category_name`)!=UPPER('CLOSED') ";
     }
 

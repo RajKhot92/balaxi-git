@@ -12,7 +12,8 @@
                         from product_master a 
                         INNER JOIN product_queries_received b ON a.`product_id`=b.`product_id`
                         INNER JOIN query_category c ON b.`query_category`=c.`category_id`
-                        INNER JOIN user_master d on a.`product_owner`=d.`user_id` ";
+                        INNER JOIN user_master d on a.`product_owner`=d.`user_id` 
+                        AND a.`del_by` IS NULL ";
 
     if($country_id != 0){
         $get_queries_sql .= "AND a.`country_id`=".$country_id;

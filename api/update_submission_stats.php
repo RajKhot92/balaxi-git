@@ -10,7 +10,7 @@
         $total_entries_translation = 0;
 
         $get_translation_sql = "SELECT count(*) cnt FROM `product_translation` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_translation = mysqli_query($conn,$get_translation_sql);
         while ($row_translation = mysqli_fetch_array($result_translation, MYSQLI_ASSOC)) {  
             $total_progress_translation += (int)$row_translation['cnt'] > 0 ? 1 : 0;
@@ -18,7 +18,7 @@
         }
 
         $get_translation_received_sql = "SELECT count(*) cnt FROM `product_translation_received` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_translation_received = mysqli_query($conn,$get_translation_received_sql);
         while ($row_translation_received = mysqli_fetch_array($result_translation_received, MYSQLI_ASSOC)) {  
             $total_progress_translation += (int)$row_translation_received['cnt'] > 0 ? 1 : 0;
@@ -34,7 +34,7 @@
         $total_entries_submission = 0;
 
         $get_validation_sql = "SELECT count(*) cnt FROM `product_submission_valid` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_validation = mysqli_query($conn,$get_validation_sql);
         while ($row_validation = mysqli_fetch_array($result_validation, MYSQLI_ASSOC)) {  
             $total_progress_submission += (int)$row_validation['cnt'] > 0 ? 1 : 0;
@@ -42,7 +42,7 @@
         }
 
         $get_legalization_sql = "SELECT count(*) cnt FROM `product_submission_legal` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_legalization = mysqli_query($conn,$get_legalization_sql);
         while ($row_legalization = mysqli_fetch_array($result_legalization, MYSQLI_ASSOC)) {  
             $total_progress_submission += (int)$row_legalization['cnt'] > 0 ? 1 : 0;
@@ -50,7 +50,7 @@
         }
 
         $get_submission_sql = "SELECT count(*) cnt FROM `product_submission` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_submission = mysqli_query($conn,$get_submission_sql);
         while ($row_submission = mysqli_fetch_array($result_submission, MYSQLI_ASSOC)) {  
             $total_progress_submission += (int)$row_submission['cnt'] > 0 ? 1 : 0;
@@ -58,7 +58,7 @@
         }
 
         $get_registration_sql = "SELECT count(*) cnt FROM `product_submission` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_registration = mysqli_query($conn,$get_registration_sql);
         while ($row_registration = mysqli_fetch_array($result_registration, MYSQLI_ASSOC)) {  
             $total_progress_submission += (int)$row_registration['cnt'] > 0 ? 1 : 0;

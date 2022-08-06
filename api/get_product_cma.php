@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_cma_sql = "SELECT * FROM product_cma WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_cma_sql = "SELECT * FROM product_cma WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($cma_id != 0){
         $get_cma_sql .= " AND cma_id = ".$cma_id;

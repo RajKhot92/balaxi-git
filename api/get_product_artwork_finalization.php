@@ -27,7 +27,8 @@
 
     /*  Getting artwork question    */
     $get_finalize_artwork_sql = "SELECT * FROM product_artwork_finalize 
-                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."'";
+                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($af_id != 0){
         $get_finalize_artwork_sql .= " AND af_id = ".$af_id;

@@ -14,13 +14,14 @@
                     INNER JOIN product_category c ON b.`product_category`=c.`category_id`
                     INNER JOIN user_master d on b.`product_owner`=d.`user_id`
                     INNER JOIN user_master e ON a.`user_id`=e.`user_id`
-                    INNER JOIN menu_master f on a.`menu_id`=f.`menu_id`";
+                    INNER JOIN menu_master f on a.`menu_id`=f.`menu_id` 
+                    WHERE b.`del_by` IS NULL ";
 
     if($country_id != 0){
-        $get_progress_sql .= "WHERE b.`country_id`=".$country_id." 
+        $get_progress_sql .= "AND b.`country_id`=".$country_id." 
                             AND a.`updt_dt` between DATE_SUB(NOW(), INTERVAL ".$last_month." MONTH) AND NOW()";
     }else{
-        $get_progress_sql .= "WHERE a.`updt_dt` between DATE_SUB(NOW(), INTERVAL ".$last_month." MONTH) AND NOW()";
+        $get_progress_sql .= "AND a.`updt_dt` between DATE_SUB(NOW(), INTERVAL ".$last_month." MONTH) AND NOW()";
     }
 
     $result = mysqli_query($conn,$get_progress_sql);  

@@ -10,7 +10,7 @@
         $total_entries_pre_requisite = 0;
 
         $get_dossier_pre_requisite_sql = "SELECT count(*) cnt FROM `product_dossier_pre_requisite` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_dossier_pre_requisite = mysqli_query($conn,$get_dossier_pre_requisite_sql);
         while ($row_dossier_pre_requisite = mysqli_fetch_array($result_dossier_pre_requisite, MYSQLI_ASSOC)) {  
             $total_progress_pre_requisite += (int)$row_dossier_pre_requisite['cnt'] > 0 ? 1 : 0;
@@ -18,7 +18,7 @@
         }
 
         $get_dossier_check_sql = "SELECT count(*) cnt FROM `product_dossier_check` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_dossier_check = mysqli_query($conn,$get_dossier_check_sql);
         while ($row_dossier_check = mysqli_fetch_array($result_dossier_check, MYSQLI_ASSOC)) {  
             $total_progress_pre_requisite += (int)$row_dossier_check['cnt'] > 0 ? 1 : 0;
@@ -29,7 +29,7 @@
         $total_entries_population = 0;
 
         $get_dossier_writing_sql = "SELECT count(*) cnt FROM `product_dossier_writing` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_dossier_writing = mysqli_query($conn,$get_dossier_writing_sql);
         while ($row_dossier_writing = mysqli_fetch_array($result_dossier_writing, MYSQLI_ASSOC)) {  
             $total_progress_population += (int)$row_dossier_writing['cnt'] > 0 ? 1 : 0;
@@ -37,7 +37,7 @@
         }
 
         $get_dossier_valid_marker_sql = "SELECT count(*) cnt FROM `product_dossier_valid_marker` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_dossier_valid_marker = mysqli_query($conn,$get_dossier_valid_marker_sql);
         while ($row_dossier_valid_marker = mysqli_fetch_array($result_dossier_valid_marker, MYSQLI_ASSOC)) {  
             $total_progress_population += (int)$row_dossier_valid_marker['cnt'] > 0 ? 1 : 0;

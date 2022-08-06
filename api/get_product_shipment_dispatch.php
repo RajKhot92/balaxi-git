@@ -26,7 +26,8 @@
     }
 
     /*  Getting shipment booking    */
-    $get_shipment_dispatch_sql = "SELECT * FROM product_shipment_dispatch WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_shipment_dispatch_sql = "SELECT * FROM product_shipment_dispatch WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($psd_id != 0){
         $get_shipment_dispatch_sql .= " AND psd_id = ".$psd_id;

@@ -10,10 +10,11 @@
     					a.`deadline_dt`,c.`user_name` as product_owner,
     					IFNULL((SELECT ROUND(SUM(psm.progress)/7,2) FROM product_step_master psm WHERE psm.menu_id IN (9,10,11,12,13,14,15) and psm.product_id=a.product_id),0) progress
     					from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id`
-    					INNER JOIN user_master c on a.`product_owner`=c.`user_id` ";
+    					INNER JOIN user_master c on a.`product_owner`=c.`user_id`
+                        WHERE a.`del_by` IS NULL  ";
 
     if($country_id != 0){
-        $get_progress_sql .= "WHERE a.`country_id`=".$country_id;
+        $get_progress_sql .= "AND a.`country_id`=".$country_id;
     }
 
     $result = mysqli_query($conn,$get_progress_sql);  

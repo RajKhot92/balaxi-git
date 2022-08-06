@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_legal_submission_sql = "SELECT * FROM product_legal_submission WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_legal_submission_sql = "SELECT * FROM product_legal_submission WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($ls_id != 0){
         $get_legal_submission_sql .= " AND ls_id = ".$ls_id;

@@ -138,7 +138,7 @@
                                           "<td align=\"center\">"+counter.remarks+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this vendor finalization details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteVendorFinalization("+counter.vf_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this vendor finalization details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteVendorFinalization('product_vendor_finalization','vf_id',"+counter.vf_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -195,7 +195,7 @@
                                           "<td>"+counter.cma_remark+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this document collection details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDocumentCollection("+counter.vdc_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this document collection details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDocumentCollection('product_vendor_doc_collection','vdc_id',"+counter.vdc_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -255,7 +255,7 @@
                                           "<td>"+counter.finish_product_remark+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                              "<span title=\"Click here to delete this sample collection details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteSampleCollection("+counter.vdc_id+")\"></span>"+
+                                              "<span title=\"Click here to delete this sample collection details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteSampleCollection('product_vendor_sample_collection','vsc_id',"+counter.vsc_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -286,5 +286,26 @@
 
   function getSampleCollection(){
       return callAPIService("get_product_vendor_sample_collection.php","login_id="+loginId+"&product_id="+productId+"&vsc_id=0");
+  }
+
+  function deleteVendorFinalization(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadVendorFinalization();
+    }
+  }
+
+  function deleteDocumentCollection(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadDocumentCollection();
+    }
+  }
+
+  function deleteSampleCollection(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadSampleCollection();
+    }
   }
 </script>

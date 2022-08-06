@@ -26,7 +26,8 @@
     }
 
     /*  Getting shipment booking    */
-    $get_license_manufacture_sql = "SELECT * FROM product_license_manufacture WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_license_manufacture_sql = "SELECT * FROM product_license_manufacture WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($lm_id != 0){
         $get_license_manufacture_sql .= " AND lm_id = ".$lm_id;

@@ -196,7 +196,7 @@
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this translation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslation("+counter.ps_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this translation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslation('product_translation','ps_id',"+counter.ps_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
               dossier_id = counter.dossier_id;
@@ -237,6 +237,8 @@
               var fileTypeIcon = "fas fa-file-pdf";
               if(counter.file_type == "pdf"){
                   fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+              }else if(counter.file_type == "zip" || counter.file_type == "rar"){
+                  fileTypeIcon = "far fa-file-archive fa-lg text-warning";
               }else{
                   fileTypeIcon = "fas fa-file-word fa-lg text-info";
               }
@@ -248,7 +250,7 @@
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this translation received details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslationReceived("+counter.ptr_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this translation received details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslationReceived('product_translation_received','ptr_id',"+counter.ptr_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
               dossier_id = counter.dossier_id;
@@ -309,7 +311,7 @@
                                           "<td align=\"center\">"+counter.ws_finish_product+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this validation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteValidation("+counter.psv_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this validation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteValidation('product_submission_valid','psv_id',"+counter.psv_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -360,7 +362,7 @@
                                           "<td align=\"center\">"+counter.received_notary+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this legalization details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteLegalization("+counter.psl_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this legalization details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteLegalization('product_submission_legal','psl_id',"+counter.psl_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -407,7 +409,7 @@
                                               "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ps_id+"','submission')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this submission details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteSubmission("+counter.ps_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this submission details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteSubmission('product_submission','ps_id',"+counter.ps_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -455,7 +457,7 @@
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this registration details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteRegistration("+counter.ps_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this registration details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteRegistration('product_registration','pr_id',"+counter.pr_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -508,5 +510,47 @@
         break;
     }
     downloadFile(tbl,col,col1,id,format);
+  }
+
+  function deleteTranslation(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadTranslation();
+    }
+  }
+
+  function deleteTranslationReceived(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadTranslationReceived();
+    }
+  }
+
+  function deleteValidation(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadValidation();
+    }
+  }
+
+  function deleteLegalization(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadLegalization();
+    }
+  }
+
+  function deleteSubmission(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadSubmission();
+    }
+  }
+
+  function deleteRegistration(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadRegistration();
+    }
   }
 </script>

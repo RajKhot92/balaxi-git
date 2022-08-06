@@ -15,7 +15,8 @@
                     INNER JOIN user_master d on b.`product_owner`=d.`user_id`
                     INNER JOIN menu_master f on a.`menu_id`=f.`menu_id`
                     WHERE a.`progress`=100 
-                    AND a.`updt_dt` between ADDDATE(NOW(),-".$last_days.") AND NOW() ";
+                    AND a.`updt_dt` between ADDDATE(NOW(),-".$last_days.") AND NOW() 
+                    AND b.`del_by` IS NULL ";
 
     if($country_id != 0){
         $get_progress_sql .= "AND b.`country_id`=".$country_id."";

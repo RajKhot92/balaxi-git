@@ -27,7 +27,8 @@
 
     /*  Getting artwork question    */
     $get_commercial_doc_sql = "SELECT * FROM product_commercial_doc 
-                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."'";
+                        WHERE `product_id`=".$product_id." AND `ent_by`='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($cd_id != 0){
         $get_commercial_doc_sql .= " AND cd_id = ".$cd_id;

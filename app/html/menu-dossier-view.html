@@ -169,7 +169,7 @@
                                         "</td>"+
                                         "<td>"+counter.ent_dt+"</td>"+
                                         "<td align=\"center\">"+
-                                          "<span title=\"Click here to delete this pre requisite check details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deletePreRequisiteCheck("+counter.dpr_id+")\"></span>"+
+                                          "<span title=\"Click here to delete this pre requisite check details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deletePreRequisiteCheck('product_dossier_pre_requisite','dpr_id',"+counter.dpr_id+")\"></span>"+
                                         "</td>"+
                                     "</tr>";
         }
@@ -219,7 +219,7 @@
                                         "<td align=\"center\">"+counter.everything_complete+"</td>"+
                                         "<td>"+counter.ent_dt+"</td>"+
                                         "<td align=\"center\">"+
-                                          "<span title=\"Click here to delete this dossier check list details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteCheckList("+counter.dc_id+")\"></span>"+
+                                          "<span title=\"Click here to delete this dossier check list details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteCheckList('product_dossier_check','dc_id',"+counter.dc_id+")\"></span>"+
                                         "</td>"+
                                     "</tr>";
         }
@@ -260,6 +260,8 @@
               var fileTypeIcon = "fas fa-file-pdf";
                 if(counter.file_type == "pdf"){
                     fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+                }else if(counter.file_type == "zip" || counter.file_type == "rar"){
+                    fileTypeIcon = "far fa-file-archive fa-lg text-warning";
                 }else{
                     fileTypeIcon = "fas fa-file-word fa-lg text-info";
                 }
@@ -271,7 +273,7 @@
                                           "<td align=\"center\">"+counter.everything_complete+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
                                           "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this dossier check list details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDossierWriting("+counter.dw_id+")\"></span>"+
+                                            "<span title=\"Click here to delete this dossier check list details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDossierWriting('product_dossier_writing','dw_id',"+counter.dw_id+")\"></span>"+
                                           "</td>"+
                                       "</tr>";
           }
@@ -316,7 +318,7 @@
                                             "<td align=\"center\">"+counter.score+"</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
-                                              "<span title=\"Click here to delete this dossier validation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDossierValidation("+counter.dvm_id+")\"></span>"+
+                                              "<span title=\"Click here to delete this dossier validation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteDossierValidation('product_dossier_valid_marker','dvm_id',"+counter.dvm_id+")\"></span>"+
                                             "</td>"+
                                         "</tr>";
             }
@@ -378,5 +380,33 @@
         break;
     }
     downloadFile(tbl,col,col1,id,format);
+  }
+
+  function deletePreRequisiteCheck(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadPreRequisiteCheck();
+    }
+  }
+
+  function deleteCheckList(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadCheckList();
+    }
+  }
+
+  function deleteDossierWriting(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadDossierWriting();
+    }
+  }
+
+  function deleteDossierValidation(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadDossierValidation();
+    }
   }
 </script>

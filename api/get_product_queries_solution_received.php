@@ -34,7 +34,8 @@
                         INNER JOIN product_master c ON a.`product_id`=c.`product_id` 
                         WHERE b.`pqs_id` IN (
                         SELECT MAX(pqs_id) FROM `product_queries_solution` GROUP by psq_id) 
-                        AND a.`product_id`=".$product_id." AND a.`ent_by`=".$login_id;
+                        AND a.`product_id`=".$product_id." AND a.`ent_by`=".$login_id."  
+                                AND a.del_by IS NULL ";
 
     if($psq_id != 0){
         $get_solution_sql .= " AND a.`psq_id` = ".$psq_id;

@@ -26,7 +26,8 @@
     }
 
     /*  Getting shipment booking    */
-    $get_shipment_booking_sql = "SELECT * FROM product_shipment_booking WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_shipment_booking_sql = "SELECT * FROM product_shipment_booking WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($psb_id != 0){
         $get_shipment_booking_sql .= " AND psb_id = ".$psb_id;

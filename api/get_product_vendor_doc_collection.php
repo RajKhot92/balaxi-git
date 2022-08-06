@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_vendor_doc_collection_sql = "SELECT * FROM product_vendor_doc_collection WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_vendor_doc_collection_sql = "SELECT * FROM product_vendor_doc_collection 
+                                    WHERE product_id=".$product_id." AND ent_by='".$login_id."' AND del_by IS NULL ";
 
     if($vdc_id != 0){
         $get_vendor_doc_collection_sql .= " AND vdc_id = ".$vdc_id;

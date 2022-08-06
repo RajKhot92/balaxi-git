@@ -13,7 +13,7 @@
                             INNER JOIN product_shipment_dispatch c ON a.`product_id`=c.`product_id`
                             WHERE c.`psd_id` IN (SELECT MAX(psd_id) from product_shipment_dispatch GROUP by product_id)
                             AND a.`product_id` NOT IN (
-                                SELECT `product_id` FROM product_registration)  ";
+                                SELECT `product_id` FROM product_registration)  AND a.`del_by` IS NULL ";
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;

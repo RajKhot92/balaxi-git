@@ -18,10 +18,10 @@
 						(SELECT pr.registration_expired from product_registration pr WHERE pr.`pr_id` = (SELECT MAX(`pr_id`) FROM product_registration WHERE `product_id`=a.`product_id`) AND pr.`registration_expired` between CURDATE() and DATE_ADD(CURDATE(), INTERVAL ".$last_month." MONTH) ) registration,
 						(SELECT pfp.`validity` from product_finish_product pfp WHERE pfp.`fp_id` = (SELECT MAX(`fp_id`) FROM product_finish_product WHERE `product_id`=a.`product_id`) AND pfp.`validity` between CURDATE() and DATE_ADD(CURDATE(), INTERVAL ".$last_month." MONTH) ) finish_product
 						from product_master a INNER JOIN user_master b on a.`product_owner`=b.`user_id` 
-                        INNER JOIN product_category c on a.`product_category`=c.`category_id` ";
+                        INNER JOIN product_category c on a.`product_category`=c.`category_id` WHERE a.del_by IS NULL ";
 
     if($country_id != 0){
-        $get_progress_sql .= "WHERE a.`country_id`=".$country_id;
+        $get_progress_sql .= "AND a.`country_id`=".$country_id;
     }
 
     $result = mysqli_query($conn,$get_progress_sql);  

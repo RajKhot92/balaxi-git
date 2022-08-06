@@ -153,7 +153,7 @@
                                       "<td>"+counter.pharmacopeia_type+"</td>"+
                                       "<td>"+counter.ent_dt+"</td>"+
                                       "<td align=\"center\">"+
-                                        "<span title=\"Click here to delete this entry\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteNomenclature("+counter.nom_id+")\"></span>"+
+                                        "<span title=\"Click here to delete this entry\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteNomenclature('product_nomenclature','nom_id',"+counter.nom_id+")\"></span>"+
                                       "</td>"+
                                   "</tr>";
           }
@@ -201,7 +201,7 @@
                                 "<td>"+counter.package_description+"</td>"+
                                 "<td>"+counter.ent_dt+"</td>"+
                                 "<td align=\"center\">"+
-                                  "<span title=\"Click here to delete this country\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteProductDetails("+counter.det_i+")\"></span>"+
+                                  "<span title=\"Click here to delete this country\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteProductDetails('product_details','det_id',"+counter.det_id+")\"></span>"+
                                 "</td>"+
                             "</tr>";
         }
@@ -252,7 +252,7 @@
                                 "</td>"+
                                 "<td>"+counter.ent_dt+"</td>"+
                                 "<td align=\"center\">"+
-                                  "<span title=\"Click here to delete this market research details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteMarketResearch("+counter.mr_id+")\"></span>"+
+                                  "<span title=\"Click here to delete this market research details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteMarketResearch('product_market_research','mr_id',"+counter.mr_id+")\"></span>"+
                                 "</td>"+
                             "</tr>";
         }
@@ -298,7 +298,7 @@
                                       "</td>"+
                                       "<td>"+counter.ent_dt+"</td>"+
                                       "<td align=\"center\">"+
-                                        "<span title=\"Click here to delete this procurement details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteProcurement("+counter.procure_id+")\"></span>"+
+                                        "<span title=\"Click here to delete this procurement details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteProcurement('product_procurement','procure_id',"+counter.procure_id+")\"></span>"+
                                       "</td>"+
                                   "</tr>";
           }
@@ -344,5 +344,33 @@
         break;
     }
     downloadFile(tbl,col,col1,id,format);
+  }
+
+  function deleteNomenclature(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadNomenclature();
+    }
+  }
+
+  function deleteProductDetails(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadProductDetails();
+    }
+  }
+
+  function deleteMarketResearch(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadMarketResearch();
+    }
+  }
+
+  function deleteProcurement(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadProcurement();
+    }
   }
 </script>

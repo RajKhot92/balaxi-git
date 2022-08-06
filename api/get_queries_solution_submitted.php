@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_solution_submitted_sql = "SELECT * FROM product_queries_submitted WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_solution_submitted_sql = "SELECT * FROM product_queries_submitted WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($pqs_id != 0){
         $get_solution_submitted_sql .= " AND pqs_id = ".$pqs_id;

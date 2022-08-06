@@ -10,13 +10,13 @@
 					d.`country_name`,b.`product_owner`,c.`user_name`,
                     e.`menu_id`,e.`menu_name`,IFNULL(a.`progress`,'0.00') progress,
                     (SELECT `vendor_name` from product_vendor_finalization 
-                        WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id`)) supplier_name
+                        WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id`  AND del_by IS NULL)) supplier_name
 					FROM `product_step_master` a 
 					INNER JOIN `product_master` b ON a.`product_id`=b.`product_id` 
 					INNER JOIN `user_master` c ON b.`product_owner`=c.`user_id` 
 					INNER JOIN `country_master` d ON b.`country_id`=d.`country_id` 
 					INNER JOIN `menu_master` e ON a.`menu_id`=e.`menu_id` 
-					WHERE a.`user_id`=".$login_id." 
+					WHERE a.`user_id`=".$login_id." AND b.del_by IS NULL 
                     AND b.`product_category` NOT IN (SELECT `category_id` FROM `product_category` WHERE UPPER(`category_name`)=UPPER('REGISTERED') OR UPPER(`category_name`)=UPPER('CLOSED'))";
 
     $result = mysqli_query($conn,$get_steps_sql);  

@@ -31,7 +31,8 @@
                         a.`artwork_file`,a.`commercial_file`,a.`ent_by`,a.`ent_dt` 
                         FROM product_artwork a INNER JOIN vendor_master b 
                         ON a.`vendor_id`=b.`vendor_id` 
-                        WHERE a.`product_id`=".$product_id." AND a.`ent_by`='".$login_id."'";
+                        WHERE a.`product_id`=".$product_id." AND a.`ent_by`='".$login_id."' 
+                                AND a.del_by IS NULL ";
 
     if($art_id != 0){
         $get_artwork_sql .= " AND art_id = ".$art_id;

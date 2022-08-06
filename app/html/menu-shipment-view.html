@@ -141,7 +141,7 @@
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
-                                              "<span title=\"Click here to delete this shipment booking details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBooking("+counter.psb_id+")\"></span>"+
+                                              "<span title=\"Click here to delete this shipment booking details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBooking('product_shipment_booking','psb_id',"+counter.psb_id+")\"></span>"+
                                             "</td>"+
                                         "</tr>";
             }
@@ -203,7 +203,7 @@
                                     "</td>"+
                                     "<td>"+counter.ent_dt+"</td>"+
                                     "<td align=\"center\">"+
-                                      "<span title=\"Click here to delete this shipment box preparation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBoxPreparation("+counter.psbp_id+")\"></span>"+
+                                      "<span title=\"Click here to delete this shipment box preparation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBoxPreparation('product_shipment_box_prep','psbp_id',"+counter.psbp_id+")\"></span>"+
                                     "</td>"+
                                 "</tr>";
             }
@@ -253,7 +253,7 @@
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+
-                                              "<span title=\"Click here to delete this shipment dispatch details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentDispatch("+counter.psd_id+")\"></span>"+
+                                              "<span title=\"Click here to delete this shipment dispatch details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentDispatch('product_shipment_dispatch','psd_id',"+counter.psd_id+")\"></span>"+
                                             "</td>"+
                                         "</tr>";
             }
@@ -310,5 +310,26 @@
         break;
     }
     downloadFile(tbl,col,col1,id,format);
+  }
+
+  function deleteShipmentBooking(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadShipmentBooking();
+    }
+  }
+
+  function deleteShipmentBoxPreparation(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadShipmentBoxPreparation();
+    }
+  }
+
+  function deleteShipmentDispatch(tblNm,colId,colVal){
+    var response = deleteExecutiveEntry(tblNm,colId,colVal);
+    if(response == 1){
+      loadShipmentDispatch();
+    }
   }
 </script>

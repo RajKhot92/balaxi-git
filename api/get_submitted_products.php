@@ -14,7 +14,8 @@
                          'Not Registered' as registration_status
                         from product_master a INNER JOIN product_submission b ON a.`product_id`=b.`product_id`
                         WHERE a.`product_id` NOT IN (
-                        SELECT product_id FROM product_registration pr) ";
+                        SELECT product_id FROM product_registration pr)
+                        AND a.`del_by` IS NULL  ";
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;

@@ -26,7 +26,8 @@
     }
 
     /*  Getting nomenclature    */
-    $get_finish_product_sql = "SELECT * FROM product_finish_product WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_finish_product_sql = "SELECT * FROM product_finish_product WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($fp_id != 0){
         $get_finish_product_sql .= " AND fp_id = ".$fp_id;

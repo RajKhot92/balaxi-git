@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_gmp_sql = "SELECT * FROM product_gmp WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_gmp_sql = "SELECT * FROM product_gmp WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($gmp_id != 0){
         $get_gmp_sql .= " AND gmp_id = ".$gmp_id;

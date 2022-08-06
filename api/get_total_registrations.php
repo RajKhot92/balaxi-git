@@ -11,7 +11,7 @@
                         from product_master a 
                         INNER JOIN product_registration b ON a.`product_id`=b.`product_id` 
                         INNER JOIN user_master c on a.`product_owner`=c.`user_id` 
-                        WHERE b.`pr_id` IN (SELECT MAX(pr_id) from product_registration GROUP by product_id) ";
+                        WHERE b.`pr_id` IN (SELECT MAX(pr_id) from product_registration GROUP by product_id) AND a.`del_by` IS NULL  ";
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;

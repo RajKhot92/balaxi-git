@@ -18,7 +18,7 @@
                     AND product_id NOT IN (
                     SELECT product_id FROM product_submission)
                     AND product_id NOT IN (
-                    SELECT product_id FROM product_registration) ";
+                    SELECT product_id FROM product_registration)  AND `del_by` IS NULL ";
     
     if($country_id != ""){
         $get_wip_sql .= "AND country_id = ".$country_id;

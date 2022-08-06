@@ -26,7 +26,8 @@
     }
 
     /*  Getting market research    */
-    $get_copp_sql = "SELECT * FROM product_copp WHERE product_id=".$product_id." AND ent_by='".$login_id."'";
+    $get_copp_sql = "SELECT * FROM product_copp WHERE product_id=".$product_id." AND ent_by='".$login_id."' 
+                                AND del_by IS NULL ";
 
     if($copp_id != 0){
         $get_copp_sql .= " AND copp_id = ".$copp_id;

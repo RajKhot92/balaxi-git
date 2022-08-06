@@ -10,7 +10,7 @@
         $total_entries_artwork = 0;
 
         $get_artwork_question_sql = "SELECT count(*) cnt FROM `product_artwork_question` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_artwork_question = mysqli_query($conn,$get_artwork_question_sql);
         while ($row_artwork_question = mysqli_fetch_array($result_artwork_question, MYSQLI_ASSOC)) {  
             $total_progress_artwork += (int)$row_artwork_question['cnt'] > 0 ? 1 : 0;
@@ -18,7 +18,7 @@
         }
 
         $get_artwork_sql = "SELECT count(*) cnt FROM `product_artwork` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_artwork = mysqli_query($conn,$get_artwork_sql);
         while ($row_artwork = mysqli_fetch_array($result_artwork, MYSQLI_ASSOC)) {  
             $total_progress_artwork += (int)$row_artwork['cnt'] > 0 ? 1 : 0;
@@ -26,7 +26,7 @@
         }
 
         $get_commercial_doc_sql = "SELECT count(*) cnt FROM `product_commercial_doc` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_commercial_doc = mysqli_query($conn,$get_commercial_doc_sql);
         while ($row_commercial_doc = mysqli_fetch_array($result_commercial_doc, MYSQLI_ASSOC)) {  
             $total_progress_artwork += (int)$row_commercial_doc['cnt'] > 0 ? 1 : 0;
@@ -37,7 +37,7 @@
         $total_entries_finalize = 0;
 
         $get_artwork_finalize_sql = "SELECT count(*) cnt FROM `product_artwork_finalize` 
-                                WHERE `ent_by`=".$user_id." AND product_id=".$product_id;
+                                WHERE `ent_by`=".$user_id." AND del_by IS NULL  AND product_id=".$product_id;
         $result_artwork_finalize = mysqli_query($conn,$get_artwork_finalize_sql);
         while ($row_artwork_finalize = mysqli_fetch_array($result_artwork_finalize, MYSQLI_ASSOC)) {  
             $total_progress_finalize += (int)$row_artwork_finalize['cnt'] > 0 ? 1 : 0;
