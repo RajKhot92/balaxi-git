@@ -221,7 +221,7 @@
         formData.append("remarks", $("#remarks").val());
 
     	let miscSaveResult = saveMiscData(formData);
-    	if(String(miscSaveResult) != "1"){
+    	if(String(miscSaveResult).trim() != "1"){
     		alert(miscSaveResult);
     	}else{
     		resetMisc();

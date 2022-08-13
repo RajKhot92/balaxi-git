@@ -206,7 +206,7 @@
         }
 
     	let workingStandardSaveResult = saveWorkingStandardData($("#frmWorkingStandard").serialize());
-    	if(String(workingStandardSaveResult) != "1"){
+    	if(String(workingStandardSaveResult).trim() != "1"){
     		alert(workingStandardSaveResult);
     	}else{
     		resetWorkingStandard();

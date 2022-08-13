@@ -182,7 +182,7 @@
         }
 
     	let physicalChecksSaveResult = savePhysicalChecksData($("#frmPhysicalChecks").serialize());
-    	if(String(physicalChecksSaveResult) != "1"){
+    	if(String(physicalChecksSaveResult).trim() != "1"){
     		alert(physicalChecksSaveResult);
     	}else{
     		resetPhysicalChecks();

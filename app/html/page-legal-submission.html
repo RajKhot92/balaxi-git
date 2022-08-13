@@ -274,7 +274,7 @@
         }
 
     	let submissionSaveResult = saveSubmissionData($("#frmSubmission").serialize());
-    	if(String(submissionSaveResult) != "1"){
+    	if(String(submissionSaveResult).trim() != "1"){
     		alert(submissionSaveResult);
     	}else{
     		resetSubmission();

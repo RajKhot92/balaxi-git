@@ -222,7 +222,7 @@
         formData.append("received_translator", $("#received_translator").val());
 
     	let translationReceivedSaveResult = saveTranslationReceivedData(formData);
-    	if(String(translationReceivedSaveResult) != "1"){
+    	if(String(translationReceivedSaveResult).trim() != "1"){
     		alert(translationReceivedSaveResult);
     	}else{
     		resetTranslationReceived();

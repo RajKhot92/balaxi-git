@@ -274,7 +274,7 @@
         }
 
     	let receiptSaveResult = saveReceiptData($("#frmReceipt").serialize());
-    	if(String(receiptSaveResult) != "1"){
+    	if(String(receiptSaveResult).trim() != "1"){
     		alert(receiptSaveResult);
     	}else{
     		resetReceipt();

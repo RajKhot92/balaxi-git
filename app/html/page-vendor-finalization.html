@@ -191,7 +191,7 @@
         }
 
         let vendorFinalizationSaveResult = saveVendorFinalizationData($("#frmVendorFinalization").serialize());
-    	if(String(vendorFinalizationSaveResult) != "1"){
+    	if(String(vendorFinalizationSaveResult).trim() != "1"){
     		alert(vendorFinalizationSaveResult);
     	}else{
     		resetVendorFinalization();

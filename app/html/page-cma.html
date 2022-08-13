@@ -217,7 +217,7 @@
         formData.append("received_date", $("#received_date").val());
 
     	let cMASaveResult = saveCMAData(formData);
-    	if(String(cMASaveResult) != "1"){
+    	if(String(cMASaveResult).trim() != "1"){
     		alert(cMASaveResult);
     	}else{
     		resetCMA();

@@ -223,7 +223,7 @@
         }
 
     	let legalizationSaveResult = saveLegalizationData($("#frmLegalization").serialize());
-    	if(String(legalizationSaveResult) != "1"){
+    	if(String(legalizationSaveResult).trim() != "1"){
     		alert(legalizationSaveResult);
     	}else{
     		resetLegalization();

@@ -21,7 +21,6 @@
 
         $file_name = $_FILES['amv']['name'];
         $file_tmp = $_FILES['amv']['tmp_name'];
-        // $file_content = addslashes(file_get_contents($_FILES['amv']['tmp_name']));
     }
     
     $conn -> autocommit(FALSE);

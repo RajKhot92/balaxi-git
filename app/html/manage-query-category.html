@@ -159,7 +159,7 @@
         }
 
     	let categorySaveResult = saveCategoryData($("#frmCategory").serialize());
-    	if(String(categorySaveResult) != "1"){
+    	if(String(categorySaveResult).trim() != "1"){
     		alert(categorySaveResult);
     	}else{
     		resetQueryCategory();
@@ -183,7 +183,7 @@
 			var updateData = "login_id="+localStorage.getItem("balaxi_user_id")+"&category_id="+categoryId+"&category_name="+$("#edit_category_name"+categoryId).val();
 
 	    	let categoryUpdateResult = editCategoryData(updateData);
-	    	if(String(categoryUpdateResult) != "1"){
+	    	if(String(categoryUpdateResult).trim() != "1"){
 	    		alert(categoryUpdateResult);
 	    	}else{
 	    		alert("Query category details has been updated successfully.");

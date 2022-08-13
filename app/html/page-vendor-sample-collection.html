@@ -252,7 +252,7 @@
         }
 
         let sampleCollectionSaveResult = saveSampleCollectionData($("#frmSampleCollection").serialize());
-        if(String(sampleCollectionSaveResult) != "1"){
+        if(String(sampleCollectionSaveResult).trim() != "1"){
             alert(sampleCollectionSaveResult);
         }else{
             resetSampleCollection();

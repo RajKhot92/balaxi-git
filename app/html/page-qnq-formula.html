@@ -207,7 +207,7 @@
         formData.append("avg_weight", $("#avg_weight").val());
 
     	let qnQFormulaSaveResult = saveQnQFormulaData(formData);
-    	if(String(qnQFormulaSaveResult) != "1"){
+    	if(String(qnQFormulaSaveResult).trim() != "1"){
     		alert(qnQFormulaSaveResult);
     	}else{
     		resetQnQFormula();

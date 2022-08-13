@@ -217,7 +217,7 @@
         formData.append("received_date", $("#received_date").val());
 
     	let gMPSaveResult = saveGMPData(formData);
-    	if(String(gMPSaveResult) != "1"){
+    	if(String(gMPSaveResult).trim() != "1"){
     		alert(gMPSaveResult);
     	}else{
     		resetGMP();

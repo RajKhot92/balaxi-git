@@ -211,7 +211,7 @@
         formData.append("conducted_on", $("#conducted_on").val());
 
     	let marketResearchSaveResult = saveMarketResearchData(formData);
-    	if(String(marketResearchSaveResult) != "1"){
+    	if(String(marketResearchSaveResult).trim() != "1"){
     		alert(marketResearchSaveResult);
     	}else{
     		resetMarketResearch();

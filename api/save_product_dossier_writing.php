@@ -17,7 +17,6 @@
 
         $file_name = $_FILES['dossier']['name'];
         $file_tmp = $_FILES['dossier']['tmp_name'];
-        $file_content = addslashes(file_get_contents($_FILES['dossier']['tmp_name']));
     }
     
     $conn -> autocommit(FALSE);

@@ -195,7 +195,7 @@
         formData.append("remarks", $("#remarks").val());
 
     	let solutionSubmittedSaveResult = saveSolutionSubmittedData(formData);
-    	if(String(solutionSubmittedSaveResult) != "1"){
+    	if(String(solutionSubmittedSaveResult).trim() != "1"){
     		alert(solutionSubmittedSaveResult);
     	}else{
     		resetSolutionSubmitted();

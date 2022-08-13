@@ -215,7 +215,7 @@
         formData.append("registration_expired", $("#registration_expired").val());
 
     	let registrationSaveResult = saveRegistrationData(formData);
-    	if(String(registrationSaveResult) != "1"){
+    	if(String(registrationSaveResult).trim() != "1"){
     		alert(registrationSaveResult);
     	}else{
     		resetRegistration();

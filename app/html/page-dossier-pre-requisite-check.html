@@ -255,7 +255,7 @@
         formData.append("test_lab", $("#chkTestLab").prop("checked") ? "Yes" : "No");
 
     	let preRequisiteCheckSaveResult = savePreRequisiteCheckData(formData);
-    	if(String(preRequisiteCheckSaveResult) != "1"){
+    	if(String(preRequisiteCheckSaveResult).trim() != "1"){
     		alert(preRequisiteCheckSaveResult);
     	}else{
     		resetPreRequisiteCheck();

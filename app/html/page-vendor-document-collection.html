@@ -429,7 +429,7 @@
         }
 
         let documentCollectionSaveResult = saveDocumentCollectionData($("#frmDocumentCollection").serialize());
-    	if(String(documentCollectionSaveResult) != "1"){
+    	if(String(documentCollectionSaveResult).trim() != "1"){
     		alert(documentCollectionSaveResult);
     	}else{
     		resetDocumentCollection();

@@ -211,7 +211,7 @@
         formData.append("everything_complete", $("#everything_complete").val());
 
     	let checkListSaveResult = saveCheckListData(formData);
-    	if(String(checkListSaveResult) != "1"){
+    	if(String(checkListSaveResult).trim() != "1"){
     		alert(checkListSaveResult);
     	}else{
     		resetCheckList();

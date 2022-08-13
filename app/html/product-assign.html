@@ -342,7 +342,7 @@
         }
 
         let assignStepResult = saveStepsData("login_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+productArray.toString()+"&menu_id="+menuArray.toString()+"&user_id="+userArray.toString());
-        if(String(assignStepResult) != "1"){
+        if(String(assignStepResult).trim() != "1"){
             alert(assignStepResult);
         }else{
             // resetProduct();

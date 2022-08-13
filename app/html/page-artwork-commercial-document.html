@@ -237,7 +237,7 @@
         formData.append("product_code", $("#cmboProductCode").val());
 
     	let commercialDocumentSaveResult = saveCommercialDocumentData(formData);
-    	if(String(commercialDocumentSaveResult) != "1"){
+    	if(String(commercialDocumentSaveResult).trim() != "1"){
     		alert(commercialDocumentSaveResult);
     	}else{
     		resetCommercialDocument();

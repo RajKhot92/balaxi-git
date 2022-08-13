@@ -212,7 +212,7 @@
         }
 
     	let finishedProductSaveResult = saveFinishedProductData($("#frmFinishedProduct").serialize());
-    	if(String(finishedProductSaveResult) != "1"){
+    	if(String(finishedProductSaveResult).trim() != "1"){
     		alert(finishedProductSaveResult);
     	}else{
     		resetFinishedProduct();

@@ -238,7 +238,7 @@
         formData.append("received_date", $("#received_date").val());
 
     	let fSCSaveResult = saveFSCData(formData);
-    	if(String(fSCSaveResult) != "1"){
+    	if(String(fSCSaveResult).trim() != "1"){
     		alert(fSCSaveResult);
     	}else{
     		resetFSC();

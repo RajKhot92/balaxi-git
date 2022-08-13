@@ -177,7 +177,7 @@
         }
 
     	let nomenclatureSaveResult = saveNomenclatureData($("#frmNomenclature").serialize());
-    	if(String(nomenclatureSaveResult) != "1"){
+    	if(String(nomenclatureSaveResult).trim() != "1"){
     		alert(nomenclatureSaveResult);
     	}else{
     		resetNomenclature();

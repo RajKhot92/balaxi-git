@@ -326,7 +326,7 @@
         formData.append("remarks", $("#remarks").val());
 
     	let labTestSaveResult = saveLabTestData(formData);
-    	if(String(labTestSaveResult) != "1"){
+    	if(String(labTestSaveResult).trim() != "1"){
     		alert(labTestSaveResult);
     	}else{
     		resetLabTest();

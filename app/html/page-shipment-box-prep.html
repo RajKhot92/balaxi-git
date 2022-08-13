@@ -373,7 +373,7 @@
         formData.append("box_list_date", $("#box_list_date").val());
 
     	let shipmentBoxPreparationSaveResult = saveShipmentBoxPreparationData(formData);
-    	if(String(shipmentBoxPreparationSaveResult) != "1"){
+    	if(String(shipmentBoxPreparationSaveResult).trim() != "1"){
     		alert(shipmentBoxPreparationSaveResult);
     	}else{
     		resetShipmentBoxPreparation();

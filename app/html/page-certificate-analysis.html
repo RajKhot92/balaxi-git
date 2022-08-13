@@ -212,7 +212,7 @@
         formData.append("validity", $("#validity").val());
 
     	let certificateAnalysisSaveResult = saveCertificateAnalysisData(formData);
-    	if(String(certificateAnalysisSaveResult) != "1"){
+    	if(String(certificateAnalysisSaveResult).trim() != "1"){
     		alert(certificateAnalysisSaveResult);
     	}else{
     		resetCertificateAnalysis();

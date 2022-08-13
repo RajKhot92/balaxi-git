@@ -245,7 +245,7 @@
         }
 
     	let productDetailsSaveResult = saveProductDetailsData($("#frmProductDetails").serialize());
-    	if(String(productDetailsSaveResult) != "1"){
+    	if(String(productDetailsSaveResult).trim() != "1"){
     		alert(productDetailsSaveResult);
     	}else{
     		resetProductDetails();

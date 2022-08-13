@@ -159,7 +159,7 @@
         }
 
     	let countrySaveResult = saveCountryData($("#frmCountry").serialize());
-    	if(String(countrySaveResult) != "1"){
+    	if(String(countrySaveResult).trim() != "1"){
     		alert(countrySaveResult);
     	}else{
     		resetCountry();
@@ -183,7 +183,7 @@
 			var updateData = "login_id="+localStorage.getItem("balaxi_user_id")+"&country_id="+countryId+"&country_name="+$("#edit_country_name"+countryId).val();
 
 	    	let countryUpdateResult = editCountryData(updateData);
-	    	if(String(countryUpdateResult) != "1"){
+	    	if(String(countryUpdateResult).trim() != "1"){
 	    		alert(countryUpdateResult);
 	    	}else{
 	    		alert("Country details has been updated successfully.");

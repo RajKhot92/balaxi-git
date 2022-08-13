@@ -177,7 +177,7 @@
         formData.append("is_research", isResearch);
 
         let procurementSaveResult = saveProcurementData(formData);
-    	if(String(procurementSaveResult) != "1"){
+    	if(String(procurementSaveResult).trim() != "1"){
     		alert(procurementSaveResult);
     	}else{
     		resetProcurement();

@@ -235,7 +235,7 @@
         formData.append("slot_booking", $("#chkSlotBooking").prop("checked") ? "Yes" : "No");
 
     	let shipmentBookingSaveResult = saveShipmentBookingData(formData);
-    	if(String(shipmentBookingSaveResult) != "1"){
+    	if(String(shipmentBookingSaveResult).trim() != "1"){
     		alert(shipmentBookingSaveResult);
     	}else{
     		resetShipmentBooking();

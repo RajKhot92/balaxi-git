@@ -307,7 +307,7 @@
         formData.append("deadline_dt", $("#deadline_dt").val());
         
     	let queriesSaveResult = saveQueriesData(formData);
-    	if(String(queriesSaveResult) != "1"){
+    	if(String(queriesSaveResult).trim() != "1"){
     		alert(queriesSaveResult);
     	}else{
     		resetQueries();

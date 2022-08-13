@@ -269,7 +269,7 @@
         formData.append("received_date", $("#received_date").val());
 
     	let pPSaveResult = savePPData(formData);
-    	if(String(pPSaveResult) != "1"){
+    	if(String(pPSaveResult).trim() != "1"){
     		alert(pPSaveResult);
     	}else{
     		resetPP();

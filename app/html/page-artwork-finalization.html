@@ -230,7 +230,7 @@
         }
 
         let finalizationArtworkSaveResult = saveFinalizationArtworkData($("#frmFinalizationArtwork").serialize());
-    	if(String(finalizationArtworkSaveResult) != "1"){
+    	if(String(finalizationArtworkSaveResult).trim() != "1"){
     		alert(finalizationArtworkSaveResult);
     	}else{
     		resetFinalizationArtwork();

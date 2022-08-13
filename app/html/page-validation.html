@@ -291,7 +291,7 @@
         }
 
     	let validationSaveResult = saveValidationData($("#frmValidation").serialize());
-    	if(String(validationSaveResult) != "1"){
+    	if(String(validationSaveResult).trim() != "1"){
     		alert(validationSaveResult);
     	}else{
     		resetValidation();

@@ -205,7 +205,7 @@
         formData.append("submission_slip_no", $("#submission_slip_no").val());
 
     	let submissionSaveResult = saveSubmissionData(formData);
-    	if(String(submissionSaveResult) != "1"){
+    	if(String(submissionSaveResult).trim() != "1"){
     		alert(submissionSaveResult);
     	}else{
     		resetSubmission();

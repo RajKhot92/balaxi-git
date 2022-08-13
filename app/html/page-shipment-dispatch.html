@@ -189,7 +189,7 @@
         formData.append("dispatch_dt", $("#dispatch_dt").val());
 
     	let shipmentDispatchSaveResult = saveShipmentDispatchData(formData);
-    	if(String(shipmentDispatchSaveResult) != "1"){
+    	if(String(shipmentDispatchSaveResult).trim() != "1"){
     		alert(shipmentDispatchSaveResult);
     	}else{
     		resetShipmentDispatch();

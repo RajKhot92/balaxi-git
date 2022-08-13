@@ -181,7 +181,7 @@
         formData.append("handed_translator", $("#handed_translator").val());
 
     	let translationSaveResult = saveTranslationData(formData);
-    	if(String(translationSaveResult) != "1"){
+    	if(String(translationSaveResult).trim() != "1"){
     		alert(translationSaveResult);
     	}else{
     		resetTranslation();

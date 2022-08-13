@@ -178,7 +178,7 @@
         formData.append("score", $("#score").val());
 
     	let dossierValidationSaveResult = saveDossierValidationData(formData);
-    	if(String(dossierValidationSaveResult) != "1"){
+    	if(String(dossierValidationSaveResult).trim() != "1"){
     		alert(dossierValidationSaveResult);
     	}else{
     		resetDossierValidation();

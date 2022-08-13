@@ -353,7 +353,7 @@
         formData.append("revision_dt", $("#revision_dt").val());
 
     	let artworksSaveResult = saveArtworksData(formData);
-    	if(String(artworksSaveResult) != "1"){
+    	if(String(artworksSaveResult).trim() != "1"){
     		alert(artworksSaveResult);
     	}else{
     		resetArtworks();

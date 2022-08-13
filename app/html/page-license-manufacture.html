@@ -232,7 +232,7 @@
         formData.append("received_date", $("#received_date").val());
 
     	let licenseManufactureSaveResult = saveLicenseManufactureData(formData);
-    	if(String(licenseManufactureSaveResult) != "1"){
+    	if(String(licenseManufactureSaveResult).trim() != "1"){
     		alert(licenseManufactureSaveResult);
     	}else{
     		resetLicenseManufacture();

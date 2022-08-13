@@ -217,7 +217,7 @@
         formData.append("everything_complete", $("#everything_complete").val());
 
     	let dossierWritingSaveResult = saveDossierWritingData(formData);
-    	if(String(dossierWritingSaveResult) != "1"){
+    	if(String(dossierWritingSaveResult).trim() != "1"){
     		alert(dossierWritingSaveResult);
     	}else{
     		resetDossierWriting();
