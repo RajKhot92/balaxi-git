@@ -158,7 +158,7 @@
         }
 
     	let vendorSaveResult = saveVendorData($("#frmVendor").serialize());
-    	if(vendorSaveResult != "1"){
+    	if(String(vendorSaveResult) != "1"){
     		alert(vendorSaveResult);
     	}else{
     		resetVendor();
@@ -182,7 +182,7 @@
 			var updateData = "login_id="+localStorage.getItem("balaxi_user_id")+"&vendor_id="+vendorId+"&vendor_name="+$("#edit_vendor"+vendorId).val();
 
 	    	let vendorUpdateResult = editVendorData(updateData);
-	    	if(vendorUpdateResult != "1"){
+	    	if(String(vendorUpdateResult) != "1"){
 	    		alert(vendorUpdateResult);
 	    	}else{
 	    		alert("Vendor details has been updated successfully.");
@@ -211,7 +211,7 @@
             var deleteData = "login_id="+localStorage.getItem("balaxi_user_id")+"&vendor_id="+vendorId;
 
             let vendorDeleteResult = deleteVendorData(deleteData);
-            if(vendorDeleteResult != "1"){
+            if(String(vendorDeleteResult) != "1"){
                 alert(vendorDeleteResult);
             }else{
                 alert("Vendor details has been deleted successfully.");

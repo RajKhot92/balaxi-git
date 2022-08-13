@@ -201,6 +201,7 @@
                                 (counter.product_name))+
                               "</td>"+
                               "<td>"+counter.country_name+"</td>"+
+                              "<td>"+counter.category_name+"</td>"+
                               "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                               "<td align=\"center\">"+
                                 (counter.gmp > 0 ? 
@@ -232,7 +233,7 @@
         }
     }else{
         productTbody += "<tr>"+
-                          "<td colspan=\"10\" align=\"center\">No product details found.</td>"
+                          "<td colspan=\"11\" align=\"center\">No product details found.</td>"
                         "</tr>";
     }
     $("#divProductReport").html("<table class=\"table table-sm table-hover table-bordered\" id=\"productReportTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -241,6 +242,7 @@
                                     "<th><b>Sr.No.</b></th>"+
                                     "<th><b>Product</b></th>"+
                                     "<th><b>Country</b></th>"+
+                                    "<th><b>Product Category</b></th>"+
                                     "<th><b>Supplier Name</b></th>"+
                                     "<th><b>GMP Status</b></th>"+
                                     "<th><b>FSC Status</b></th>"+
@@ -257,11 +259,11 @@
     if(jsonProductData.length > 0){
       $("#productReportTable").DataTable({
         "columnDefs": [
-          {"targets": 4,"orderable": false},
           {"targets": 5,"orderable": false},
           {"targets": 6,"orderable": false},
           {"targets": 7,"orderable": false},
-          {"targets": 8,"orderable": false}
+          {"targets": 8,"orderable": false},
+          {"targets": 9,"orderable": false}
         ]
       });
     }

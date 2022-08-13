@@ -158,14 +158,11 @@
                                                 "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.aq_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
-                                            "<td align=\"center\">"+
-                                            	"<span title=\"Click here to delete this artwork questionnaire details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQuestionnaire("+counter.aq_id+")\"></span>"+
-                                            "</td>"+
                                         "</tr>";
             }
         }else{
             questionnaireTbody += "<tr>"+
-                            "<td colspan=\"7\" align=\"center\">No artwork questionnaire details found.</td>"
+                            "<td colspan=\"6\" align=\"center\">No artwork questionnaire details found.</td>"
                         "</tr>";
         }
         $("#divQuestionnaire").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"questionnaireTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -177,7 +174,6 @@
                                         "<th>Received Date</th>"+
                                         "<th>Uploaded Document</th>"+
                                         "<th>Entry Date</th>"+
-                                        "<th>Delete</th>"+
                                     "</tr>"+
                                 "</thead>"+
                                 "<tbody>"+
@@ -185,11 +181,7 @@
                                 "</tbody>"+
                             "</table>");
         if(jsonQuestionnaireData.length > 0){
-            $("#questionnaireTable").DataTable({
-            	"columnDefs": [
-	            	{"targets": 6,"orderable": false}
-            	]
-            });
+            $("#questionnaireTable").DataTable();
         }
     }
 
@@ -252,7 +244,7 @@
         formData.append("received_dt", $("#received_dt").val());
 
     	let questionnaireSaveResult = saveQuestionnaireData(formData);
-    	if(questionnaireSaveResult != "1"){
+    	if(String(questionnaireSaveResult) != "1"){
     		alert(questionnaireSaveResult);
     	}else{
     		resetQuestionnaire();
@@ -266,13 +258,6 @@
     }
 
     function resetQuestionnaire(){
-    	$("#product_code").val("");
-        $("#submitted_dt").val("");
-        $("#received_dt").val("");
-        $("#artwork").val("");
-    }
-
-    function deleteQuestionnaire(mrId) {
-        alert("This feature is not yet implemented.");
+        document.getElementById("frmQuestionnaire").reset();
     }
 </script>

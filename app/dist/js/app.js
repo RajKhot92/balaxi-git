@@ -274,8 +274,10 @@ function fileValidation(fileInput,format){
 	        	return false;
 	        }
 	    }else if("dossier"){
-	        if(file.size >= 20971520){
-        		alert("Sorry! You can upload a file which is less than 20 MB in size.");
+	    	console.log(file.size);
+	    	console.log(104857600);
+	        if(file.size >= 104857600){
+        		alert("Sorry! You can upload a file which is less than 100 MB in size.");
 	        	$("#"+fileInput).focus();
 	        	return false;
 	        }

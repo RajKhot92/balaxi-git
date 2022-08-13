@@ -159,7 +159,7 @@
         }
 
     	let userRoleSaveResult = saveUserRoleData($("#frmUserRole").serialize());
-    	if(userRoleSaveResult != "1"){
+    	if(String(userRoleSaveResult) != "1"){
     		alert(userRoleSaveResult);
     	}else{
     		resetUserRole();
@@ -183,7 +183,7 @@
 			var updateData = "login_id="+localStorage.getItem("balaxi_user_id")+"&role_id="+roleId+"&role_name="+$("#edit_user_role"+roleId).val();
 
 	    	let userRoleUpdateResult = editUserRoleData(updateData);
-	    	if(userRoleUpdateResult != "1"){
+	    	if(String(userRoleUpdateResult) != "1"){
 	    		alert(userRoleUpdateResult);
 	    	}else{
 	    		alert("User role details has been updated successfully.");
@@ -212,7 +212,7 @@
             var deleteData = "login_id="+localStorage.getItem("balaxi_user_id")+"&role_id="+roleId;
 
             let userRoleDeleteResult = deleteUserRoleData(deleteData);
-            if(userRoleDeleteResult != "1"){
+            if(String(userRoleDeleteResult) != "1"){
                 alert(userRoleDeleteResult);
             }else{
                 alert("User role details has been deleted successfully.");

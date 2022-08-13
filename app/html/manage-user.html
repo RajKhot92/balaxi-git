@@ -280,7 +280,7 @@
         }
 
     	let userSaveResult = saveUserData($("#frmUser").serialize());
-    	if(userSaveResult != "1"){
+    	if(String(userSaveResult) != "1"){
     		alert(userSaveResult);
     	}else{
     		resetUser();
@@ -322,7 +322,7 @@
 			var updateData = "login_id="+$("#login_id").val()+"&user_id="+userId+"&user_name="+$("#edit_user_name"+userId).val()+"&contact_no="+$("#edit_contact_no"+userId).val()+"&email_id="+$("#edit_email_id"+userId).val()+"&user_role="+$("#edit_user_role"+userId).val();
 
 	    	let userUpdateResult = editUserData(updateData);
-	    	if(userUpdateResult != "1"){
+	    	if(String(userUpdateResult) != "1"){
 	    		alert(userUpdateResult);
 	    	}else{
 	    		alert("User details has been updated successfully.");

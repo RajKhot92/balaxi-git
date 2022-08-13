@@ -352,7 +352,7 @@
         }
 
     	let productSaveResult = saveProductData($("#frmProduct").serialize());
-    	if(productSaveResult != "1"){
+    	if(String(productSaveResult) != "1"){
     		alert(productSaveResult);
     	}else{
     		resetProduct();
@@ -407,7 +407,7 @@
 			var updateData = "login_id="+$("#login_id").val()+"&product_id="+productId+"&product_name="+$("#edit_product_name"+productId).val()+"&product_category="+$("#edit_product_category"+productId).val()+"&product_owner="+$("#edit_product_owner"+productId).val()+"&country_id="+$("#edit_product_country"+productId).val()+"&deadline_dt="+$("#edit_deadline_date"+productId).val();
 
 	    	let productUpdateResult = editProductData(updateData);
-	    	if(productUpdateResult != "1"){
+	    	if(String(productUpdateResult) != "1"){
 	    		alert(productUpdateResult);
 	    	}else{
 	    		alert("Product details has been updated successfully.");
@@ -458,12 +458,14 @@
     }
 
     function deleteProduct(productId){
-        let productDeleteResult = deleteProductData(productId);
-        if(productDeleteResult != "1" || productDeleteResult != 1 || productDeleteResult != '1'){
-            alert(productDeleteResult);
-        }else{
-            alert("Product details has been deleted successfully.");
-            loadProducts();
+        if(confirm("Are you sure want to delete this product?\nWarning: This will delete all the steps details associated with this product.")){
+            let productDeleteResult = deleteProductData(productId);
+            if(String(productDeleteResult) != "1"){
+                alert(productDeleteResult);
+            }else{
+                alert("Product details has been deleted successfully.");
+                loadProducts();
+            }
         }
     }
 

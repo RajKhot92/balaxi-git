@@ -47,6 +47,8 @@
         $row_array['qnq'] = $row['qnq'];
         $row_array['misc'] = $row['misc'];
         $row_array['test_lab'] = $row['test_lab'];
+        $row_array['file_type'] = $row['file_type'];
+        $row_array['file_url'] = $row['file_url'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

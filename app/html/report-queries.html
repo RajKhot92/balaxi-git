@@ -422,7 +422,7 @@
       formData.append("psq_id", currentQueryId);
 
       let solutionSaveResult = saveSolutionData(formData);
-      if(solutionSaveResult != "1" || solutionSaveResult != 1){
+      if(String(solutionSaveResult) != "1"){
         alert(solutionSaveResult);
       }else{
         resetSolution();
