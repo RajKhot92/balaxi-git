@@ -53,7 +53,7 @@
                         <div class="row assign-product" style="display: none;">
                             <div class="col-12" style="margin: 2px;">
                                 <hr>
-                                <b>Note:</b> You can assign/re-assgign the executives only, if that work is not started or not completed.
+                                <b>Note:</b> You can assign/re-assign the executives only, if that work is not started or not completed.
                             </div>
                             <div class="col-12" style="padding-top: 5px;">
                                 <h4 class="card-title text-center">Select Users</h4>
@@ -163,7 +163,7 @@
                 optionsProductData += "<option value=\""+counter.product_id+"\">"+counter.product_name+" ["+counter.category_name+"] ["+counter.country_name+"]</option>";
             }
             $("#divProduct").html("<select id=\"product_id\" name=\"product_id\" class=\"form-control\">"+
-                                       "<option value=\"\">Select Product Category</option>"+
+                                       "<option value=\"\">Select Product</option>"+
                                        optionsProductData+
                                     "</select>");
         }
@@ -250,6 +250,14 @@
     }
 
     function loadProductSteps() {
+        $("#cmboDataCapture").val("");
+        $("#cmboVendorFinalize").val("");
+        $("#cmboDocSampleCollection").val("");
+        $("#cmboSampleFinalize").val("");
+        $("#cmboDossier").val("");
+        $("#cmboShipment").val("");
+        $("#cmboSubmission").val("");
+        
         let productStepResult = getProductSteps();
         // console.log(productStepResult);
         var jsonProductStepData = JSON.parse(productStepResult);
@@ -345,8 +353,8 @@
         if(String(assignStepResult).trim() != "1"){
             alert(assignStepResult);
         }else{
-            // resetProduct();
             alert("Product steps assigned successfully.");
+            resetSteps();
         }
     }
 
@@ -356,13 +364,6 @@
 
     function resetSteps() {
         loadProductSteps();
-        // $("#cmboDataCapture").val("");
-        // $("#cmboVendorFinalize").val("");
-        // $("#cmboDocSampleCollection").val("");
-        // $("#cmboSampleFinalize").val("");
-        // $("#cmboDossier").val("");
-        // $("#cmboShipment").val("");
-        // $("#cmboSubmission").val("");
     }
 
     function openProductAssigned(){

@@ -321,16 +321,25 @@ function onlyNumberKey(evt) {
 
 function deleteExecutiveEntry(tblNm,colId,colVal) {
 	let response = 0;
-	if(confirm("Are you sure want to delete this entry?")){
-		let deleteResult = deleteEntry(tblNm,colId,colVal);
-	    // console.log(deleteResult);
-	    if(deleteResult == "1" || deleteResult == '1' || deleteResult == 1){
-			alert("Executive entry successfully deleted.");
-			response = 1;
-	    }else{
-	    	alert(deleteResult);
-	    	response = 0;
-	    }
+	if(localStorage.getItem("balaxi_user_role") == 1 ||
+		localStorage.getItem("balaxi_user_role") == 2 ||
+		localStorage.getItem("balaxi_user_role") == 3){
+
+		if(confirm("Are you sure want to delete this entry?")){
+			let deleteResult = deleteEntry(tblNm,colId,colVal);
+		    // console.log(deleteResult);
+		    if(deleteResult == "1" || deleteResult == '1' || deleteResult == 1){
+				alert("Executive entry successfully deleted.");
+				response = 1;
+		    }else{
+		    	alert(deleteResult);
+		    	response = 0;
+		    }
+		}
+
+	}else{
+		alert("You don't have access to delete this entry.");
+		response = 0;
 	}
     return response;
 }

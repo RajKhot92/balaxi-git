@@ -9,7 +9,7 @@ const EXECUTIVE_ROLE = 4;
 
 // const serverURL = "http://localhost/balaxi/api/";
 const serverURL = "http://localhost/balaxi/balaxi-git/api/";
-// const serverURL = "https://klugerkopf.com/balaxi/api/";
+// const serverURL = "https://regulatorybalaxi.in/api/";
 
 
 function showLoader(){
