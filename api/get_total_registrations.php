@@ -7,10 +7,11 @@
     
     /*  Getting roles    */
     $get_progress_sql = "SELECT a.`product_id`,a.`product_name`,b.`pr_id`,
-                        b.`registration_complete`, b.`registration_expired`,c.`user_name` as product_owner 
+                        b.`registration_complete`, b.`registration_expired`,c.`user_name` as product_owner,d.`category_name`  
                         from product_master a 
                         INNER JOIN product_registration b ON a.`product_id`=b.`product_id` 
                         INNER JOIN user_master c on a.`product_owner`=c.`user_id` 
+                        INNER JOIN product_category d ON a.`product_category`=d.`category_id` 
                         WHERE b.`pr_id` IN (SELECT MAX(pr_id) from product_registration GROUP by product_id) AND a.`del_by` IS NULL  ";
 
     if($country_id != 0){
@@ -23,6 +24,7 @@
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
         $row_array['product_id'] = $row['product_id'];
         $row_array['product_name'] = $row['product_name'];
+        $row_array['category_name'] = $row['category_name'];
         $row_array['registration_complete'] = $row['registration_complete'];
         $row_array['registration_expired'] = $row['registration_expired'];
         $row_array['product_owner'] = $row['product_owner'];

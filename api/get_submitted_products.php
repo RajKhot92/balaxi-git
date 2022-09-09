@@ -6,13 +6,14 @@
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
     
     /*  Getting roles    */
-    $get_progress_sql = "SELECT DISTINCT a.`product_id`,a.`product_name`,
+    $get_progress_sql = "SELECT DISTINCT a.`product_id`,a.`product_name`,c.`category_name`,
                         (SELECT `box` FROM product_submission_valid 
                          WHERE psv_id=(SELECT max(psv_id) FROM `product_submission_valid` WHERE product_id=a.`product_id`)) box_date,
                         (SELECT CONCAT(submitted_moh,'@#$',submission_slip_no) FROM product_submission 
                          WHERE ps_id=(SELECT max(ps_id) FROM `product_submission` WHERE product_id=a.`product_id`)) submitted_data,
                          'Not Registered' as registration_status
-                        from product_master a INNER JOIN product_submission b ON a.`product_id`=b.`product_id`
+                        from product_master a INNER JOIN product_submission b ON a.`product_id`=b.`product_id` 
+                        INNER JOIN `product_category` c ON a.`product_category`=c.`category_id` 
                         WHERE a.`product_id` NOT IN (
                         SELECT product_id FROM product_registration pr)
                         AND a.`del_by` IS NULL  ";
@@ -27,6 +28,7 @@
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         $row_array['product_id'] = $row['product_id'];
         $row_array['product_name'] = $row['product_name'];
+        $row_array['category_name'] = $row['category_name'];
         $row_array['box_date'] = $row['box_date'];
         $submission_data = explode("@#$", $row['submitted_data']);
         $row_array['submitted_moh'] = $submission_data[0];

@@ -236,6 +236,7 @@
                               "<td align=\"center\">"+
                                 clickable+
                               "</td>"+
+                              "<td align=\"center\">"+counter.product_category+"</td>"+
                               "<td align=\"center\">"+counter.product_owner+"</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.query_no+"</td>"+
@@ -250,6 +251,7 @@
                               "<td align=\"center\">"+
                                 clickable+
                               "</td>"+
+                              "<td align=\"center\">"+counter.product_category+"</td>"+
                               "<td align=\"center\">"+counter.product_owner+"</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.query_no+"</td>"+
@@ -261,11 +263,11 @@
     }else{
       if(localStorage.getItem("balaxi_user_role") == 3){
         progressTbody += "<tr>"+
-                            "<td colspan=\"7\" align=\"center\">No details found.</td>"
+                            "<td colspan=\"8\" align=\"center\">No details found.</td>"
                           "</tr>";
       }else{
         progressTbody += "<tr>"+
-                            "<td colspan=\"6\" align=\"center\">No details found.</td>"
+                            "<td colspan=\"7\" align=\"center\">No details found.</td>"
                           "</tr>";
       }
     }
@@ -274,6 +276,7 @@
                               "<thead>"+
                                   "<tr>"+
                                       "<th>Product Name</th>"+
+                                      "<th>Product Category</th>"+
                                       "<th>Product Owner</th>"+
                                       "<th>Query Category</th>"+
                                       "<th>Query No</th>"+
@@ -291,6 +294,7 @@
                               "<thead>"+
                                   "<tr>"+
                                       "<th>Product Name</th>"+
+                                      "<th>Product Category</th>"+
                                       "<th>Product Owner</th>"+
                                       "<th>Query Category</th>"+
                                       "<th>Query No</th>"+

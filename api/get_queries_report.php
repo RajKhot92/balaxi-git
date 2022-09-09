@@ -8,11 +8,12 @@
     /*  Getting market research    */
     $get_queries_sql = "SELECT a.`product_id`,a.`product_name`,b.`psq_id`,
                         b.`query_no`, b.`deadline_dt`,b.`received_date`,b.`ent_by`,
-                        c.`category_name`,a.`product_owner` as user_id,d.`user_name` as product_owner 
+                        c.`category_name`,a.`product_owner` as user_id,d.`user_name` as product_owner,e.`category_name` as product_category 
                         from product_master a 
                         INNER JOIN product_queries_received b ON a.`product_id`=b.`product_id`
                         INNER JOIN query_category c ON b.`query_category`=c.`category_id`
                         INNER JOIN user_master d on a.`product_owner`=d.`user_id` 
+                        INNER JOIN product_category e ON a.`product_category`=e.`category_id`
                         AND a.`del_by` IS NULL ";
 
     if($country_id != 0){
@@ -34,6 +35,7 @@
         $row_array['category_name'] = $row['category_name'];
         $row_array['deadline_dt'] = $row['deadline_dt'];
         $row_array['received_date'] = $row['received_date'];
+        $row_array['product_category'] = $row['product_category'];
         $row_array['ent_by'] = $row['ent_by'];
         array_push($json_response,$row_array);
     }

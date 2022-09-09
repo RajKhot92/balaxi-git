@@ -224,9 +224,7 @@
                                   "<i class='fas fa-times-circle text-danger'></i>")+
                               "</td>"+
                               "<td align=\"center\">"+
-                                (counter.amv > 0 ? 
-                                  "<i class='fas fa-check-circle text-success'></i>" : 
-                                  "<i class='fas fa-times-circle text-danger'></i>")+
+                                (counter.deadline_dt != null ? counter.deadline_dt : "")+
                               "</td>"+
                               "<td class=\"text-center\">"+counter.progress+"%</td>"+
                             "</tr>";
@@ -248,7 +246,7 @@
                                     "<th><b>FSC Status</b></th>"+
                                     "<th><b>CMA Status</b></th>"+
                                     "<th><b>Dossier Status</b></th>"+
-                                    "<th><b>AMV Status</b></th>"+
+                                    "<th><b>Deadline Date</b></th>"+
                                     "<th><b>Overall Progress</b></th>"+
                                 "</tr>"+
                             "</thead>"+
