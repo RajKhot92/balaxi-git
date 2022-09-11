@@ -79,17 +79,17 @@
             echo "Product owner details not found for current product.";
             exit();
         }else{
-            while ($row = mysqli_fetch_array($email_response, MYSQLI_ASSOC)) {
+            while ($row = mysqli_fetch_array($owner_response, MYSQLI_ASSOC)) {
                 $product_owner_name = $row['user_name'];
                 $product_owner_mail = $row['email_id'];
             }
         }
 
-        $admin_mail = 'regulatory@balaxi.in';
+        // $admin_mail = 'regulatory@balaxi.in';
         // $mail_to = $product_owner_mail;
         // $subject = 'Query Received ';
         // $content = 'Hello '.$product_owner_name.',<br/><br/>
-        //             We have received queries against product <b>'.$product_name.'</b>. It requires your attention. Kindly provide your solution to these queries by visiting portal.<br/><br/>
+        //             We have received queries against product '.$product_name.'. It requires your attention. Kindly provide your solution to these queries by visiting portal.<br/><br/>
         //             Please do not reply to this mail.<br/><br/>
         //             Thanks,<br/>
         //             Team Balaxi';
