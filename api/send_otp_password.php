@@ -69,7 +69,7 @@
         //             Please do not reply to this mail.<br/><br/>
         //             Thanks,<br/>
         //             Team Balaxi';
-        // $retval = sendEmail($mail_to,$subject,$content);
+        // $retval = sendEmail($mail_to,null,$subject,$content);
         $retval = "1";
         if($retval == "0"){
             $response->status_code = 500;
