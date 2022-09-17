@@ -4,6 +4,8 @@
 
     /*  Taking user input   */
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
+    $user_id = mysqli_real_escape_string($conn, $_REQUEST['user_id']);
+    $user_role = mysqli_real_escape_string($conn, $_REQUEST['user_role']);
 
     /*  Getting categories    */
     $get_product_report_sql = "SELECT a.`product_id`,a.`product_name`,b.`country_name`,c.`user_name` as owner,d.`category_name`,
@@ -27,6 +29,10 @@
                         AND a.`product_id` NOT IN (
                         SELECT `product_id` FROM product_registration)
                         AND a.`del_by` IS NULL  ";
+
+    if($user_role == 4){
+        $get_product_report_sql .= "AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
+    }
 
     if($country_id != 0){
         $get_product_report_sql .= "AND a.`country_id`=".$country_id;

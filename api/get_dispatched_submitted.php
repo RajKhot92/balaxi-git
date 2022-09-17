@@ -4,6 +4,8 @@
 
     /*  Taking user input   */
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
+    $user_id = mysqli_real_escape_string($conn, $_REQUEST['user_id']);
+    $user_role = mysqli_real_escape_string($conn, $_REQUEST['user_role']);
     
     /*  Getting roles    */
         $get_progress_sql = "SELECT DISTINCT a.`product_id`,a.`product_name`,
@@ -14,6 +16,10 @@
                             WHERE c.`psd_id` IN (SELECT MAX(psd_id) from product_shipment_dispatch GROUP by product_id)
                             AND a.`product_id` NOT IN (
                                 SELECT `product_id` FROM product_registration)  AND a.`del_by` IS NULL ";
+
+    if($user_role == 4){
+        $get_progress_sql .= "AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
+    }
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;

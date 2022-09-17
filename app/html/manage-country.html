@@ -140,7 +140,7 @@
     }
 
     function getCountries(){
-    	return callAPIService("get_country.php","country_id=0");
+    	return callAPIService("get_country.php","country_id=0&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
     }
 
     function saveCountry(){

@@ -71,21 +71,26 @@
             var counter = jsonCountryData[i];
             optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
         }
-        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchTotalRegistrations()\">"+
-                                   "<option value=\"0\">All</option>"+
-                                   optionsCountryData+
-                                "</select>");
     }
 
-    fetchTotalRegistrations();
+    $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"changeRegistrations()\">"+
+                             "<option value=\"0\">All</option>"+
+                             optionsCountryData+
+                          "</select>");
+    
+    changeRegistrations();
+  }
+
+  function changeRegistrations(){
+    fetchTotalRegistrations($("#country_id").val());
   }
 
   function getCountry() {
-    return callAPIService("get_country.php","country_id=0");
+    return callAPIService("get_country.php","country_id=0&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
   }
 
-  function fetchTotalRegistrations(){
-    loadTotalRegistrations($("#country_id").val());
+  function fetchTotalRegistrations(countryId){
+    loadTotalRegistrations(countryId);
   }
 
   function loadTotalRegistrations(countryId){
@@ -137,7 +142,7 @@
   }
 
   function getTotalRegistrations(countryId) {
-    return callAPIService("get_total_registrations.php","country_id="+countryId);
+    return callAPIService("get_total_registrations.php","country_id="+countryId+"&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
   }
 
   function back(){

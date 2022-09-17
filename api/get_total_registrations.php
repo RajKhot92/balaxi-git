@@ -4,6 +4,8 @@
 
     /*  Taking user input   */
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
+    $user_id = mysqli_real_escape_string($conn, $_REQUEST['user_id']);
+    $user_role = mysqli_real_escape_string($conn, $_REQUEST['user_role']);
     
     /*  Getting roles    */
     $get_progress_sql = "SELECT a.`product_id`,a.`product_name`,b.`pr_id`,
@@ -13,6 +15,10 @@
                         INNER JOIN user_master c on a.`product_owner`=c.`user_id` 
                         INNER JOIN product_category d ON a.`product_category`=d.`category_id` 
                         WHERE b.`pr_id` IN (SELECT MAX(pr_id) from product_registration GROUP by product_id) AND a.`del_by` IS NULL  ";
+
+    if($user_role == 4){
+        $get_progress_sql .= "AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
+    }
 
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;

@@ -4,6 +4,8 @@
 
     /*  Taking user input   */
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
+    $user_id = mysqli_real_escape_string($conn, $_REQUEST['user_id']);
+    $user_role = mysqli_real_escape_string($conn, $_REQUEST['user_role']);
 
     /*  Getting market research    */
     $get_queries_sql = "SELECT a.`product_id`,a.`product_name`,b.`psq_id`,
@@ -15,6 +17,10 @@
                         INNER JOIN user_master d on a.`product_owner`=d.`user_id` 
                         INNER JOIN product_category e ON a.`product_category`=e.`category_id`
                         AND a.`del_by` IS NULL ";
+
+    if($user_role == 4){
+        $get_queries_sql .= "AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
+    }
 
     if($country_id != 0){
         $get_queries_sql .= "AND a.`country_id`=".$country_id;

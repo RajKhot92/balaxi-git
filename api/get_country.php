@@ -4,9 +4,19 @@
 
     /*  Taking user input   */
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
+    $user_id = mysqli_real_escape_string($conn, $_REQUEST['user_id']);
+    $user_role = mysqli_real_escape_string($conn, $_REQUEST['user_role']);
 
     /*  Getting roles    */
-    $get_country_sql = "SELECT * FROM country_master WHERE del_by IS NULL";
+    $get_country_sql = "SELECT * FROM country_master WHERE del_by IS NULL ";
+
+    if($user_role == 4){
+        $get_country_sql .= " AND country_id IN ( 
+                            SELECT DISTINCT a.`country_id` 
+                            from `product_master` a INNER join `product_step_master` b 
+                            ON a.`product_id`=b.`product_id` 
+                            WHERE b.`user_id`=".$user_id.") ";
+    }
 
     if($country_id != 0){
         /*  Checking role already exists     */

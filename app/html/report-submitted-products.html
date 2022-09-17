@@ -79,21 +79,26 @@
             var counter = jsonCountryData[i];
             optionsCountryData += "<option value=\""+counter.country_id+"\">"+counter.country_name+"</option>";
         }
-        $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"fetchSubmittedProducts()\">"+
-                                   "<option value=\"0\">All</option>"+
-                                   optionsCountryData+
-                                "</select>");
     }
+    
+    $("#divCountry").html("<select id=\"country_id\" name=\"country_id\" class=\"form-control\" onchange=\"changeSubmittedProducts()\">"+
+                             "<option value=\"0\">All</option>"+
+                             optionsCountryData+
+                          "</select>");
 
-    fetchSubmittedProducts();
+    changeSubmittedProducts();
+  }
+
+  function changeSubmittedProducts(){
+    fetchSubmittedProducts($("#country_id").val());
   }
 
   function getCountry() {
-    return callAPIService("get_country.php","country_id=0");
+    return callAPIService("get_country.php","country_id=0&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
   }
 
-  function fetchSubmittedProducts(){
-    loadSubmittedProducts($("#country_id").val());
+  function fetchSubmittedProducts(countryId){
+    loadSubmittedProducts(countryId);
   }
 
   function loadSubmittedProducts(countryId){
@@ -150,7 +155,7 @@
   }
 
   function getSubmittedProducts(countryId) {
-    return callAPIService("get_submitted_products.php","country_id="+countryId);
+    return callAPIService("get_submitted_products.php","country_id="+countryId+"&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
   }
 
   function loadSubmittedProductsWIP(countryId){
