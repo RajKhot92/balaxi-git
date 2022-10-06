@@ -30,18 +30,6 @@ $(document).ready(function(){
 	loadUserMenus();
 });
 
-// function showLoader(){
-//     $("#loader").show();
-//     $("#mainContainer").prop("disabled","disabled");
-//     //alert("Loading...");
-// }
-
-// function hideLoader(){
-//     $("#loader").hide();
-//     $("#mainContainer").show();
-//     //alert("Hide loading...");
-// }
-
 function popupwindow(url, title, target, w, h) {
     var left = (screen.width/2)-(w/2);
     var top = (screen.height/2)-(h/2);
