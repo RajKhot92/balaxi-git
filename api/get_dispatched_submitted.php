@@ -10,12 +10,15 @@
     /*  Getting roles    */
         $get_progress_sql = "SELECT DISTINCT a.`product_id`,a.`product_name`,
                             b.`category_name`,c.`dispatch_dt`,
-                            IF((SELECT COUNT(*) FROM product_submission ps WHERE ps.`product_id`=a.`product_id`) > 0, 'Submitted', 'Not Submitted') submission_status
+                            'Not Submitted' as submission_status
                             from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id`
                             INNER JOIN product_shipment_dispatch c ON a.`product_id`=c.`product_id`
                             WHERE c.`psd_id` IN (SELECT MAX(psd_id) from product_shipment_dispatch GROUP by product_id)
                             AND a.`product_id` NOT IN (
-                                SELECT `product_id` FROM product_registration)  AND a.`del_by` IS NULL ";
+                                SELECT `product_id` FROM product_registration) 
+                            AND a.`product_id` NOT IN (
+                                SELECT `product_id` FROM product_submission) 
+                            AND a.`del_by` IS NULL ";
 
     if($user_role == 4){
         $get_progress_sql .= "AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";

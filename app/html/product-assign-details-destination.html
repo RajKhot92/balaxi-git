@@ -1,0 +1,289 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Product Details</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Product Details
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <input type="hidden" id="login_id" name="login_id">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th><b>Product Name</b></th>
+                                            <th><b>Product Owner</b></th>
+                                            <th><b>Product Category</b></th>
+                                            <th><b>Product Country</b></th>
+                                            <th><b>Overall Progess</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="tdProductName"></td>
+                                            <td id="tdProductOwner"></td>
+                                            <td id="tdProductCategory"></td>
+                                            <td id="tdProductCountry"></td>
+                                            <td id="tdOverallProgress" class="text-center"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id ="divDossierDevelopment" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-dossier-view-destination.html')">
+                                <div class="card card-hover">
+                                    <div class="box bg-info text-center">
+                                        <h3 class="font-light text-white">
+                                            <i class="fas fa-edit"></i>
+                                        </h3>
+                                        <h6 class="text-white">Dossier Development</h6>
+                                        <hr class="text-white">
+                                        <span class="text-white" id="spnDossierDevelopment"></span>
+                                        <br/>
+                                        <span style="display: none;" class="text-white" id="spnDossierDevelopmentUser"></span>
+                                        <span class="text-white" id="spnDossierDevelopmentUserName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id ="divShipment" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-shipment-view-destination.html')">
+                                <div class="card card-hover">
+                                    <div class="box bg-cyan text-center">
+                                        <h3 class="font-light text-white">
+                                            <i class="fas fa-truck"></i>
+                                        </h3>
+                                        <h6 class="text-white">Shipment</h6>
+                                        <hr class="text-white">
+                                        <span class="text-white" id="spnShipment"></span>
+                                        <br/>
+                                        <span style="display: none;" class="text-white" id="spnShipmentUser"></span>
+                                        <span class="text-white" id="spnShipmentUserName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id ="divSubmission" class="col-md-3" style="cursor: pointer;" onclick="loadSubPageContent('menu-submission-view-destination.html')">
+                                <div class="card card-hover">
+                                    <div class="box bg-success text-center">
+                                        <h3 class="font-light text-white">
+                                            <i class="fas fa-check"></i>
+                                        </h3>
+                                        <h6 class="text-white">Submission</h6>
+                                        <hr class="text-white">
+                                        <span class="text-white" id="spnSubmission"></span>
+                                        <br/>
+                                        <span style="display: none;" class="text-white" id="spnSubmissionUser"></span>
+                                        <span class="text-white" id="spnSubmissionUserName"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" onclick="back()" id="btnBack" name="btnBack" class="btn btn-dark">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var optionsProductData = "";
+    $(document).ready(function(){
+
+        if(sessionStorage.getItem("product_details_form_flag") == "4"){
+            // alert("dashboard");
+            if(sessionStorage.getItem("product_details_product_id") != null && sessionStorage.getItem("product_details_product_id") != ""){
+                // alert(sessionStorage.getItem("product_details_product_id"));
+                loadProductSteps(sessionStorage.getItem("product_details_product_id"));
+                // openProductDetails(sessionStorage.getItem("product_details_product_id"));
+            }
+        }else{
+            //Nothing
+            loadProductDetails();           
+        }
+    });
+
+    function loadProductDetails(){
+        $("#tdProductName").html(sessionStorage.getItem("details_product_name"));
+        $("#tdProductOwner").html(sessionStorage.getItem("details_product_owner"));
+        $("#tdProductCategory").html(sessionStorage.getItem("details_product_category"));
+        $("#tdProductCountry").html(sessionStorage.getItem("details_product_country"));
+        $("#tdOverallProgress").html("<h5>"+sessionStorage.getItem("overall_progress")+"</h5>");
+
+        
+        var dossierDevelopmentUserName = sessionStorage.getItem("dossier_development_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("dossier_development_assigned_name");
+        $("#spnDossierDevelopment").html("<b>"+sessionStorage.getItem("dossier_development")+"%</b>");
+        $("#spnDossierDevelopmentUser").html(sessionStorage.getItem("dossier_development_assigned_to"));
+        $("#spnDossierDevelopmentUserName").html(dossierDevelopmentUserName);
+
+        if(dossierDevelopmentUserName == "Not Assigned" || parseFloat($("#spnDossierDevelopment").text()) == 0){
+            $("#divDossierDevelopment").removeAttr("style");
+            $("#divDossierDevelopment").removeAttr("onclick");
+        }
+
+        var shipmentUserName = sessionStorage.getItem("shipment_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("shipment_assigned_name");
+        $("#spnShipment").html("<b>"+sessionStorage.getItem("shipment")+"%</b>");
+        $("#spnShipmentUser").html(sessionStorage.getItem("shipment_assigned_to"));
+        $("#spnShipmentUserName").html(shipmentUserName);
+
+        if(shipmentUserName == "Not Assigned" || parseFloat($("#spnShipment").text()) == 0){
+            $("#divShipment").removeAttr("style");
+            $("#divShipment").removeAttr("onclick");
+        }
+
+        var submissionUserName = sessionStorage.getItem("submission_assigned_name") == "" ? "Not Assigned" : sessionStorage.getItem("submission_assigned_name");
+        $("#spnSubmission").html("<b>"+sessionStorage.getItem("submission")+"%</b>");
+        $("#spnSubmissionUser").html(sessionStorage.getItem("submission_assigned_to"));
+        $("#spnSubmissionUserName").html(submissionUserName);
+
+        if(submissionUserName == "Not Assigned" || parseFloat($("#spnSubmission").text()) == 0){
+            $("#divSubmission").removeAttr("style");
+            $("#divSubmission").removeAttr("onclick");
+        }
+    }
+
+    function loadProductSteps(productId) {
+        let productResult = getProductSteps(productId);
+        // console.log(productResult);
+        var jsonProductData = JSON.parse(productResult);
+        if(jsonProductData.length > 0){
+            for(i=0; i<jsonProductData.length; i++){
+                var productStepData = "";
+                var counter = jsonProductData[i];
+
+                sessionStorage.setItem("details_product_name",counter.product_name);
+                sessionStorage.setItem("details_product_owner",counter.user_name);
+                sessionStorage.setItem("details_product_category",counter.category_name);
+                sessionStorage.setItem("details_product_country",counter.country_name);
+
+                // console.log(counter.steps.length);
+                var totalProgress = 0.00;
+                var menuId = 9;
+                if(counter.steps.length > 0){
+                    for(j=0; j<counter.steps.length; j++){
+                        var step = counter.steps[j];
+                        // console.log(step.executive+" | "+step.menu_id+" | "+menuId);
+                        if(step.executive != ""){
+                            if(step.menu_id == menuId){
+                                setStepWiseDetails(menuId,step.progress,step.user_id,step.executive);
+                                totalProgress += parseFloat(step.progress);
+                            }else{
+                                setStepWiseDetails(menuId,0,"","");
+                                j = j - 1;
+                                totalProgress += 0;
+                            }
+                        }else{
+                            setStepWiseDetails(menuId,0,"","");
+                        }
+                        menuId++;
+                    }
+
+                    if(menuId != 16){
+                        for(k=menuId; k<=15; k++){
+                            // console.log("Added");
+                            setStepWiseDetails(menuId,0,"","");
+                        }
+                    }
+                }else{
+                    for(j=9; j<=15; j++){
+                        setStepWiseDetails(j,0,"","");
+                    }
+                }
+
+                // console.log(totalProgress);
+                if(totalProgress != 0.00){
+                    totalProgress = (totalProgress/7).toFixed(2)+"%";
+                    sessionStorage.setItem("overall_progress",totalProgress);
+                }else{
+                    sessionStorage.setItem("overall_progress",parseFloat(0).toFixed(2));
+                }
+
+                loadProductDetails();
+            }
+        }
+    }
+
+    function setStepWiseDetails(menuId,progress,userId,userName){
+        switch(menuId){
+            case DATA_CAPTURE_MENU_ID:
+                sessionStorage.setItem("data_capture",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("data_capture_assigned_to",userId);
+                sessionStorage.setItem("data_capture_assigned_name",userName);
+                break;
+            case VENDOR_FINALIZE_MENU_ID:
+                sessionStorage.setItem("vendor_finalization",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("vendor_finalization_assigned_to",userId);
+                sessionStorage.setItem("vendor_finalization_assigned_name",userName);
+                break;
+            case DOCUMENT_SAMPLE_COLLECTION_MENU_ID:
+                sessionStorage.setItem("document_sample_collection",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("document_sample_collection_assigned_to",userId);
+                sessionStorage.setItem("document_sample_collection_assigned_name",userName);
+                break;
+            case SAMPLE_FINALIZATION_MENU_ID:
+                sessionStorage.setItem("sample_finalization",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("sample_finalization_assigned_to",userId);
+                sessionStorage.setItem("sample_finalization_assigned_name",userName);
+                break;
+            case DOSSIER_DEVELOPMENT_MENU_ID:
+                sessionStorage.setItem("dossier_development",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("dossier_development_assigned_to",userId);
+                sessionStorage.setItem("dossier_development_assigned_name",userName);
+                break;
+            case SHIPMENT_MENU_ID:
+                sessionStorage.setItem("shipment",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("shipment_assigned_to",userId);
+                sessionStorage.setItem("shipment_assigned_name",userName);
+                break;
+            case SUBMISSION_MENU_ID:
+                sessionStorage.setItem("submission",parseFloat(progress).toFixed(2));
+                sessionStorage.setItem("submission_assigned_to",userId);
+                sessionStorage.setItem("submission_assigned_name",userName);
+                break;
+        }
+    }
+
+    function getProductSteps(productId) {
+        var showAll = 0;
+        if(sessionStorage.getItem("product_details_form_flag") == "4"){
+            showAll = 1;
+        }
+        return callAPIService("get_assigned_step_tabular.php","login_id="+localStorage.getItem("balaxi_user_id")+"&product_id="+productId+"&show_all="+showAll);
+    }
+
+    function resetProduct() {
+        $("#product_id").val("");
+    }
+
+    function back() {
+        if(sessionStorage.getItem("product_details_form_flag") != ""){
+            if(sessionStorage.getItem("product_details_form_flag") == "4"){
+                loadPageContent(20,sessionStorage.getItem("current_report"));
+            }else{
+                loadPageContent(19,"product-assign-view-destination.html");
+            }
+        }else{
+            loadPageContent(19,"product-assign-view-destination.html");
+        }
+    }
+</script>

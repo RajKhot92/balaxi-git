@@ -9,7 +9,10 @@
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $registration_complete = mysqli_real_escape_string($conn, $_REQUEST['registration_complete']);
     $registration_expired = mysqli_real_escape_string($conn, $_REQUEST['registration_expired']);
+    $rejection_slip_date = mysqli_real_escape_string($conn, $_REQUEST['rejection_slip_date']);
+    $rejection_remark = mysqli_real_escape_string($conn, $_REQUEST['rejection_remark']);
     
+    $file_content_certificate = '';
     if (!empty($_FILES['certificate_file']['name'])) {
         if ($_FILES['certificate_file']['error'] != 0) {
             echo 'Something wrong with the file.';
@@ -20,10 +23,22 @@
         $file_tmp = $_FILES['certificate_file']['tmp_name'];
         $file_content_certificate = addslashes(file_get_contents($_FILES['certificate_file']['tmp_name']));
     }
+
+    $file_content_rejection = '';
+    if (!empty($_FILES['rejection_slip']['name'])) {
+        if ($_FILES['rejection_slip']['error'] != 0) {
+            echo 'Something wrong with the file.';
+            exit();
+        }
+
+        $file_name = $_FILES['rejection_slip']['name'];
+        $file_tmp = $_FILES['rejection_slip']['tmp_name'];
+        $file_content_rejection = addslashes(file_get_contents($_FILES['rejection_slip']['tmp_name']));
+    }
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $registration_complete === "" || $registration_expired === ""){
+    if($login_id === "" || $product_id === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -61,9 +76,15 @@
         }
     }
 
+    $rgstr_complete = $registration_complete === "" ? "null" : "STR_TO_DATE('".$registration_complete."', '%m/%d/%Y')";
+    $rgstr_expired = $registration_expired === "" ? "null" : "STR_TO_DATE('".$registration_expired."', '%m/%d/%Y')";
+    $fil_certificate = $file_content_certificate === "" ? "null" : "'".$file_content_certificate."'";
+    $rjctn_slip_date = $rejection_slip_date === "" ? "null" : "STR_TO_DATE('".$rejection_slip_date."', '%m/%d/%Y')";
+    $fil_rejection = $file_content_rejection === "" ? "null" : "'".$file_content_rejection."'";
+
     /*  Adding product registration    */
-    $add_registration_sql = "INSERT INTO product_registration (`product_id`, `registration_complete`, `registration_expired`, `certificate_file`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",STR_TO_DATE('".$registration_complete."', '%m/%d/%Y'),STR_TO_DATE('".$registration_expired."', '%m/%d/%Y'),'".$file_content_certificate."',".$login_id.",NOW())";
+    $add_registration_sql = "INSERT INTO product_registration (`product_id`, `registration_complete`, `registration_expired`, `certificate_file`, `rejection_slip_date`, `rejection_slip`, `rejection_remark`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",".$rgstr_complete.",".$rgstr_expired.",".$fil_certificate.",".$rjctn_slip_date.",".$fil_rejection.",'".$rejection_remark."',".$login_id.",NOW())";
 
     $update_category_sql = "UPDATE product_master 
                             SET product_category=".$register_category." WHERE product_id=".$product_id;

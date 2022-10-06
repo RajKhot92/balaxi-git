@@ -104,6 +104,8 @@
         var clickable = "";
         if(localStorage.getItem("balaxi_user_role") == 4){
           clickable = counter.product_name;
+        }else if(localStorage.getItem("balaxi_user_role") == 9){
+          clickable = "<span onclick=\"loadProductDetailsDestinationCountry("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
         }else{
           clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
         }
@@ -142,7 +144,8 @@
   }
 
   function back(){
-    if(localStorage.getItem("balaxi_user_role") == 4){
+    if(localStorage.getItem("balaxi_user_role") == 4 ||
+      localStorage.getItem("balaxi_user_role") == 9){
       loadPageContent(19,"menu-report-executive.html");
     }else{
       loadPageContent(19,"menu-report.html");
@@ -156,5 +159,14 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-halted-products.html");
     loadSubPageContent("product-assign-details.html");
+  }
+
+  function loadProductDetailsDestinationCountry(productId){
+    sessionStorage.clear();
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",4);
+    sessionStorage.setItem("product_details_product_id",productId);
+    sessionStorage.setItem("current_report","report-halted-products.html");
+    loadSubPageContent("product-assign-details-destination.html");
   }
 </script>

@@ -183,7 +183,7 @@
 
           <div class="border-top">
             <div class="card-body text-center">
-                <button type="button" onclick="loadSubPageContent('product-assign-details.html')" id="btnBack" name="btnBack" class="btn btn-dark">
+                <button type="button" onclick="loadSubPageContent('product-assign-details-destination.html')" id="btnBack" name="btnBack" class="btn btn-dark">
                     <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                 </button>
             </div>
@@ -247,15 +247,12 @@
                                               "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ps_id+"','translation')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
-                                          "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this translation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslation('product_translation','ps_id',"+counter.ps_id+")\"></span>"+
-                                          "</td>"+
                                       "</tr>";
               dossier_id = counter.dossier_id;
           }
       }else{
           translationTbody += "<tr>"+
-                          "<td colspan=\"5\" align=\"center\">No translation details found.</td>"
+                          "<td colspan=\"4\" align=\"center\">No translation details found.</td>"
                       "</tr>";
       }
       $("#divTranslation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"translationTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -265,7 +262,6 @@
                                       "<th>Handed over to Translator</th>"+
                                       "<th>Dossier (Local Langauge)</th>"+
                                       "<th>Entry Date</th>"+
-                                      "<th>Delete</th>"+
                                   "</tr>"+
                               "</thead>"+
                               "<tbody>"+
@@ -301,15 +297,12 @@
                                               "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFileByURL('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"+
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
-                                          "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this translation received details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteTranslationReceived('product_translation_received','ptr_id',"+counter.ptr_id+")\"></span>"+
-                                          "</td>"+
                                       "</tr>";
               dossier_id = counter.dossier_id;
           }
       }else{
           translationReceivedTbody += "<tr>"+
-                          "<td colspan=\"5\" align=\"center\">No translation received details found.</td>"
+                          "<td colspan=\"4\" align=\"center\">No translation received details found.</td>"
                       "</tr>";
       }
       $("#divTranslationReceived").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"translationReceivedTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -319,7 +312,6 @@
                                       "<th>Received From Translator</th>"+
                                       "<th>Dossier (Local Langauge)</th>"+
                                       "<th>Entry Date</th>"+
-                                      "<th>Delete</th>"+
                                   "</tr>"+
                               "</thead>"+
                               "<tbody>"+
@@ -362,14 +354,11 @@
                                           "<td align=\"center\">"+counter.box+"</td>"+
                                           "<td align=\"center\">"+counter.ws_finish_product+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
-                                          "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this validation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteValidation('product_submission_valid','psv_id',"+counter.psv_id+")\"></span>"+
-                                          "</td>"+
                                       "</tr>";
           }
       }else{
           validationTbody += "<tr>"+
-                          "<td colspan=\"11\" align=\"center\">No validation details found.</td>"
+                          "<td colspan=\"10\" align=\"center\">No validation details found.</td>"
                       "</tr>";
       }
       $("#divValidation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"validationTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -385,7 +374,6 @@
                                       "<th>Box</th>"+
                                       "<th>WS & Finished Product</th>"+
                                       "<th>Entry Date</th>"+
-                                      "<th>Delete</th>"+
                                   "</tr>"+
                               "</thead>"+
                               "<tbody>"+
@@ -413,14 +401,11 @@
                                           "<td align=\"center\">"+counter.received_fa+"</td>"+
                                           "<td align=\"center\">"+counter.received_notary+"</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
-                                          "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this legalization details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteLegalization('product_submission_legal','psl_id',"+counter.psl_id+")\"></span>"+
-                                          "</td>"+
                                       "</tr>";
           }
       }else{
           legalizationTbody += "<tr>"+
-                          "<td colspan=\"7\" align=\"center\">No legalization details found.</td>"
+                          "<td colspan=\"6\" align=\"center\">No legalization details found.</td>"
                       "</tr>";
       }
       $("#divLegalization").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"legalizationTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -432,7 +417,6 @@
                                       "<th>Received from FA</th>"+
                                       "<th>Received from Notary</th>"+
                                       "<th>Entry Date</th>"+
-                                      "<th>Delete</th>"+
                                   "</tr>"+
                               "</thead>"+
                               "<tbody>"+
@@ -460,14 +444,11 @@
                                           "<td align=\"center\">"+
                                               "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.ps_id+"','submission')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                           "<td>"+counter.ent_dt+"</td>"+
-                                          "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this submission details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteSubmission('product_submission','ps_id',"+counter.ps_id+")\"></span>"+
-                                          "</td>"+
                                       "</tr>";
           }
       }else{
           submissionTbody += "<tr>"+
-                          "<td colspan=\"6\" align=\"center\">No submission details found.</td>"
+                          "<td colspan=\"5\" align=\"center\">No submission details found.</td>"
                       "</tr>";
       }
       $("#divSubmission").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"submissionTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -478,7 +459,6 @@
                                       "<th>Submission Slip No/Document</th>"+
                                       "<th>Submission Document</th>"+
                                       "<th>Entry Date</th>"+
-                                      "<th>Delete</th>"+
                                   "</tr>"+
                               "</thead>"+
                               "<tbody>"+
@@ -520,14 +500,11 @@
                                           (counter.rejection_remark != null ? counter.rejection_remark : "")+
                                           "</td>"+
                                           "<td>"+counter.ent_dt+"</td>"+
-                                          "<td align=\"center\">"+
-                                            "<span title=\"Click here to delete this registration details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteRegistration('product_registration','pr_id',"+counter.pr_id+")\"></span>"+
-                                          "</td>"+
                                       "</tr>";
           }
       }else{
           registrationTbody += "<tr>"+
-                          "<td colspan=\"9\" align=\"center\">No registration details found.</td>"
+                          "<td colspan=\"8\" align=\"center\">No registration details found.</td>"
                       "</tr>";
       }
       $("#divRegistration").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"registrationTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -541,7 +518,6 @@
                                       "<th>Rejection Slip</th>"+
                                       "<th>Rejection Remark</th>"+
                                       "<th>Entry Date</th>"+
-                                      "<th>Delete</th>"+
                                   "</tr>"+
                               "</thead>"+
                               "<tbody>"+
@@ -573,14 +549,11 @@
                                 "<td align=\"center\">"+counter.category_name+"</td>"+
                                 "<td align=\"center\">"+counter.deadline_dt+"</td>"+
                                 "<td>"+counter.ent_dt+"</td>"+
-                                "<td align=\"center\">"+
-                                  "<span title=\"Click here to delete this queries details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQueries('product_queries_received','psq_id',"+counter.psq_id+")\"></span>"+
-                                "</td>"+
                             "</tr>";
         }
     }else{
         queriesTbody += "<tr>"+
-                        "<td colspan=\"9\" align=\"center\">No query received details found.</td>"
+                        "<td colspan=\"8\" align=\"center\">No query received details found.</td>"
                     "</tr>";
     }
     $("#divQueries").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"queriesTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -594,7 +567,6 @@
                                     "<th>Query Category</th>"+
                                     "<th>Deadline Date</th>"+
                                     "<th>Entry Date</th>"+
-                                    "<th>Delete</th>"+
                                 "</tr>"+
                             "</thead>"+
                             "<tbody>"+
@@ -633,14 +605,11 @@
                             "</td>"+
                             "<td align=\"center\">"+counter.solution_desc+"</td>"+
                             "<td>"+counter.ent_dt+"</td>"+
-                            "<td align=\"center\">"+
-                              "<span title=\"Click here to delete this queries solution received details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQueriesReceived('product_queries_solution','pqs_id',"+counter.pqs_id+")\"></span>"+
-                            "</td>"+
                           "</tr>";
       }
     }else{
       progressTbody += "<tr>"+
-                          "<td colspan=\"8\" align=\"center\">No details found.</td>"
+                          "<td colspan=\"7\" align=\"center\">No details found.</td>"
                         "</tr>";
     }
     $("#divSolution").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"solutionTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -653,7 +622,6 @@
                                     "<th>Solution File</th>"+
                                     "<th>Solution Description</th>"+
                                     "<th>Solution Received Date</th>"+
-                                    "<th>Delete</th>"+
                                 "</tr>"+
                             "</thead>"+
                             "<tbody>"+
@@ -680,14 +648,11 @@
                                         "<td align=\"center\">"+counter.slip_no+"</td>"+
                                         "<td align=\"center\">"+counter.remarks+"</td>"+
                                         "<td>"+counter.ent_dt+"</td>"+
-                                        "<td align=\"center\">"+
-                                          "<span title=\"Click here to delete this queries solution submitted details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteQueriesSubmitted('product_queries_submitted','pqs_id',"+counter.pqs_id+")\"></span>"+
-                                        "</td>"+
                                     "</tr>";
         }
     }else{
         solutionSubmittedTbody += "<tr>"+
-                        "<td colspan=\"6\" align=\"center\">No solution submitted details found.</td>"
+                        "<td colspan=\"5\" align=\"center\">No solution submitted details found.</td>"
                     "</tr>";
     }
     $("#divSolutionSubmitted").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"solutionSubmittedTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -698,7 +663,6 @@
                                     "<th>Slip No</th>"+
                                     "<th>Remarks</th>"+
                                     "<th>Entry Date</th>"+
-                                    "<th>Delete</th>"+
                                 "</tr>"+
                             "</thead>"+
                             "<tbody>"+
@@ -746,68 +710,5 @@
         break;
     }
     downloadFile(tbl,col,col1,id,format);
-  }
-
-  function deleteTranslation(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadTranslation();
-    }
-  }
-
-  function deleteTranslationReceived(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadTranslationReceived();
-    }
-  }
-
-  function deleteValidation(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadValidation();
-    }
-  }
-
-  function deleteLegalization(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadLegalization();
-    }
-  }
-
-  function deleteSubmission(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadSubmission();
-    }
-  }
-
-  function deleteRegistration(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadRegistration();
-    }
-  }
-
-  function deleteQueries(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadQueries();
-    }
-  }
-
-  function deleteQueriesReceived(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadSolution();
-    }
-  }
-
-  function deleteQueriesSubmitted(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadSolutionSubmitted();
-    }
   }
 </script>

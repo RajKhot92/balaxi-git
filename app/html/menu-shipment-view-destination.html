@@ -79,7 +79,7 @@
 
           <div class="border-top">
             <div class="card-body text-center">
-                <button type="button" onclick="loadSubPageContent('product-assign-details.html')" id="btnBack" name="btnBack" class="btn btn-dark">
+                <button type="button" onclick="loadSubPageContent('product-assign-details-destination.html')" id="btnBack" name="btnBack" class="btn btn-dark">
                     <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
                 </button>
             </div>
@@ -140,14 +140,11 @@
                                                 "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psb_id+"','shipment_booking','')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
-                                            "<td align=\"center\">"+
-                                              "<span title=\"Click here to delete this shipment booking details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBooking('product_shipment_booking','psb_id',"+counter.psb_id+")\"></span>"+
-                                            "</td>"+
                                         "</tr>";
             }
         }else{
             shipmentBookingTbody += "<tr>"+
-                            "<td colspan=\"7\" align=\"center\">No shipment booking details found.</td>"
+                            "<td colspan=\"6\" align=\"center\">No shipment booking details found.</td>"
                         "</tr>";
         }
         $("#divShipmentBooking").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"shipmentBookingTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -159,7 +156,6 @@
                                         "<th>Pick-up Date</th>"+
                                         "<th>Booking Invoice</th>"+
                                         "<th>Entry Date</th>"+
-                                        "<th>Delete</th>"+
                                     "</tr>"+
                                 "</thead>"+
                                 "<tbody>"+
@@ -202,14 +198,11 @@
                                         "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psbp_id+"','shipment_box_prep','box_list_box')\" class=\"fas fa-file-image fa-lg text-info\"></i>"+
                                     "</td>"+
                                     "<td>"+counter.ent_dt+"</td>"+
-                                    "<td align=\"center\">"+
-                                      "<span title=\"Click here to delete this shipment box preparation details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentBoxPreparation('product_shipment_box_prep','psbp_id',"+counter.psbp_id+")\"></span>"+
-                                    "</td>"+
                                 "</tr>";
             }
         }else{
             shipmentBoxPreparationTbody += "<tr>"+
-                            "<td colspan=\"10\" align=\"center\">No shipment box preparation details found.</td>"
+                            "<td colspan=\"9\" align=\"center\">No shipment box preparation details found.</td>"
                         "</tr>";
         }
         $("#divShipmentBoxPreparation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"shipmentBoxPreparationTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -224,7 +217,6 @@
                                         "<th>Documents</th>"+
                                         "<th>Box List With Box</th>"+
                                         "<th>Entry Date</th>"+
-                                        "<th>Delete</th>"+
                                     "</tr>"+
                                 "</thead>"+
                                 "<tbody>"+
@@ -252,14 +244,11 @@
                                                 "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.psd_id+"','shipment_dispatch','')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
-                                            "<td align=\"center\">"+
-                                              "<span title=\"Click here to delete this shipment dispatch details\" class=\"fas fa-trash fa-lg text-danger\" style=\"cursor:pointer;\" onclick=\"deleteShipmentDispatch('product_shipment_dispatch','psd_id',"+counter.psd_id+")\"></span>"+
-                                            "</td>"+
                                         "</tr>";
             }
         }else{
             shipmentDispatchTbody += "<tr>"+
-                            "<td colspan=\"5\" align=\"center\">No shipment dispatch details found.</td>"
+                            "<td colspan=\"4\" align=\"center\">No shipment dispatch details found.</td>"
                         "</tr>";
         }
         $("#divShipmentDispatch").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"shipmentDispatchTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -269,7 +258,6 @@
                                         "<th>Dispatch Date</th>"+
                                         "<th>Dispatch Document</th>"+
                                         "<th>Entry Date</th>"+
-                                        "<th>Delete</th>"+
                                     "</tr>"+
                                 "</thead>"+
                                 "<tbody>"+
@@ -305,26 +293,5 @@
         break;
     }
     downloadFile(tbl,col,col1,id,format);
-  }
-
-  function deleteShipmentBooking(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadShipmentBooking();
-    }
-  }
-
-  function deleteShipmentBoxPreparation(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadShipmentBoxPreparation();
-    }
-  }
-
-  function deleteShipmentDispatch(tblNm,colId,colVal){
-    var response = deleteExecutiveEntry(tblNm,colId,colVal);
-    if(response == 1){
-      loadShipmentDispatch();
-    }
   }
 </script>

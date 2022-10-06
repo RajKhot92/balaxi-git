@@ -3,13 +3,13 @@
   <div class="page-breadcrumb">
     <div class="row">
       <div class="col-12 d-flex no-block align-items-center">
-        <h4 class="page-title">Total Registrations</h4>
+        <h4 class="page-title">Total Rejected Registrations</h4>
         <div class="ms-auto text-end">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">
-                Total Registrations
+                Total Rejected Registrations
               </li>
             </ol>
           </nav>
@@ -114,8 +114,8 @@
                             clickable+
                           "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
-                          "<td align=\"center\">"+counter.registration_complete+"</td>"+
-                          "<td align=\"center\">"+counter.registration_expired+"</td>"+
+                          "<td align=\"center\">"+counter.rejection_slip_date+"</td>"+
+                          "<td align=\"center\">"+counter.rejection_remark+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
                         "</tr>";  
       }
@@ -129,8 +129,8 @@
                                 "<tr>"+
                                     "<th>Product Name</th>"+
                                     "<th>Product Category</th>"+
-                                    "<th>Registration Date</th>"+
-                                    "<th>Expiry Date</th>"+
+                                    "<th>Rejection Slip Date</th>"+
+                                    "<th>Rejection Remark</th>"+
                                     "<th>Product Owner</th>"+
                                 "</tr>"+
                             "</thead>"+
@@ -144,7 +144,7 @@
   }
 
   function getTotalRegistrations(countryId) {
-    return callAPIService("get_total_registrations.php","country_id="+countryId+"&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role")+"&category=registered");
+    return callAPIService("get_total_registrations.php","country_id="+countryId+"&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role")+"&category=rejected");
   }
 
   function back(){
@@ -161,7 +161,7 @@
     sessionStorage.removeItem("product_details_form_flag");
     sessionStorage.setItem("product_details_form_flag",3);
     sessionStorage.setItem("product_details_product_id",productId);
-    sessionStorage.setItem("current_report","report-registration.html");
+    sessionStorage.setItem("current_report","report-registration-rejection.html");
     loadSubPageContent("product-assign-details.html");
   }
 

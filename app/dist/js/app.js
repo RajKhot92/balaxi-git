@@ -115,7 +115,8 @@ function loadUserMenus() {
 				}else{
 					if(menu.menu_name === "Reports"){
 						let menuLinkDynamic = "";
-						if(localStorage.getItem("balaxi_user_role") == 4){
+						if(localStorage.getItem("balaxi_user_role") == 4 ||
+							localStorage.getItem("balaxi_user_role") == 9){
 							menuLinkDynamic = "menu-report-executive.html";
 						}else{
 							menuLinkDynamic = "menu-report.html";
@@ -231,7 +232,7 @@ function loadUploadedFile(tbl,col,col1,val,format) {
                 var counter = jsonFileData[i];
                 var report = "";
                 if(format == "pdf"){
-                	report = "<object data=\"data:application/pdf;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" type=\"application/pdf\"></object>";
+					report = "<iframe title='document' width='100%' height='100%' src='data:application/pdf;base64,"+encodeURI(counter.file_content)+"'></iframe>";
                 }else if(format == "jpg"){
                 	report = "<img src=\"data:application/jpg;base64,"+counter.file_content+"\" height=\"100%\" width=\"100%\" />";
                 }else{
@@ -252,7 +253,6 @@ function fileValidation(fileInput,format){
         alert("The file API isn't supported on this browser yet.");
         return false;
     }
-
     var input = document.getElementById(fileInput);
     if (!input.files) { // This is VERY unlikely, browser support is near-universal
         alert("This browser doesn't seem to support the `files` property of file inputs.");
@@ -273,7 +273,7 @@ function fileValidation(fileInput,format){
 	        	$("#"+fileInput).focus();
 	        	return false;
 	        }
-	    }else if("dossier"){
+	    }else if(format == "dossier"){
 	    	console.log(file.size);
 	    	console.log(104857600);
 	        if(file.size >= 104857600){

@@ -49,6 +49,8 @@
         $row_array['cma'] = $row['cma'];
         $row_array['box'] = $row['box'];
         $row_array['ws_finish_product'] = $row['ws_finish_product'];
+        $row_array['qnq'] = $row['qnq'];
+        $row_array['signing_authority'] = $row['signing_authority'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

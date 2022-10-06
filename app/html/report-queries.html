@@ -32,7 +32,19 @@
 
                 </div>
               </div>
-              <div class="col-md-8">
+              <label for="fname"
+                class="col-1 text-end control-label col-form-label">
+                Status
+              </label>
+              <div class="col-md-3">
+                <div id="divStatus">
+                  <select id="category_id" name="category_id" class="form-control" onchange="changeQueries()">
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
                 
               </div>
             </div>
@@ -204,19 +216,19 @@
   }
 
   function changeQueries(){
-    fetchQueries($("#country_id").val());
+    fetchQueries($("#country_id").val(),$("#category_id").val());
   }
 
   function getCountry() {
     return callAPIService("get_country.php","country_id=0&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
   }
 
-  function fetchQueries(countryId){
-    loadQueries(countryId);
+  function fetchQueries(countryId,category){
+    loadQueries(countryId,category);
   }
 
-  function loadQueries(countryId){
-    let queriesResult = getQueries(countryId);
+  function loadQueries(countryId,category){
+    let queriesResult = getQueries(countryId,category);
     // console.log(queriesResult);
     var jsonQueriesData = JSON.parse(queriesResult);
     var progressTbody = "";
@@ -226,6 +238,8 @@
         var clickable = "";
         if(localStorage.getItem("balaxi_user_role") == 4){
           clickable = counter.product_name;
+        }else if(localStorage.getItem("balaxi_user_role") == 9){
+          clickable = "<span onclick=\"loadProductDetailsDestinationCountry("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
         }else{
           clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
         }
@@ -326,12 +340,13 @@
     }
   }
 
-  function getQueries(countryId) {
-    return callAPIService("get_queries_report.php","country_id="+countryId+"&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
+  function getQueries(countryId,category) {
+    return callAPIService("get_queries_report.php","country_id="+countryId+"&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role")+"&category="+category);
   }
 
   function back(){
-    if(localStorage.getItem("balaxi_user_role") == 4){
+    if(localStorage.getItem("balaxi_user_role") == 4 ||
+      localStorage.getItem("balaxi_user_role") == 9){
       loadPageContent(19,"menu-report-executive.html");
     }else{
       loadPageContent(19,"menu-report.html");
@@ -524,5 +539,14 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-queries.html");
     loadSubPageContent("product-assign-details.html");
+  }
+
+  function loadProductDetailsDestinationCountry(productId){
+    sessionStorage.clear();
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",4);
+    sessionStorage.setItem("product_details_product_id",productId);
+    sessionStorage.setItem("current_report","report-queries.html");
+    loadSubPageContent("product-assign-details-destination.html");
   }
 </script>

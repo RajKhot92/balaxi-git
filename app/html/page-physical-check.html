@@ -162,11 +162,6 @@
     	return callAPIService("get_product_physical_check.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&pc_id=0");
     }
 
-    function openFile(URL){
-        var win = window.open();
-        win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
-    }
-
     function savePhysicalChecks(){
     	
         if($("#appearance").val() == ""){

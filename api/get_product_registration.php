@@ -43,6 +43,8 @@
         $row_array['product_id'] = $row['product_id'];
         $row_array['registration_complete'] = $row['registration_complete'];
         $row_array['registration_expired'] = $row['registration_expired'];
+        $row_array['rejection_slip_date'] = $row['rejection_slip_date'];
+        $row_array['rejection_remark'] = $row['rejection_remark'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];
         array_push($json_response,$row_array);

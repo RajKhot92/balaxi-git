@@ -6,6 +6,7 @@
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
     $user_id = mysqli_real_escape_string($conn, $_REQUEST['user_id']);
     $user_role = mysqli_real_escape_string($conn, $_REQUEST['user_role']);
+    $category = mysqli_real_escape_string($conn, $_REQUEST['category']);
 
     /*  Getting market research    */
     $get_queries_sql = "SELECT a.`product_id`,a.`product_name`,b.`psq_id`,
@@ -19,11 +20,17 @@
                         AND a.`del_by` IS NULL ";
 
     if($user_role == 4){
-        $get_queries_sql .= "AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
+        $get_queries_sql .= " AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
     }
 
     if($country_id != 0){
-        $get_queries_sql .= "AND a.`country_id`=".$country_id;
+        $get_queries_sql .= " AND a.`country_id`=".$country_id;
+    }
+
+    if($category == "pending"){
+        $get_queries_sql .= " AND a.`product_id` not in (SELECT DISTINCT `product_id` FROM `product_queries_solution` where `del_by` IS NULL)";
+    }else{
+        $get_queries_sql .= " AND a.`product_id` in (SELECT DISTINCT `product_id` FROM `product_queries_solution` where `del_by` IS NULL)";
     }
 
     $get_queries_sql .= " ORDER BY a.`product_id`,b.`psq_id` DESC ";

@@ -15,10 +15,12 @@
     $cma = mysqli_real_escape_string($conn, $_REQUEST['cma']);
     $box = mysqli_real_escape_string($conn, $_REQUEST['box']);
     $ws_finish_product = mysqli_real_escape_string($conn, $_REQUEST['ws_finish_product']);
+    $qnq = mysqli_real_escape_string($conn, $_REQUEST['qnq']);
+    $signing_authority = mysqli_real_escape_string($conn, $_REQUEST['signing_authority']);
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $gmp === "" || $fsc === "" || $cma === "" || $box === "" || $ws_finish_product === ""){
+    if($login_id === "" || $product_id === "" || $gmp === "" || $fsc === "" || $cma === "" || $box === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -43,8 +45,8 @@
     }
 
     /*  Adding product translation     */
-    $add_validation_sql = "INSERT INTO product_submission_valid (`product_id`, `gmp`, `fsc`, `copp`, `pp`, `license_manufacture`, `cma`, `box`, `ws_finish_product`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$gmp."','".$fsc."','".$copp."','".$pp."','".$license_manufacture."','".$cma."',STR_TO_DATE('".$box."', '%m/%d/%Y'),'".$ws_finish_product."',".$login_id.",NOW())";
+    $add_validation_sql = "INSERT INTO product_submission_valid (`product_id`, `gmp`, `fsc`, `copp`, `pp`, `license_manufacture`, `cma`, `box`, `ws_finish_product`, `qnq`, `signing_authority`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",'".$gmp."','".$fsc."','".$copp."','".$pp."','".$license_manufacture."','".$cma."',STR_TO_DATE('".$box."', '%m/%d/%Y'),'".$ws_finish_product."','".$qnq."','".$signing_authority."',".$login_id.",NOW())";
 
     if ($conn->query($add_validation_sql) !== TRUE) {
         echo "Some error occurred while adding validation details. Please try again later.";

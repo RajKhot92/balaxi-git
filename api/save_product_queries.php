@@ -67,6 +67,9 @@
         echo "Some error occurred while adding query received details. Please try again later.";
         exit();
     }else{
+
+        $cc_mail = array();
+
         $product_owner_mail = '';
         $product_owner_name = '';
         $owner_exist = "SELECT b.`user_name`,b.`email_id` 
@@ -85,7 +88,19 @@
             }
         }
 
-        // $admin_mail = 'regulatory@balaxi.in';
+        /*  All Admin Email  */
+        $admin_exist = "SELECT DISTINCT `email_id`
+                        FROM `user_master` 
+                        WHERE `user_role` = 2 AND `del_by` IS NULL";
+        $admin_response = mysqli_query($conn, $admin_exist);
+        if (mysqli_num_rows($admin_response) == 0){
+            //Skipping Admin Emails
+        }else{
+            while ($row = mysqli_fetch_array($admin_response, MYSQLI_ASSOC)) {
+                array_push($cc_mail, $row['email_id']);
+            }
+        }
+        // array_push($cc_mail, 'regulatory@balaxi.in','sandeep@balaxi.com')
         // $mail_to = $product_owner_mail;
         // $subject = 'Query Received ';
         // $content = 'Hello '.$product_owner_name.',<br/><br/>
@@ -93,7 +108,7 @@
         //             Please do not reply to this mail.<br/><br/>
         //             Thanks,<br/>
         //             Team Balaxi';
-        // $retval = sendEmail($mail_to,$admin_mail,$subject,$content);
+        // $retval = sendEmail($mail_to,$cc_mail,$subject,$content);
         $retval = "1";
         if($retval == "0"){
             echo "Some error occurred while sending mail to product owner. Please try again later.";

@@ -141,7 +141,7 @@
                                 <label
                                     for="fname"
                                     class="col-sm-3 text-end control-label col-form-label"
-                                  >WS & Finished Product <span style="color: red;">*</span></label
+                                  >WS & Finished Product</label
                                 >
                                 <div class="col-sm-3">
                                     <input
@@ -151,6 +151,38 @@
                                         name="ws_finish_product"
                                         maxlength="450"
                                         placeholder="Enter ws & finished product remarks"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >QnQ</label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="qnq"
+                                        name="qnq"
+                                        maxlength="450"
+                                        placeholder="Enter qnq"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Signing Authority</label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="signing_authority"
+                                        name="signing_authority"
+                                        maxlength="450"
+                                        placeholder="Enter signing authority"
                                     />
                                 </div>
                             </div>
@@ -177,7 +209,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title text-center">View Added Validation</h4>
-                        <div class="card-body" id="divValidation" class="table-responsive">
+                        <div class="card-body table-responsive" id="divValidation">
                         
                         </div>
                     </div>
@@ -217,12 +249,14 @@
                                             "<td align=\"center\">"+counter.cma+"</td>"+
                                             "<td align=\"center\">"+counter.box+"</td>"+
                                             "<td align=\"center\">"+counter.ws_finish_product+"</td>"+
+                                            "<td align=\"center\">"+counter.qnq+"</td>"+
+                                            "<td align=\"center\">"+counter.signing_authority+"</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                         "</tr>";
             }
         }else{
             validationTbody += "<tr>"+
-                            "<td colspan=\"10\" align=\"center\">No validation details found.</td>"
+                            "<td colspan=\"12\" align=\"center\">No validation details found.</td>"
                         "</tr>";
         }
         $("#divValidation").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"validationTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -237,6 +271,8 @@
                                         "<th>CMA</th>"+
                                         "<th>Box</th>"+
                                         "<th>WS & Finished Product</th>"+
+                                        "<th>QnQ</th>"+
+                                        "<th>Signing Authority</th>"+
                                         "<th>Entry Date</th>"+
                                     "</tr>"+
                                 "</thead>"+
@@ -251,11 +287,6 @@
 
     function getValidation(){
     	return callAPIService("get_product_validation.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&psv_id=0");
-    }
-
-    function openFile(URL){
-        var win = window.open();
-        win.document.write("<object data=\"data:application/pdf;base64,"+URL+"\" type=\"application/pdf\" style=\"border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;\"></object>");
     }
 
     function saveValidation(){
@@ -281,12 +312,6 @@
         if($("#box").val() == ""){
             alert("Please enter box date.");
             $("#box").focus();
-            return false;
-        }
-
-        if($("#ws_finish_product").val() == ""){
-            alert("Please enter ws & finished product.");
-            $("#ws_finish_product").focus();
             return false;
         }
 
