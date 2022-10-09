@@ -10,7 +10,8 @@
     /*  Getting roles    */
         $get_progress_sql = "SELECT DISTINCT a.`product_id`,a.`product_name`,
                             b.`category_name`,c.`dispatch_dt`,
-                            'Not Submitted' as submission_status
+                            'Not Submitted' as submission_status,
+                            DATEDIFF(c.`deadline_dt`,CURDATE()) due_dt 
                             from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id`
                             INNER JOIN product_shipment_dispatch c ON a.`product_id`=c.`product_id`
                             WHERE c.`psd_id` IN (SELECT MAX(psd_id) from product_shipment_dispatch GROUP by product_id)
@@ -36,6 +37,7 @@
         $row_array['product_name'] = $row['product_name'];
         $row_array['category_name'] = $row['category_name'];
         $row_array['dispatch_dt'] = $row['dispatch_dt'];
+        $row_array['due_dt'] = $row['due_dt'];
         $row_array['submission_status'] = $row['submission_status'];
         array_push($json_response,$row_array);  
     }

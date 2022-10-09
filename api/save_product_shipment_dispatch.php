@@ -46,8 +46,8 @@
     }
 
     /*  Adding shipment dispatch     */
-    $add_shipment_dispatch_sql = "INSERT INTO product_shipment_dispatch (`product_id`, `dispatch_dt`, `dispatch_doc`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",STR_TO_DATE('".$dispatch_dt."', '%m/%d/%Y'),'".$file_content."',".$login_id.",NOW())";
+    $add_shipment_dispatch_sql = "INSERT INTO product_shipment_dispatch (`product_id`, `dispatch_dt`, `dispatch_doc`, `deadline_dt`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",STR_TO_DATE('".$dispatch_dt."', '%m/%d/%Y'),'".$file_content."',DATE_ADD(NOW(), INTERVAL 1 MONTH),".$login_id.",NOW())";
 
     if ($conn->query($add_shipment_dispatch_sql) !== TRUE) {
         echo "Some error occurred while adding shipment dispatch details. Please try again later.";

@@ -36,10 +36,10 @@
         $get_user_sql .= " AND user_id = ".$user_id;
     }
 
-    if($role_id != 0){
+    if($role_id != ""){
         /*  Checking role already exists     */
         $role_exist = "SELECT role_id FROM user_roles 
-                        WHERE role_id = ".$role_id."
+                        WHERE role_id IN (".$role_id.") 
                         AND del_by IS NULL";
         $role_response = mysqli_query($conn, $role_exist);
         if (mysqli_num_rows($role_response) == 0){
@@ -47,7 +47,7 @@
             exit();
         }
 
-        $get_user_sql .= " AND role_id = ".$role_id;
+        $get_user_sql .= " AND role_id IN (".$role_id.") ";
     }
 
     $get_user_sql .= " ORDER BY user_id DESC ";

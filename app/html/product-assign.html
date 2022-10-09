@@ -246,7 +246,7 @@
     }
 
     function getExecutives() {
-        return callAPIService("get_user.php","login_id="+localStorage.getItem("balaxi_user_id")+"&user_id=0&role_id="+EXECUTIVE_ROLE);
+        return callAPIService("get_user.php","login_id="+localStorage.getItem("balaxi_user_id")+"&user_id=0&role_id="+EXECUTIVE_ROLE+","+DESTINATION_COUNTRY_ROLE);
     }
 
     function loadProductSteps() {
