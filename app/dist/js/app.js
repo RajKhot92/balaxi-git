@@ -278,6 +278,23 @@ function fileValidation(fileInput,format){
 	        	$("#"+fileInput).focus();
 	        	return false;
 	        }
+        }else if(format == "testReport"){
+	        if(file.size >= 5242880){
+        		alert("Sorry! You can upload a file which is less than 5 MB in size.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
+        	if(!(file.name.toUpperCase().endsWith("PDF")
+        		|| file.name.toUpperCase().endsWith("PNG")
+        		|| file.name.toUpperCase().endsWith("JPG")
+        		|| file.name.toUpperCase().endsWith("JPEG")
+        		|| file.name.toUpperCase().endsWith("BMP")
+        		|| file.name.toUpperCase().endsWith("GIF")
+        		|| file.name.toUpperCase().endsWith("SVG")) ){
+	        	alert("Kindly upload a pdf/jpg document file.");
+	        	$("#"+fileInput).focus();
+	        	return false;
+	        }
         }else{
         	if(file.size >= 3145728){
 	        	alert("Sorry! You can upload a file which is less than 3 MB in size.");

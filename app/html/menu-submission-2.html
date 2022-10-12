@@ -66,6 +66,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-6 mt-4 destination-country" style="cursor: pointer; display: none;"  onclick="loadSubPageContent('page-test-report.html')">
+                <div class="bg-dark p-15 text-white text-center">
+                    <h4>5.</h4>
+                    <h5 class="mb-1 mt-1">Test Report</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col" id="divTestReport">
+                            <h4>N/A</h4>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="" aria-valuemin="" aria-valuemax="100" style="width:100%;">
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="border-top">
             <div class="row mt-4">
@@ -85,6 +101,9 @@
         // console.log(sessionStorage.getItem("submission"));
         // console.log(sessionStorage.getItem("validation"));
         // console.log(sessionStorage.getItem("registration"));
+        if(localStorage.getItem("balaxi_user_role") == 9){
+            $(".destination-country").show();
+        }
 
         $("#divValidation").html("<h4>"+sessionStorage.getItem("validation")+"%</h4>"+
                                     "<div class=\"progress\" style=\"height: 20px;\">"+

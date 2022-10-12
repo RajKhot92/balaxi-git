@@ -73,6 +73,63 @@
                     </div>
                   </div>
                 </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" id="btnDHL" onclick="loadDHL()">
+                      DHL Details
+                    </button>
+                  </h2>
+                  <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divDHL" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" id="btnDHLFeedback" onclick="loadDHLFeedback()">
+                      DHL Details (Feedback)
+                    </button>
+                  </h2>
+                  <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <form class="form-horizontal" method="post" id="frmDHLFeedback" name="frmDHLFeedback" enctype="multipart/form-data">
+                        <div class="form-group row mb-2">
+                          <label
+                              for="fname"
+                              class="col-sm-4 text-end control-label col-form-label"
+                            >DHL Details (Feedback)</label
+                          >
+                          <div class="col-sm-4">
+                              <input
+                                  type="text"
+                                  class="form-control"
+                                  id="dhl_feedback"
+                                  name="dhl_feedback"
+                                  maxlength="450"
+                                  placeholder="Enter dhl feedback details"
+                              />
+                          </div>
+                          <div class="col-sm-4">
+                              <button type="button" onclick="saveDHLFeedback()" class="btn btn-primary">
+                                  <i class="fas fa-check-circle"></i>&nbsp;Submit
+                              </button>
+                              <button type="button" onclick="resetDHLFeedback()" class="btn btn-danger">
+                                  <i class="fas fa-ban"></i>&nbsp;Reset
+                              </button>
+                          </div>
+                        </div>  
+                      </form>
+                      <hr>
+                      <div class="col-12" id="divDHLFeedback" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -113,6 +170,8 @@
         $("#btnShipmentBooking").html("<b>Shipment Booking ("+counter.boxing.toFixed(2)+"%)</b>");
         $("#btnBoxPrep").html("<b>Box Prep ("+counter.box_prep.toFixed(2)+"%)</b>");
         $("#btnDispatch").html("<b>Dispatch ("+counter.dispatch.toFixed(2)+"%)</b>");
+        $("#btnDHL").html("<b>DHL (N/A)</b>");
+        $("#btnDHLFeedback").html("<b>DHL Feedback (N/A)</b>");
       }
     }
 
@@ -268,6 +327,112 @@
 
     function getShipmentDispatch(){
       return callAPIService("get_product_shipment_dispatch.php","login_id="+loginId+"&product_id="+productId+"&psd_id=0");
+    }
+
+  function loadDHL(){
+    let dhlResult = getDHL();
+    // console.log(dhlResult);
+    var jsonDHLData = JSON.parse(dhlResult);
+    var dhlTbody = "";
+    if(jsonDHLData.length > 0){
+        for(i=0; i<jsonDHLData.length; i++){
+            var counter = jsonDHLData[i];
+            dhlTbody += "<tr>"+
+                                    "<td align=\"center\">"+(i+1)+"</td>"+
+                                    "<td align=\"center\">"+counter.dhl+"</td>"+
+                                    "<td>"+counter.ent_dt+"</td>"+
+                                "</tr>";
+        }
+    }else{
+        dhlTbody += "<tr>"+
+                        "<td colspan=\"3\" align=\"center\">No dhl details found.</td>"
+                    "</tr>";
+    }
+    $("#divDHL").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"dhlTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Sr.No.</th>"+
+                                    "<th>DHL Details</th>"+
+                                    "<th>Entry Date</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                dhlTbody+
+                            "</tbody>"+
+                        "</table>");
+  }
+
+  function getDHL(){
+    return callAPIService("get_product_dhl.php","login_id="+loginId+"&product_id="+productId+"&dhl_id=0");
+  }
+
+  function loadDHLFeedback(){
+      let dhlResult = getDHLFeedback();
+      // console.log(dhlResult);
+      var jsonDHLData = JSON.parse(dhlResult);
+      var dhlTbody = "";
+      if(jsonDHLData.length > 0){
+          for(i=0; i<jsonDHLData.length; i++){
+              var counter = jsonDHLData[i];
+              dhlTbody += "<tr>"+
+                                      "<td align=\"center\">"+(i+1)+"</td>"+
+                                      "<td align=\"center\">"+counter.dhl+"</td>"+
+                                      "<td>"+counter.ent_dt+"</td>"+
+                                  "</tr>";
+          }
+      }else{
+          dhlTbody += "<tr>"+
+                          "<td colspan=\"3\" align=\"center\">No dhl feedback details found.</td>"
+                      "</tr>";
+      }
+      $("#divDHLFeedback").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"dhlTable\" width=\"100%\" cellspacing=\"0\">"+
+                              "<thead>"+
+                                  "<tr>"+
+                                      "<th>Sr.No.</th>"+
+                                      "<th>DHL Feedback Details</th>"+
+                                      "<th>Entry Date</th>"+
+                                  "</tr>"+
+                              "</thead>"+
+                              "<tbody>"+
+                                  dhlTbody+
+                              "</tbody>"+
+                          "</table>");
+    }
+
+    function getDHLFeedback(){
+      return callAPIService("get_product_dhl_feedback.php","login_id="+loginId+"&product_id="+productId+"&dhl_id=0");
+    }
+
+    function saveDHLFeedback(){
+      
+        if($("#dhl_feedback").val() == ""){
+        alert("Please enter dhl feedback details.");
+        $("#dhl_feedback").focus();
+        return false;
+      }
+
+        // Create a FormData object.
+        var formData = new FormData();
+        formData.append("login_id", loginId);
+        formData.append("product_id", productId);
+        formData.append("dhl_feedback", $("#dhl_feedback").val());
+
+        let dhlSaveResult = saveDHLFeedbackData(formData);
+      if(String(dhlSaveResult).trim() != "1"){
+        alert(dhlSaveResult);
+      }else{
+        resetDHLFeedback();
+        alert("DHL feedback details has been saved successfully.");
+        loadDHLFeedback();
+      }
+    }
+
+    function saveDHLFeedbackData(dhlData){
+      return callAPIServicePost("save_product_dhl_feedback.php",dhlData);
+    }
+
+    function resetDHLFeedback(){
+        document.getElementById("frmDHLFeedback").reset();
     }
 
   function openFile(id,menu,colnm){
