@@ -128,6 +128,20 @@
                     </div>
                   </div>
                 </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="accordionExample2headingFive">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive" id="btnTestReport" onclick="loadTestReport()">
+                      Test Report
+                    </button>
+                  </h2>
+                  <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="accordionExample2headingFive" data-bs-parent="#accordionExample2">
+                    <div class="accordion-body">
+                      <div class="col-12" id="divTestReport" style="height: 200px; overflow: scroll;">
+                    
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -528,6 +542,55 @@
 
   function getRegistration(){
     return callAPIService("get_product_registration.php","login_id="+loginId+"&product_id="+productId+"&pr_id=0");
+  }
+
+  function loadTestReport(){
+    let testReportResult = getTestReport();
+    // console.log(testReportResult);
+    var jsonTestReportData = JSON.parse(testReportResult);
+    var testReportTbody = "";
+    if(jsonTestReportData.length > 0){
+        for(i=0; i<jsonTestReportData.length; i++){
+            var counter = jsonTestReportData[i];
+            var fileTypeIcon = "fas fa-file-pdf";
+            if(counter.file_type == "pdf"){
+                fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+            }else{
+                fileTypeIcon = "fas fa-file-image fa-lg text-info";
+            }
+            testReportTbody += "<tr>"+
+                                        "<td align=\"center\">"+(i+1)+"</td>"+
+                                        "<td align=\"center\">"+
+                                            "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFileByURL('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"+
+                                        "</td>"+
+                                        "<td align=\"center\">"+counter.batch_no+"</td>"+
+                                        "<td>"+counter.test_result+"</td>"+
+                                        "<td>"+counter.ent_dt+"</td>"+
+                                    "</tr>";
+        }
+    }else{
+        testReportTbody += "<tr>"+
+                        "<td colspan=\"5\" align=\"center\">No test report details found.</td>"
+                    "</tr>";
+    }
+    $("#divTestReport").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"testReportTable\" width=\"100%\" cellspacing=\"0\">"+
+                            "<thead>"+
+                                "<tr>"+
+                                    "<th>Sr.No.</th>"+
+                                    "<th>Working Standard</th>"+
+                                    "<th>Batch Number</th>"+
+                                    "<th>Test Result</th>"+
+                                    "<th>Entry Date</th>"+
+                                "</tr>"+
+                            "</thead>"+
+                            "<tbody>"+
+                                testReportTbody+
+                            "</tbody>"+
+                        "</table>");
+  }
+
+  function getTestReport(){
+    return callAPIService("get_product_test_report.php","login_id="+login_id+"&product_id="+productId+"&tr_id=0");
   }
 
   function loadQueries(){

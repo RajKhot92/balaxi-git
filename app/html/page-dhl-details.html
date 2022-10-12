@@ -1,0 +1,161 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">DHL Details</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            DHL Details
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" method="post" id="frmDHL" name="frmDHL" enctype="multipart/form-data">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <input type="hidden" id="product_id" name="product_id">
+                        <div class="card-body">
+                            <!-- <h4 class="card-title text-center">Add Hand Over To DHL</h4> -->
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-4 text-end control-label col-form-label"
+                                  >DHL Details</label
+                                >
+                                <div class="col-sm-4">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="dhl"
+                                        name="dhl"
+                                        maxlength="450"
+                                        placeholder="Enter dhl details"
+                                    />
+                                </div>
+                                <div class="col-sm-4">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-warning" onclick="loadSubPageContent('menu-shipment-form.html')">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                                <button type="button" onclick="saveDHL()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetDHL()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added DHL Details</h4>
+                        <div class="card-body table-responsive" id="divDHL">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        $("#product_id").val(sessionStorage.getItem("data_shipment_id"));
+
+        loadDHL();
+    });
+
+    function loadDHL(){
+        let dhlResult = getDHL();
+        // console.log(dhlResult);
+        var jsonDHLData = JSON.parse(dhlResult);
+        var dhlTbody = "";
+        if(jsonDHLData.length > 0){
+            for(i=0; i<jsonDHLData.length; i++){
+                var counter = jsonDHLData[i];
+                dhlTbody += "<tr>"+
+                                        "<td align=\"center\">"+(i+1)+"</td>"+
+                                        "<td align=\"center\">"+counter.dhl+"</td>"+
+                                        "<td>"+counter.ent_dt+"</td>"+
+                                    "</tr>";
+            }
+        }else{
+            dhlTbody += "<tr>"+
+                            "<td colspan=\"3\" align=\"center\">No dhl details found.</td>"
+                        "</tr>";
+        }
+        $("#divDHL").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"dhlTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>DHL Details</th>"+
+                                        "<th>Entry Date</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    dhlTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonDHLData.length > 0){
+            $("#dhlTable").DataTable();
+        }
+    }
+
+    function getDHL(){
+    	return callAPIService("get_product_dhl.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&dhl_id=0");
+    }
+
+    function saveDHL(){
+    	
+        if($("#dhl").val() == ""){
+    		alert("Please enter dhl details.");
+    		$("#dhl").focus();
+    		return false;
+    	}
+
+        // Create a FormData object.
+        var formData = new FormData();
+        formData.append("login_id", $("#login_id").val());
+        formData.append("product_id", $("#product_id").val());
+        formData.append("dhl", $("#dhl").val());
+
+        let dhlSaveResult = saveDHLData(formData);
+    	if(String(dhlSaveResult).trim() != "1"){
+    		alert(dhlSaveResult);
+    	}else{
+    		resetDHL();
+    		alert("DHL details has been saved successfully.");
+    		loadDHL();
+    	}
+    }
+
+    function saveDHLData(dhlData){
+    	return callAPIServicePost("save_product_dhl.php",dhlData);
+    }
+
+    function resetDHL(){
+        document.getElementById("frmDHL").reset();
+    }
+</script>

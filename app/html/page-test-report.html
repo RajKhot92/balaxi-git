@@ -1,0 +1,245 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Test Report</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Test Report
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" method="post" id="frmTestReport" name="frmTestReport" enctype="multipart/form-data">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <input type="hidden" id="product_id" name="product_id">
+                        <div class="card-body">
+                            <!-- <h4 class="card-title text-center">Add TestReport</h4> -->
+                            <div class="form-group row">    
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Working Standard <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="file"
+                                        class="form-control"
+                                        id="working_standard"
+                                        name="working_standard"
+                                        accept="application/pdf,
+                                        image/*"
+                                        placeholder="Enter testReport certificate file"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Batch Number <span style="color: red;">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="batch_no"
+                                        name="batch_no"
+                                        maxlength="450"
+                                        placeholder="Enter batch_no"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">    
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Test Result / Analysis <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3 mt-2">
+                                    <input type="radio" id="rdoPassed" name="rdoStatus" value="Passed">&nbsp;Passed&nbsp;
+                                    <input type="radio" id="rdoFailed" name="rdoStatus" value="Failed">&nbsp;Failed
+                                </div>
+                                <div class="col-sm-6">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-warning" onclick="loadSubPageContent('menu-submission-2.html')">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                                <button type="button" onclick="saveTestReport()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetTestReport()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added Test Report</h4>
+                        <div class="card-body table-responsive" id="divTestReport">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        $("#product_id").val(sessionStorage.getItem("submission_product_id"));
+        $("#rdoPassed").prop("checked",true);
+        loadTestReport();
+    });
+
+    function loadTestReport(){
+        let testReportResult = getTestReport();
+        // console.log(testReportResult);
+        var jsonTestReportData = JSON.parse(testReportResult);
+        var testReportTbody = "";
+        if(jsonTestReportData.length > 0){
+            for(i=0; i<jsonTestReportData.length; i++){
+                var counter = jsonTestReportData[i];
+                var fileTypeIcon = "fas fa-file-pdf";
+                if(counter.file_type == "pdf"){
+                    fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+                }else{
+                    fileTypeIcon = "fas fa-file-image fa-lg text-info";
+                }
+                testReportTbody += "<tr>"+
+                                            "<td align=\"center\">"+(i+1)+"</td>"+
+                                            "<td align=\"center\">"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"+
+                                            "</td>"+
+                                            "<td align=\"center\">"+counter.batch_no+"</td>"+
+                                            "<td>"+counter.test_result+"</td>"+
+                                            "<td>"+counter.ent_dt+"</td>"+
+                                        "</tr>";
+            }
+        }else{
+            testReportTbody += "<tr>"+
+                            "<td colspan=\"5\" align=\"center\">No test report details found.</td>"
+                        "</tr>";
+        }
+        $("#divTestReport").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"testReportTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>Working Standard</th>"+
+                                        "<th>Batch Number</th>"+
+                                        "<th>Test Result</th>"+
+                                        "<th>Entry Date</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    testReportTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonTestReportData.length > 0){
+            $("#testReportTable").DataTable();
+        }
+    }
+
+    function getTestReport(){
+    	return callAPIService("get_product_test_report.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&tr_id=0");
+    }
+
+    function openFile(url){
+        downloadFileByURL(url);
+    }
+
+    function saveTestReport(){
+    	var test_result = $('input[name=rdoStatus]:checked').val();
+        if($("#working_standard").val() == ""){
+            alert("Please upload working standard file.");
+            $("#working_standard").focus();
+            return false;
+        }
+        if($("#batch_no").val() == ""){
+            alert("Please enter batch number.");
+            $("#batch_no").focus();
+            return false;
+        }
+        
+        // Create a FormData object.
+        var formData = new FormData();
+
+        let fileResp = fileValidation('working_standard','testReport');
+        if(!fileResp){
+            return false;
+        }
+
+        var fileSelect = document.getElementById('working_standard');
+        var files = fileSelect.files;
+        var file = files[0];
+        var fileType = "";
+        
+        if(file.name.toUpperCase().endsWith("PDF")){
+            fileType = "pdf";
+        }else if(file.name.toUpperCase().endsWith("JPG")){
+            fileType = "jpg";
+        }else if(file.name.toUpperCase().endsWith("PNG")){
+            fileType = "png";
+        }else if(file.name.toUpperCase().endsWith("JPEG")){
+            fileType = "jpeg";
+        }else if(file.name.toUpperCase().endsWith("BMP")){
+            fileType = "bmp";
+        }else if(file.name.toUpperCase().endsWith("GIF")){
+            fileType = "gif";
+        }else if(file.name.toUpperCase().endsWith("SVG")){
+            fileType = "svg";
+        }else{
+            fileType = "";
+        }
+
+        if(fileType == ""){
+            alert("Kindly upload a pdf/image document file.");
+            return false;
+        }
+        formData.append('file_type',fileType);
+        formData.append('working_standard', file, file.name);
+        formData.append("login_id", $("#login_id").val());
+        formData.append("product_id", $("#product_id").val());
+        formData.append("batch_no", $("#batch_no").val());
+        formData.append("test_result", test_result);
+        
+    	let testReportSaveResult = saveTestReportData(formData);
+    	if(String(testReportSaveResult).trim() != "1"){
+    		alert(testReportSaveResult);
+    	}else{
+    		resetTestReport();
+    		alert("Test report details has been saved successfully.");
+    		loadTestReport();
+    	}
+    }
+
+    function saveTestReportData(testReportData){
+    	return callAPIServicePost("save_product_test_report.php",testReportData);
+    }
+
+    function resetTestReport(){
+        document.getElementById("frmTestReport").reset();
+    }
+</script>
