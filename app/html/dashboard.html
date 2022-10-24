@@ -1,6 +1,8 @@
 <script type="text/javascript">
   if(localStorage.getItem("balaxi_user_role") == 1 || localStorage.getItem("balaxi_user_role") == 2){
     loadPageContent(1,'dashboard-admin.html');
+  }else if(localStorage.getItem("balaxi_user_role") == 9){
+    loadPageContent(1,'dashboard-destination-country.html');
   }else{
     loadPageContent(1,'dashboard-executive.html');
   }

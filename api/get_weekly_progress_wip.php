@@ -6,11 +6,12 @@
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
     
     /*  Getting roles    */
-    $get_progress_sql = "SELECT a.`product_id`,a.`product_name`,b.`category_name`,
-    					a.`deadline_dt`,c.`user_name` as product_owner,
+    $get_progress_sql = "SELECT a.`product_id`,a.`product_name`,d.`country_name`,
+                        b.`category_name`,a.`deadline_dt`,c.`user_name` as product_owner,
     					IFNULL((SELECT ROUND(SUM(psm.progress)/7,2) FROM product_step_master psm WHERE psm.menu_id IN (9,10,11,12,13,14,15) and psm.product_id=a.product_id),0) progress
     					from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id`
-    					INNER JOIN user_master c on a.`product_owner`=c.`user_id`
+    					INNER JOIN user_master c on a.`product_owner`=c.`user_id` 
+                        INNER JOIN country_master d on a.`country_id`=d.`country_id` 
                         WHERE a.`del_by` IS NULL  ";
 
     if($country_id != 0){
@@ -23,6 +24,7 @@
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
         $row_array['product_id'] = $row['product_id'];
         $row_array['product_name'] = $row['product_name'];
+        $row_array['country_name'] = $row['country_name'];
         $row_array['category_name'] = $row['category_name'];
         $row_array['product_owner'] = $row['product_owner'];
         $row_array['deadline_dt'] = $row['deadline_dt'];

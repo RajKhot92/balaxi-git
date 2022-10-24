@@ -49,7 +49,22 @@
     $add_validation_sql = "INSERT INTO product_dossier_valid_marker (`product_id`, `marker_file`, `score`, `ent_by`, `ent_dt`)
                             VALUES (".$product_id.",'".$file_content."','".$score."',".$login_id.",NOW())";
 
-    if ($conn->query($add_validation_sql) !== TRUE) {
+    /*  Adding Notification     */
+    $add_notification_sql = "INSERT INTO notification_master (`product_id`, `notify_type`, `user_id`, `status`, `ent_by`, `ent_dt`) VALUES ";
+    $admin_exist = "SELECT DISTINCT `user_id`
+                    FROM `user_master` 
+                    WHERE `user_role` IN (1,2) AND `del_by` IS NULL";
+    $admin_response = mysqli_query($conn, $admin_exist);
+    if (mysqli_num_rows($admin_response) == 0){
+        //Skipping Admin Ids
+    }else{
+        while ($row = mysqli_fetch_array($admin_response, MYSQLI_ASSOC)) {
+            $add_notification_sql .= "(".$product_id.",'Dossier',".$row['user_id'].",'No',".$login_id.",NOW()),";
+        }
+    }
+    $add_notification_sql = rtrim($add_notification_sql,",");
+
+    if ($conn->query($add_validation_sql) !== TRUE || $conn->query($add_notification_sql) !== TRUE) {
         echo "Some error occurred while adding dossier validation details. Please try again later.";
         exit();
     }

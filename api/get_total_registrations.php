@@ -17,7 +17,9 @@
                         INNER JOIN product_registration b ON a.`product_id`=b.`product_id` 
                         INNER JOIN user_master c on a.`product_owner`=c.`user_id` 
                         INNER JOIN product_category d ON a.`product_category`=d.`category_id` 
-                        WHERE b.`pr_id` IN (SELECT MAX(pr_id) from product_registration GROUP by product_id) AND a.`del_by` IS NULL  ";
+                        WHERE b.`pr_id` IN (SELECT MAX(pr_id) from product_registration GROUP by product_id) 
+                        AND a.`product_category` != (SELECT `category_id` FROM `product_category` WHERE UPPER(`category_name`)=UPPER('CLOSED')) 
+                        AND a.`del_by` IS NULL  ";
 
     if($category == "registered"){
         $get_progress_sql .= " AND b.`registration_complete` IS NOT NULL 
@@ -35,8 +37,8 @@
         $get_progress_sql .= " AND a.`country_id`=".$country_id;
     }
     $result = mysqli_query($conn,$get_progress_sql);  
-    $json_response = array();  
-    
+    $json_response = array();
+        
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {  
         $row_array['product_id'] = $row['product_id'];
         $row_array['product_name'] = $row['product_name'];

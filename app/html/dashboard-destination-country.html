@@ -79,7 +79,7 @@
             var counter = jsonMenuData[i];
             menuTbody += "<tr>"+
                             "<td align=\"center\">"+(i+1)+"</td>"+
-                            "<td>"+counter.product_name+"</td>"+
+                            "<td><span onclick=\"loadProductDetailsDestinationCountry("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span></td>"+
                             "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                             "<td>"+counter.menu_name+"</td>"+
                             "<td>"+counter.progress+"%</td>"+
@@ -115,7 +115,7 @@
         ]
       });
     }
-
+    
     loadNotifications();
   }
 
@@ -159,5 +159,14 @@
         break;
     }
     loadPageContentFromDashboard(menuId, menuName);
+  }
+
+  function loadProductDetailsDestinationCountry(productId){
+    sessionStorage.clear();
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",4);
+    sessionStorage.setItem("product_details_product_id",productId);
+    sessionStorage.setItem("current_report","dashboard-destination-country.html");
+    loadSubPageContent("product-assign-details-destination.html");
   }
 </script>

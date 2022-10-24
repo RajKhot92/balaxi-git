@@ -110,7 +110,7 @@
             <div id="divProductReport">
           
             </div>
-            
+            <button type="button" class="btn btn-success" onclick="ExportToExcel('xlsx')"><span class="far fa-file-excel"></span>&nbsp;Export</button>
             <hr>
             <h5 class="card-title mb-0">Product Owner & Executive Performance</h5>
             <br/>
@@ -124,6 +124,7 @@
   </div>
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../dist/js/xlsx.full.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
     loadCountry();
@@ -275,6 +276,8 @@
 
   function loadPerformanceReport(){
     $("#divPerformanceReport").html("<center>This module is under process</center>");
+
+    loadNotifications();
   }
 
   function loadProductDetails(productId){
@@ -284,4 +287,13 @@
     sessionStorage.setItem("product_details_product_id",productId);
     loadSubPageContent("product-assign-details.html");
   }
+
+  function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById('productReportTable');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+      XLSX.writeFile(wb, fn || ('WIP_Product_Report.' + (type || 'xlsx')));
+  }
+
 </script>

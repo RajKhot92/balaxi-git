@@ -49,7 +49,22 @@
     $add_shipment_dispatch_sql = "INSERT INTO product_shipment_dispatch (`product_id`, `dispatch_dt`, `dispatch_doc`, `deadline_dt`, `ent_by`, `ent_dt`)
                             VALUES (".$product_id.",STR_TO_DATE('".$dispatch_dt."', '%m/%d/%Y'),'".$file_content."',DATE_ADD(NOW(), INTERVAL 1 MONTH),".$login_id.",NOW())";
 
-    if ($conn->query($add_shipment_dispatch_sql) !== TRUE) {
+    /*  Adding Notification     */
+    $add_notification_sql = "INSERT INTO notification_master (`product_id`, `notify_type`, `user_id`, `status`, `ent_by`, `ent_dt`) VALUES ";
+    $admin_exist = "SELECT DISTINCT `user_id`
+                    FROM `user_master` 
+                    WHERE `user_role` IN (1,2) AND `del_by` IS NULL";
+    $admin_response = mysqli_query($conn, $admin_exist);
+    if (mysqli_num_rows($admin_response) == 0){
+        //Skipping Admin Ids
+    }else{
+        while ($row = mysqli_fetch_array($admin_response, MYSQLI_ASSOC)) {
+            $add_notification_sql .= "(".$product_id.",'Dispatch',".$row['user_id'].",'No',".$login_id.",NOW()),";
+        }
+    }
+    $add_notification_sql = rtrim($add_notification_sql,",");
+
+    if ($conn->query($add_shipment_dispatch_sql) !== TRUE || $conn->query($add_notification_sql) !== TRUE) {
         echo "Some error occurred while adding shipment dispatch details. Please try again later.";
         exit();
     }

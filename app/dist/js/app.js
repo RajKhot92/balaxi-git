@@ -352,3 +352,58 @@ function deleteExecutiveEntry(tblNm,colId,colVal) {
 function deleteEntry(tblNm,colId,colVal) {
 	return callAPIService("delete_executive_entry.php","login_id="+localStorage.getItem("balaxi_user_id")+"&tbl_nm="+tblNm+"&col_id="+colId+"&col_val="+colVal);
 }
+
+function loadNotifications(){
+    let notificationResult = getNotifications();
+    // console.log(notificationResult);
+    var jsonNotificationData = JSON.parse(notificationResult);
+    var notificationTbody = "";
+    if(jsonNotificationData.length > 0){
+        for(i=0; i<jsonNotificationData.length; i++){
+        	var counter = jsonNotificationData[i];
+        	if(i==5){
+        		notificationTbody += "<a class=\"dropdown-item text-center\" href=\"#\" onclick=\"loadPageContent(98,'notifications.html')\">"+
+	                                "Click here to view all"+
+	                                "</a>";
+        		break;
+        	}else{
+	            notificationTbody += "<a class=\"dropdown-item\" href=\"#\" onclick=\"loadProductDetailsFromNotifications("+counter.product_id+","+counter.notify_id+")\">"+
+	                                "Product <b>"+counter.notify_type+"</b> has been completed for Product: <b>"+counter.product_name+" ["+counter.country_name+"]</b>"+
+	                                "</a>";
+        	}
+        }
+
+        $("#notification").html(jsonNotificationData.length);
+        $("#notification").show();
+    }else{
+        notificationTbody += "<a class=\"dropdown-item\" href=\"#\">"+
+        						"No notification for you."+
+        					"</a>";
+        $("#notification").hide();
+    }
+    $(".notification-list").html(notificationTbody);
+}
+
+function getNotifications() {
+	return callAPIService("get_notifications.php","user_id="+localStorage.getItem("balaxi_user_id"));
+}
+
+function loadProductDetailsFromNotifications(productId,notifyId){
+
+	let notificationResult = markNotificationRead(notifyId);
+	if(String(notificationResult).trim() != "1"){
+		alert(notificationResult);
+		return false;
+	}
+	
+    sessionStorage.clear();
+    sessionStorage.removeItem("product_details_form_flag");
+    sessionStorage.setItem("product_details_form_flag",3);
+    sessionStorage.setItem("product_details_product_id",productId);
+    sessionStorage.setItem("current_report","dashboard.html");
+    loadSubPageContent("product-assign-details.html");
+}
+
+function markNotificationRead(notifyId) {
+	return callAPIService("update_notification.php","notify_id="+notifyId);
+}
