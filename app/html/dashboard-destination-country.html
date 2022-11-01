@@ -80,6 +80,7 @@
             menuTbody += "<tr>"+
                             "<td align=\"center\">"+(i+1)+"</td>"+
                             "<td><span onclick=\"loadProductDetailsDestinationCountry("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span></td>"+
+                            "<td>"+counter.country_name+"</td>"+
                             "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                             "<td>"+counter.menu_name+"</td>"+
                             "<td>"+counter.progress+"%</td>"+
@@ -90,7 +91,7 @@
         }
     }else{
         menuTbody += "<tr>"+
-                        "<td colspan=\"6\" align=\"center\">No any steps assigned.</td>"
+                        "<td colspan=\"7\" align=\"center\">No any steps assigned.</td>"
                     "</tr>";
     }
     $("#divAssignedMenu").html("<table class=\"table table-sm table-hover table-bordered\" id=\"menuTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -98,6 +99,7 @@
                                 "<tr>"+
                                     "<th><b>Sr.No.</b></th>"+
                                     "<th><b>Product</b></th>"+
+                                    "<th><b>Country</b></th>"+
                                     "<th><b>Supplier Name</b></th>"+
                                     "<th><b>Assigned Step</b></th>"+
                                     "<th><b>Progress</b></th>"+
@@ -111,7 +113,7 @@
     if(jsonMenuData.length > 0){
       $("#menuTable").DataTable({
         "columnDefs": [
-          {"targets": 5,"orderable": false}
+          {"targets": 6,"orderable": false}
         ]
       });
     }
