@@ -11,7 +11,8 @@
     /*  Getting roles    */
     $get_progress_sql = "SELECT a.`product_id`,a.`product_name`,
     					b.`user_name` as product_owner,c.`category_name`,
-                        (SELECT max(vendor_name) from product_vendor_finalization WHERE product_id = a.`product_id`) supplier_name,
+                        (SELECT `vendor_name` from product_vendor_finalization 
+                        WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id` AND del_by IS NULL)) supplier_name,
 						(SELECT pc.`validity` from product_cma pc WHERE pc.`cma_id` = (SELECT MAX(`cma_id`) FROM product_cma WHERE `product_id`=a.`product_id`) AND pc.`validity` between CURDATE() and DATE_ADD(CURDATE(), INTERVAL ".$last_month." MONTH) ) cma,
 						(SELECT pco.`validity` from product_copp pco WHERE pco.`copp_id` = (SELECT MAX(`copp_id`) FROM product_copp WHERE `product_id`=a.`product_id`) AND pco.`validity` between CURDATE() and DATE_ADD(CURDATE(), INTERVAL ".$last_month." MONTH) ) copp,
 						(SELECT pf.`validity` from product_fsc pf WHERE pf.`fsc_id` = (SELECT MAX(`fsc_id`) FROM product_fsc WHERE `product_id`=a.`product_id`) AND pf.`validity` between CURDATE() and DATE_ADD(CURDATE(), INTERVAL ".$last_month." MONTH) ) fsc,

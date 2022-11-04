@@ -9,7 +9,8 @@
 
     /*  Getting categories    */
     $get_product_report_sql = "SELECT a.`product_id`,a.`product_name`,b.`country_name`,c.`user_name` as owner,d.`category_name`,
-                        (SELECT max(vendor_name) from product_vendor_finalization WHERE product_id = a.`product_id`) supplier_name,
+                        (SELECT `vendor_name` from product_vendor_finalization 
+                        WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id` AND del_by IS NULL)) supplier_name,
                         (SELECT count(*) from product_gmp WHERE product_id = a.`product_id`) gmp,
                         (SELECT count(*) from product_fsc WHERE product_id = a.`product_id`) fsc,
                         (SELECT count(*) from product_cma WHERE product_id = a.`product_id`) cma,
