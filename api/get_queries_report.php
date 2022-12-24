@@ -11,7 +11,9 @@
     /*  Getting market research    */
     $get_queries_sql = "SELECT a.`product_id`,a.`product_name`,b.`psq_id`,
                         b.`query_no`, b.`deadline_dt`,b.`received_date`,b.`ent_by`,
-                        c.`category_name`,a.`product_owner` as user_id,d.`user_name` as product_owner,e.`category_name` as product_category 
+                        c.`category_name`,a.`product_owner` as user_id,d.`user_name` as product_owner,e.`category_name` as product_category,
+                    (SELECT `vendor_name` from product_vendor_finalization 
+                        WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id` AND del_by IS NULL)) supplier_name  
                         from product_master a 
                         INNER JOIN product_queries_received b ON a.`product_id`=b.`product_id`
                         INNER JOIN query_category c ON b.`query_category`=c.`category_id`
@@ -49,6 +51,7 @@
         $row_array['deadline_dt'] = $row['deadline_dt'];
         $row_array['received_date'] = $row['received_date'];
         $row_array['product_category'] = $row['product_category'];
+        $row_array['supplier_name'] = $row['supplier_name'] == null ? "-" : $row['supplier_name'];
         $row_array['ent_by'] = $row['ent_by'];
         array_push($json_response,$row_array);
     }

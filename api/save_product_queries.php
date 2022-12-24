@@ -100,7 +100,7 @@
                 array_push($cc_mail, $row['email_id']);
             }
         }
-        // array_push($cc_mail, 'regulatory@balaxi.in','sandeep@balaxi.com')
+        // array_push($cc_mail, 'regulatory@balaxi.in','sandeep@balaxi.com');
         // $mail_to = $product_owner_mail;
         // $subject = 'Query Received ';
         // $content = 'Hello '.$product_owner_name.',<br/><br/>

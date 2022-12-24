@@ -13,7 +13,9 @@
                          WHERE psv_id=(SELECT max(psv_id) FROM `product_submission_valid` WHERE product_id=a.`product_id`)) box_date,
                         (SELECT CONCAT(submitted_moh,'@#$',submission_slip_no) FROM product_submission 
                          WHERE ps_id=(SELECT max(ps_id) FROM `product_submission` WHERE product_id=a.`product_id`)) submitted_data,
-                         'Not Registered' as registration_status
+                         'Not Registered' as registration_status,
+                    (SELECT `vendor_name` from product_vendor_finalization 
+                        WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id` AND del_by IS NULL)) supplier_name  
                         from product_master a INNER JOIN product_submission b ON a.`product_id`=b.`product_id` 
                         INNER JOIN `product_category` c ON a.`product_category`=c.`category_id` 
                         WHERE a.`product_id` NOT IN (
@@ -40,6 +42,7 @@
         $row_array['submitted_moh'] = $submission_data[0];
         $row_array['submission_slip_no'] = $submission_data[1];
         $row_array['registration_status'] = $row['registration_status'];
+        $row_array['supplier_name'] = $row['supplier_name'] == null ? "-" : $row['supplier_name'];
         array_push($json_response,$row_array);
     }
 
