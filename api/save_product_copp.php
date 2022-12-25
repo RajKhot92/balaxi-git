@@ -9,6 +9,7 @@
 	$product_id = mysqli_real_escape_string($conn, $_REQUEST['product_id']);
     $validity = mysqli_real_escape_string($conn, $_REQUEST['validity']);
     $received_date = mysqli_real_escape_string($conn, $_REQUEST['received_date']);
+    $file_content = '';
     if (!empty($_FILES['copp']['name'])) {
         if ($_FILES['copp']['error'] != 0) {
             echo 'Something wrong with the file.';
@@ -22,7 +23,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $validity === "" || $received_date === ""){
+    if($login_id === "" || $product_id === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -46,9 +47,13 @@
         exit();
     }
 
+    $vldt = $validity === "" ? "null" : "STR_TO_DATE('".$validity."', '%m/%d/%Y')";
+    $rcvd_dt = $received_date === "" ? "null" : "STR_TO_DATE('".$received_date."', '%m/%d/%Y')";
+    $fil_cntnt = $file_content === "" ? "null" : "'".$file_content."'";
+
     /*  Adding market research     */
     $add_copp_sql = "INSERT INTO product_copp (`product_id`, `validity`, `received_date`, `copp`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",STR_TO_DATE('".$validity."', '%m/%d/%Y'),STR_TO_DATE('".$received_date."', '%m/%d/%Y'),'".$file_content."',".$login_id.",NOW())";
+                            VALUES (".$product_id.",".$vldt.",".$rcvd_dt.",".$fil_cntnt.",".$login_id.",NOW())";
 
     if ($conn->query($add_copp_sql) !== TRUE) {
         echo "Some error occurred while adding copp details. Please try again later.";

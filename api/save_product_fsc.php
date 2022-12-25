@@ -10,6 +10,7 @@
     $composition = mysqli_real_escape_string($conn, $_REQUEST['composition']);
     $validity = mysqli_real_escape_string($conn, $_REQUEST['validity']);
     $received_date = mysqli_real_escape_string($conn, $_REQUEST['received_date']);
+    $file_content = '';
     if (!empty($_FILES['fsc']['name'])) {
         if ($_FILES['fsc']['error'] != 0) {
             echo 'Something wrong with the file.';
@@ -23,7 +24,7 @@
     
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_id === "" || $composition === "" || $validity === "" || $received_date === ""){
+    if($login_id === "" || $product_id === "" || $composition === ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -47,9 +48,13 @@
         exit();
     }
 
+    $vldt = $validity === "" ? "null" : "STR_TO_DATE('".$validity."', '%m/%d/%Y')";
+    $rcvd_dt = $received_date === "" ? "null" : "STR_TO_DATE('".$received_date."', '%m/%d/%Y')";
+    $fil_cntnt = $file_content === "" ? "null" : "'".$file_content."'";
+
     /*  Adding market research     */
     $add_fsc_sql = "INSERT INTO product_fsc (`product_id`, `composition`, `validity`, `received_date`, `fsc`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$composition."',STR_TO_DATE('".$validity."', '%m/%d/%Y'),STR_TO_DATE('".$received_date."', '%m/%d/%Y'),'".$file_content."',".$login_id.",NOW())";
+                            VALUES (".$product_id.",'".$composition."',".$vldt.",".$rcvd_dt.",".$fil_cntnt.",".$login_id.",NOW())";
 
     if ($conn->query($add_fsc_sql) !== TRUE) {
         echo "Some error occurred while adding fsc details. Please try again later.";
