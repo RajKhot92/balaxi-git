@@ -130,10 +130,12 @@
           clickable = "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>";
         }
         progressTbody += "<tr>"+
+                          "<td align=\"center\">"+counter.product_id+"</td>"+
                           "<td align=\"center\">"+
                             clickable+
                           "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
+                          "<td align=\"center\">"+counter.supplier_name+"</td>"+
                           "<td align=\"center\">"+(counter.deadline_dt == null ? "" : counter.deadline_dt)+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
                           "<td align=\"center\">"+counter.menu_name+"</td>"+
@@ -149,8 +151,10 @@
     $("#divMilestones").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"milestonesTable\" width=\"100%\" cellspacing=\"0\">"+
                             "<thead>"+
                                 "<tr>"+
+                                    "<th>Unique Code</th>"+
                                     "<th>Product Name</th>"+
                                     "<th>Category Name</th>"+
+                                    "<th>Supplier Name</th>"+
                                     "<th>Deadline Date</th>"+
                                     "<th>Product Owner</th>"+
                                     "<th>Completed Step</th>"+
