@@ -261,7 +261,7 @@
                                 clickable+
                               "</td>"+
                               "<td align=\"center\">"+counter.product_category+"</td>"+
-                              "<td align=\"center\">"+counter.product_supplier+"</td>"+
+                              "<td>"+(counter.product_supplier == null ? "-" : counter.product_supplier)+"</td>"+
                               "<td align=\"center\">"+counter.product_owner+"</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.query_no+"</td>"+
@@ -278,7 +278,7 @@
                                 clickable+
                               "</td>"+
                               "<td align=\"center\">"+counter.product_category+"</td>"+
-                              "<td align=\"center\">"+counter.product_supplier+"</td>"+
+                              "<td>"+(counter.product_supplier == null ? "-" : counter.product_supplier)+"</td>"+
                               "<td align=\"center\">"+counter.product_owner+"</td>"+
                               "<td align=\"center\">"+counter.category_name+"</td>"+
                               "<td align=\"center\">"+counter.query_no+"</td>"+

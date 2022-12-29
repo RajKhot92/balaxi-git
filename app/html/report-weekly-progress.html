@@ -49,19 +49,20 @@
             <div id="divProgress">
           
             </div>
-            
+            <button type="button" id="btnExportWeeklyProgress" class="btn btn-success" onclick="downloadExcelWeekProgress()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
             <hr>
             <h4 class="card-title mb-0">WIP Products (Country Wise Other Products)</h4>
             <br/>
             <div id="divWIP">
           
             </div>
-          </div>
-          <div class="border-top">
-            <div class="card-body text-center">
-              <button type="button" class="btn btn-dark" onclick="loadPageContent(19,'menu-report.html')">
-                  <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
-              </button>
+            <button type="button" id="btnExportWIP" class="btn btn-success" onclick="downloadExcelWIP()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
+            <div class="border-top">
+              <div class="card-body text-center">
+                <button type="button" class="btn btn-dark" onclick="loadPageContent(19,'menu-report.html')">
+                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -71,6 +72,9 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataQueriesTable;
+  var tableDataProgressWIPTable;
+
   $(document).ready(function(){
     $("#txtDays").val(7);
     loadCountry();
@@ -142,7 +146,7 @@
                             clickable+
                           "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
-                          "<td align=\"center\">"+counter.supplier_name+"</td>"+
+                          "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
                           "<td align=\"center\">"+counter.executive+"</td>"+
                           "<td align=\"center\">"+counter.menu_name+"</td>"+
@@ -174,7 +178,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonWeeklyProgressData.length > 0){
-        $("#queriesTable").DataTable();
+      tableDataQueriesTable = $("#queriesTable").DataTable();
+    }else{
+      $("#btnExportWeeklyProgress").hide();
     }
 
     loadWeeklyProgressWIP(countryId);
@@ -204,7 +210,7 @@
                             clickable+
                           "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
-                          "<td align=\"center\">"+counter.supplier_name+"</td>"+
+                          "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                           "<td align=\"center\">"+counter.country_name+"</td>"+
                           "<td align=\"center\">"+(counter.deadline_dt == null ? "" : counter.deadline_dt)+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
@@ -234,7 +240,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonWeeklyProgressWIPData.length > 0){
-        $("#progressWIPTable").DataTable();
+        tableDataProgressWIPTable = $("#progressWIPTable").DataTable();
+    }else{
+      $("#btnExportWIP").hide();
     }
   }
 
@@ -249,5 +257,13 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-weekly-progress.html");
     loadSubPageContent("product-assign-details.html");
+  }
+
+  function downloadExcelWeekProgress(tableID){
+    ExportToExcel(tableDataQueriesTable,"queriesTable");
+  }
+
+  function downloadExcelWIP(){
+    ExportToExcel(tableDataProgressWIPTable,"progressWIPTable");
   }
 </script>

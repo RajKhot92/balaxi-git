@@ -102,7 +102,7 @@
                             "<span onclick=\"loadProductDetails("+counter.product_id+")\" style=\"color:#2962ff; cursor: pointer;\">"+counter.product_name+"</span>"+
                           "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
-                          "<td align=\"center\">"+counter.supplier_name+"</td>"+
+                          "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                           "<td align=\"center\">"+counter.registration_complete+"</td>"+
                           "<td align=\"center\">"+counter.registration_expired+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+

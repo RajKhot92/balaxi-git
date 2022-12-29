@@ -407,3 +407,12 @@ function loadProductDetailsFromNotifications(productId,notifyId){
 function markNotificationRead(notifyId) {
 	return callAPIService("update_notification.php","notify_id="+notifyId);
 }
+
+function ExportToExcel(tableData, tableId) {
+	tableData.page.len( -1 ).draw();
+	window.open('data:application/vnd.ms-excel,' + 
+	encodeURIComponent($("#"+tableId).parent().html()));
+	setTimeout(function(){
+	  tableData.page.len(10).draw();
+	}, 1000);
+}

@@ -110,7 +110,7 @@
             <div id="divProductReport">
           
             </div>
-            <button type="button" class="btn btn-success" onclick="ExportToExcel('xlsx')"><span class="far fa-file-excel"></span>&nbsp;Export</button>
+            <button type="button" id="btnExport" class="btn btn-success" onclick="downloadExcel()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
             <hr>
             <h5 class="card-title mb-0">Product Owner & Executive Performance</h5>
             <br/>
@@ -126,6 +126,7 @@
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../dist/js/xlsx.full.min.js"></script>
 <script type="text/javascript">
+  var tableData;
   $(document).ready(function(){
     loadCountry();
   });
@@ -256,7 +257,7 @@
                             "</tbody>"+
                         "</table>");
     if(jsonProductData.length > 0){
-      $("#productReportTable").DataTable({
+      tableData = $("#productReportTable").DataTable({
         "columnDefs": [
           {"targets": 5,"orderable": false},
           {"targets": 6,"orderable": false},
@@ -265,6 +266,8 @@
           {"targets": 9,"orderable": false}
         ]
       });
+    }else{
+      $("#btnExport").hide();
     }
 
     loadPerformanceReport();
@@ -288,12 +291,8 @@
     loadSubPageContent("product-assign-details.html");
   }
 
-  function ExportToExcel(type, fn, dl) {
-    var elt = document.getElementById('productReportTable');
-    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
-    return dl ?
-      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
-      XLSX.writeFile(wb, fn || ('WIP_Product_Report.' + (type || 'xlsx')));
+  function downloadExcel(){
+    ExportToExcel(tableData,"productReportTable");
   }
 
 </script>

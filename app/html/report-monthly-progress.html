@@ -142,7 +142,7 @@
                             clickable+
                           "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
-                          "<td align=\"center\">"+counter.supplier_name+"</td>"+
+                          "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
                           "<td align=\"center\">"+counter.executive+"</td>"+
                           "<td align=\"center\">"+counter.menu_name+"</td>"+
@@ -204,7 +204,7 @@
                             clickable+
                           "</td>"+
                           "<td align=\"center\">"+counter.category_name+"</td>"+
-                          "<td align=\"center\">"+counter.supplier_name+"</td>"+
+                          "<td>"+(counter.supplier_name == null ? "-" : counter.supplier_name)+"</td>"+
                           "<td align=\"center\">"+counter.country_name+"</td>"+
                           "<td align=\"center\">"+(counter.deadline_dt == null ? "" : counter.deadline_dt)+"</td>"+
                           "<td align=\"center\">"+counter.product_owner+"</td>"+
