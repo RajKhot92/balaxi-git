@@ -40,13 +40,14 @@
             <div id="divProgress">
           
             </div>
-            
+            <button type="button" id="btnExportSubmittedProducts" class="btn btn-success" onclick="downloadExcelSubmittedProducts()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
             <hr>
             <h4 class="card-title mb-0">WIP Products (Country Wise Other Products)</h4>
             <br/>
             <div id="divWIP">
           
             </div>
+            <button type="button" id="btnExportWIP" class="btn btn-success" onclick="downloadExcelWIP()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -62,6 +63,9 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataQueriesTable;
+  var tableDataProgressWIPTable;
+
   $(document).ready(function(){
     $("#txtDays").val(7);
     loadCountry();
@@ -152,7 +156,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonSubmittedProductsData.length > 0){
-        $("#queriesTable").DataTable();
+      tableDataQueriesTable = $("#queriesTable").DataTable();
+    } else {
+      $("#btnExportSubmittedProducts").hide();
     }
 
     loadSubmittedProductsWIP(countryId);
@@ -214,7 +220,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonSubmittedProductsWIPData.length > 0){
-        $("#progressWIPTable").DataTable();
+        tableDataProgressWIPTable = $("#progressWIPTable").DataTable();
+    } else {
+      $("#btnExportWIP").hide();
     }
   }
 
@@ -247,5 +255,13 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-submitted-products.html");
     loadSubPageContent("product-assign-details-destination.html");
+  }
+
+  function downloadExcelSubmittedProducts(tableID) {
+    ExportToExcel(tableDataQueriesTable, "queriesTable");
+  }
+
+  function downloadExcelWIP() {
+    ExportToExcel(tableDataProgressWIPTable, "progressWIPTable");
   }
 </script>

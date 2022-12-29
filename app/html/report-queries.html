@@ -52,6 +52,7 @@
             <div id="divQueries">
           
             </div>
+            <button type="button" id="btnExportQueriesTable" class="btn btn-success" onclick="downloadExcelQueriesTable()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -182,6 +183,8 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataQueriesTable;
+
   var currentQueryId = 0;
   var currentProductId = 0;
   $(document).ready(function(){
@@ -344,7 +347,9 @@
     }
     
     if(jsonQueriesData.length > 0){
-        $("#queriesTable").DataTable();
+      tableDataQueriesTable = $("#queriesTable").DataTable();
+    } else {
+      $("#btnExportQueriesTable").show();
     }
   }
 
@@ -528,7 +533,7 @@
                             "</table>");
       
       if(jsonSolutionData.length > 0){
-          $("#solutionTable").DataTable();
+        $("#solutionTable").DataTable();
       }
     }
 
@@ -556,5 +561,9 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-queries.html");
     loadSubPageContent("product-assign-details-destination.html");
+  }
+
+  function downloadExcelQueriesTable() {
+    ExportToExcel(tableDataQueriesTable, "queriesTable");
   }
 </script>

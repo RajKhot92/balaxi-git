@@ -49,6 +49,7 @@
             <div id="divMilestones">
           
             </div>
+            <button type="button" id="btnExportMilestonesTable" class="btn btn-success" onclick="downloadExcelMilestonesTable()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -64,6 +65,8 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataMilestonesTable;
+
   $(document).ready(function(){
     $("#txtDays").val(1);
     loadCountry();
@@ -167,8 +170,10 @@
                             "</tbody>"+
                         "</table>");
     if(jsonMonthlyMilestonesData.length > 0){
-        $("#milestonesTable").DataTable();
-    }
+      tableDataMilestonesTable = $("#milestonesTable").DataTable();
+    } else {
+      $("#btnExportMilestonesTable").hide();
+    } 
   }
 
   function getMonthlyMilestones(countryId,lastDays) {
@@ -182,5 +187,9 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-monthly-milestones.html");
     loadSubPageContent("product-assign-details.html");
+  }
+
+  function downloadExcelMilestonesTable(tableID) {
+    ExportToExcel(tableDataMilestonesTable, "milestonesTable");
   }
 </script>

@@ -49,13 +49,14 @@
             <div id="divProgress">
           
             </div>
-            
+            <button type="button" id="btnExportMonthlyProgress" class="btn btn-success" onclick="downloadExcelMonthProgress()"><span class="far fa-file-excel"></span>&nbsp;Export</button>           
             <hr>
             <h4 class="card-title mb-0">WIP Products (Country Wise Other Products)</h4>
             <br/>
             <div id="divWIP">
           
             </div>
+            <button type="button" id="btnExportWIP" class="btn btn-success" onclick="downloadExcelWIP()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -71,6 +72,9 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataQueriesTable;
+  var tableDataProgressWIPTable;
+
   $(document).ready(function(){
     $("#txtDays").val(1);
     loadCountry();
@@ -174,7 +178,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonMonthlyProgressData.length > 0){
-        $("#queriesTable").DataTable();
+      tableDataQueriesTable = $("#queriesTable").DataTable();
+    } else {
+      $("#btnExportMonthlyProgress").hide();
     }
 
     loadMonthlyProgressWIP(countryId);
@@ -234,8 +240,10 @@
                             "</tbody>"+
                         "</table>");
     if(jsonMonthlyProgressWIPData.length > 0){
-        $("#progressWIPTable").DataTable();
-    }
+        tableDataProgressWIPTable = $("#progressWIPTable").DataTable();
+    } else {
+      $("#btnExportWIP").hide();
+    } 
   }
 
   function getMonthlyProgressWIP(countryId){
@@ -249,5 +257,13 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-monthly-progress.html");
     loadSubPageContent("product-assign-details.html");
+  }
+
+  function downloadExcelMonthProgress(tableID) {
+    ExportToExcel(tableDataQueriesTable, "queriesTable");
+  }
+
+  function downloadExcelWIP() {
+    ExportToExcel(tableDataProgressWIPTable, "progressWIPTable");
   }
 </script>

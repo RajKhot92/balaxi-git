@@ -40,6 +40,7 @@
             <div id="divRegistrations">
           
             </div>
+            <button type="button" id="btnExportWIP" class="btn btn-success" onclick="downloadExcelWIP()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -55,6 +56,8 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataWIP;
+
   $(document).ready(function(){
     loadCountry();
   });
@@ -173,7 +176,7 @@
                             "</tbody>"+
                         "</table>");
     if(jsonWIPProductsData.length > 0){
-        $("#milestonesTable").DataTable({
+        tableDataWIP = $("#milestonesTable").DataTable({
           "columnDefs": [
             {"targets": 4,"orderable": false},
             {"targets": 5,"orderable": false},
@@ -182,6 +185,8 @@
             {"targets": 8,"orderable": false}
           ]
         });
+    }else{
+      $("#btnExportWIP").hide();
     }
   }
 
@@ -214,5 +219,9 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-wip-products.html");
     loadSubPageContent("product-assign-details-destination.html");
+  }
+
+  function downloadExcelWIP(){
+    ExportToExcel(tableDataWIP, "milestonesTable");
   }
 </script>

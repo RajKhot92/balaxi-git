@@ -40,6 +40,7 @@
             <div id="divHaltedProducts">
           
             </div>
+            <button type="button" id="btnExportHaltedTable" class="btn btn-success" onclick="downloadExcelHaltedTable()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -55,6 +56,8 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataHaltedTable;
+
   $(document).ready(function(){
     loadCountry();
   });
@@ -139,7 +142,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonHaltedProductsData.length > 0){
-        $("#haltedTable").DataTable();
+       tableDataHaltedTable = $("#haltedTable").DataTable();
+    } else {
+      $("#btnExportHaltedTable").hide();
     }
   }
 
@@ -172,5 +177,9 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-halted-products.html");
     loadSubPageContent("product-assign-details-destination.html");
+  }
+
+  function downloadExcelHaltedTable(tableID){
+    ExportToExcel(tableDataHaltedTable,"haltedTable");
   }
 </script>

@@ -40,6 +40,8 @@
             <div id="divClosedProducts">
           
             </div>
+            <button type="button" id="btnExportClosedProducts" class="btn btn-success" onclick="downloadExcelClosedProducts()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
+            <hr>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -55,6 +57,8 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataMilestonesTable;
+
   $(document).ready(function(){
     loadCountry();
   });
@@ -130,7 +134,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonClosedProductsData.length > 0){
-        $("#milestonesTable").DataTable();
+      tableDataMilestonesTable =  $("#milestonesTable").DataTable();
+    }else{
+      $("#btnExportClosedProducts").hide();
     }
   }
 
@@ -145,5 +151,9 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-closed-products.html");
     loadSubPageContent("product-assign-details.html");
+  }
+
+  function downloadExcelClosedProducts(tableID){
+    ExportToExcel(tableDataMilestonesTable,"milestonesTable");
   }
 </script>

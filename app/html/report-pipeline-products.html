@@ -40,6 +40,7 @@
             <div id="divRegistrations">
           
             </div>
+            <button type="button" id="btnExportPipelineTable" class="btn btn-success" onclick="downloadExcelPipelineTable()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -55,6 +56,8 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataPipelineTable;
+
   $(document).ready(function(){
     loadCountry();
   });
@@ -140,7 +143,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonPipelineProductsData.length > 0){
-        $("#pipelineTable").DataTable();
+      tableDataPipelineTable = $("#pipelineTable").DataTable();
+    } else {
+      $("#btnExportPipelineTable").hide();
     }
   }
 
@@ -173,5 +178,9 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-pipeline-products.html");
     loadSubPageContent("product-assign-details-destination.html");
+  }
+
+  function downloadExcelPipelineTable(tableID) {
+    ExportToExcel(tableDataPipelineTable, "pipelineTable");
   }
 </script>

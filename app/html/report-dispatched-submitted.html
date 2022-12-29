@@ -40,6 +40,7 @@
             <div id="divDispatchSubmit">
           
             </div>
+            <button type="button" id="btnExportDispatchSubmitTable" class="btn btn-success" onclick="downloadExcelDispatchSubmitTable()"><span class="far fa-file-excel"></span>&nbsp;Export</button>
           </div>
           <div class="border-top">
             <div class="card-body text-center">
@@ -55,6 +56,8 @@
 </div>
 <script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+  var tableDataDispatchSubmitTable;
+
   $(document).ready(function(){
     loadCountry();
   });
@@ -143,7 +146,9 @@
                             "</tbody>"+
                         "</table>");
     if(jsonDispatchedSubmittedData.length > 0){
-        $("#dispatchSubmitTable").DataTable();
+      tableDataDispatchSubmitTable = $("#dispatchSubmitTable").DataTable();
+    } else {
+      $("#btnExportDispatchSubmitTable").show();
     }
   }
 
@@ -176,5 +181,9 @@
     sessionStorage.setItem("product_details_product_id",productId);
     sessionStorage.setItem("current_report","report-dispatched-submitted.html");
     loadSubPageContent("product-assign-details-destination.html");
+  }
+
+  function downloadExcelDispatchSubmitTable(tableID){
+    ExportToExcel(tableDataDispatchSubmitTable,"dispatchSubmitTable");
   }
 </script>
