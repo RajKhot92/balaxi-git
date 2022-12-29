@@ -9,10 +9,11 @@
     $product_owner = mysqli_real_escape_string($conn, $_REQUEST['product_owner']);
     $country_id = mysqli_real_escape_string($conn, $_REQUEST['country_id']);
     $deadline_dt = mysqli_real_escape_string($conn, $_REQUEST['deadline_dt']);
+    $therapeutic_id = mysqli_real_escape_string($conn, $_REQUEST['therapeutic_id']);
 
     $conn -> autocommit(FALSE);
 
-    if($login_id === "" || $product_name === "" || $product_category === "" || $product_owner === "" || $country_id === "" || $deadline_dt == ""){
+    if($login_id === "" || $product_name === "" || $product_category === "" || $product_owner === "" || $country_id === "" || $deadline_dt == "" || $therapeutic_id == ""){
         echo "Kindly provide valid input.";
         exit();
     }
@@ -57,12 +58,23 @@
         exit();
     }
 
+    /*  Checking therapeutic class exists     */
+    $therapeutic_exist = "SELECT therapeutic_id FROM therapeutic_class_master 
+                    WHERE therapeutic_id = ".$therapeutic_id."
+                    AND del_by IS NULL";
+    $therapeutic_response = mysqli_query($conn, $therapeutic_exist);
+    if (mysqli_num_rows($therapeutic_response) == 0){
+        echo "Entered therapeutic class is invalid. Please try with valid therapeutic class.";
+        exit();
+    }
+
     /*  Checking product already exists     */
     $product_exist = "SELECT product_id FROM product_master 
                     WHERE UPPER(product_name) = UPPER('".$product_name."')
                     AND product_category = ".$product_category."
                     AND product_owner = ".$product_owner."
                     AND country_id = ".$country_id."
+                    AND therapeutic_id = ".$therapeutic_id."
                     AND del_by IS NULL";
     $product_response = mysqli_query($conn, $product_exist);
     if (mysqli_num_rows($product_response) > 0){
@@ -71,8 +83,8 @@
     }
     
     /*  Adding new product     */
-    $add_product_sql = "INSERT INTO product_master (product_name,product_category,product_owner, country_id,deadline_dt,ent_by,ent_dt,del_by,del_dt)
-                    VALUES ('".$product_name."',".$product_category.",".$product_owner.",".$country_id.",STR_TO_DATE('".$deadline_dt."', '%m/%d/%Y'),".$login_id.",NOW(),null,null)";
+    $add_product_sql = "INSERT INTO product_master (product_name,product_category,product_owner, country_id,deadline_dt,therapeutic_id,ent_by,ent_dt,del_by,del_dt)
+                    VALUES ('".$product_name."',".$product_category.",".$product_owner.",".$country_id.",STR_TO_DATE('".$deadline_dt."', '%m/%d/%Y'),".$therapeutic_id.",".$login_id.",NOW(),null,null)";
 
     if ($conn->query($add_product_sql) !== TRUE) {
         echo "Some error occurred while adding new product. Please try again later.";

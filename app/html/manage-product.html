@@ -84,8 +84,13 @@
                                         placeholder="Enter deadline date"
                                     />
                                 </div>
-                                <div class="col-sm-6">
-                                    &nbsp;
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >Therapeutic Class</label
+                                >
+                                <div class="col-sm-4" id="divProductTherapeutic">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -124,6 +129,7 @@
     var optionsCategoryData = "";
     var optionsOwnerData = "";
     var optionsCountryData = "";
+    var optionsTherapeuticData = "";
     $(document).ready(function(){
         $("#login_id").val(localStorage.getItem("balaxi_user_id"));
         $("#deadline_dt").datepicker().on(
@@ -188,8 +194,19 @@
                                         "<input type=\"text\" readonly class=\"form-control\" id=\"edit_deadline_date"+counter.product_id+"\" name=\"edit_deadline_date"+counter.product_id+"\" value=\""+counter.deadline_dt+"\"></span>"+
                                         "<span class=\"viewDeadlineDate"+counter.product_id+"\">"+counter.deadline_dt+"</span>"+
                                     "</td>"+
+                                    "<td>"+
+                                        "<span style=\"display:none;\" class=\"editProductTherapeutic"+counter.product_id+"\">"+
+                                        "<div id=\"edit_divProductTherapeutic"+counter.product_id+"\">"+
+                                            "<select id=\"edit_product_therapeutic"+counter.product_id+"\" name=\"edit_product_therapeutic"+counter.product_id+"\" class=\"form-control\">"+
+                                                "<option value=\"\">Select Class</option>"+
+                                                optionsTherapeuticData+
+                                            "</select>"+
+                                        "</div>"+
+                                        "</span>"+
+                                        "<span class=\"viewProductTherapeutic"+counter.product_id+"\">"+counter.therapeutic_class+"</span>"+
+                                    "</td>"+
                                     "<td align=\"center\">"+
-                                    	"<span title=\"Click here to edit this product\" class=\"fas fa-pencil-alt fa-lg text-warning editButton"+counter.product_id+"\" style=\"cursor:pointer;\" onclick=\"updateProduct("+counter.product_id+","+counter.product_category+","+counter.product_owner+","+counter.country_id+",'"+counter.deadline_dt+"')\"></span>"+
+                                    	"<span title=\"Click here to edit this product\" class=\"fas fa-pencil-alt fa-lg text-warning editButton"+counter.product_id+"\" style=\"cursor:pointer;\" onclick=\"updateProduct("+counter.product_id+","+counter.product_category+","+counter.product_owner+","+counter.country_id+",'"+counter.deadline_dt+"','"+counter.therapeutic_id+"')\"></span>"+
                                     	"<span title=\"Click here to save this product\" class=\"fas fa-save fa-lg text-success saveButton"+counter.product_id+"\" style=\"cursor:pointer; display:none;\" onclick=\"editProduct("+counter.product_id+")\"></span>"+
                                     "</td>"+
                                     "<td align=\"center\">"+
@@ -205,12 +222,13 @@
                         "product_owner":counter.product_owner,
                         "product_country":counter.country_id,
                         "product_deadline":counter.deadline_dt,
+                        "therapeutic_class":counter.therapeutic_id
                     }
                 );
             }
         }else{
             productTbody += "<tr>"+
-                            "<td colspan=\"8\" align=\"center\">No product details found.</td>"
+                            "<td colspan=\"9\" align=\"center\">No product details found.</td>"
                         "</tr>";
         }
         $("#divProducts").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"productTable\" width=\"100%\" cellspacing=\"0\">"+
@@ -222,6 +240,7 @@
                                         "<th>Product Owner</th>"+
                                         "<th>Product Country</th>"+
                                         "<th>Deadline Date</th>"+
+                                        "<th>Therapeutic Class</th>"+
                                         "<th>Edit</th>"+
                                         "<th>Delete</th>"+
                                     "</tr>"+
@@ -233,8 +252,8 @@
         if(jsonProductData.length > 0){
             $("#productTable").DataTable({
             	"columnDefs": [
-	            	{"targets": 6,"orderable": false},
-	            	{"targets": 7,"orderable": false}
+	            	{"targets": 7,"orderable": false},
+	            	{"targets": 8,"orderable": false}
             	]
             });
         }
@@ -296,11 +315,32 @@
                                        optionsCountryData+
                                     "</select>");
         }
-        loadProducts();
+        loadTherapeutic();
     }
 
     function getProductCountry(){
         return callAPIService("get_country.php","country_id=0&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
+    }
+
+    function loadTherapeutic() {
+        let therapeuticResult = getTherapeutic();
+        // console.log(ownerResult);
+        var jsonTherapeuticData = JSON.parse(therapeuticResult);
+        if(jsonTherapeuticData.length > 0){
+            for(i=0; i<jsonTherapeuticData.length; i++){
+                var counter = jsonTherapeuticData[i];
+                optionsTherapeuticData += "<option value=\""+counter.therapeutic_id+"\">"+counter.therapeutic_class+"</option>";
+            }
+            $("#divProductTherapeutic").html("<select id=\"therapeutic_id\" name=\"therapeutic_id\" class=\"form-control\">"+
+                                       "<option value=\"\">Select Class</option>"+
+                                       optionsTherapeuticData+
+                                    "</select>");
+        }
+        loadProducts();
+    }
+
+    function getTherapeutic(){
+        return callAPIService("get_therapeutic_class.php","therapeutic_id=0&user_id="+localStorage.getItem("balaxi_user_id")+"&user_role="+localStorage.getItem("balaxi_user_role"));
     }
 
     function getProducts(){
@@ -345,6 +385,7 @@
             && e.product_owner == $("#product_owner").val()
             && e.product_country == $("#product_country").val()
             && e.deadline_dt == $("#deadline_dt").val()
+            && e.therapeutic_class == $("#therapeutic_id").val()
             )
         if(existProduct !== undefined){
             alert("Entered product details are already exists. Please try another product.");
@@ -403,8 +444,14 @@
             return false;
         }
 
+        if($("#edit_product_therapeutic"+productId).val() == ""){
+            alert("Please select valid therapeutic class.");
+            $("#edit_product_therapeutic"+productId).focus();
+            return false;
+        }
+
     	if(confirm("Are you sure want to update this product?")){
-			var updateData = "login_id="+$("#login_id").val()+"&product_id="+productId+"&product_name="+$("#edit_product_name"+productId).val()+"&product_category="+$("#edit_product_category"+productId).val()+"&product_owner="+$("#edit_product_owner"+productId).val()+"&country_id="+$("#edit_product_country"+productId).val()+"&deadline_dt="+$("#edit_deadline_date"+productId).val();
+			var updateData = "login_id="+$("#login_id").val()+"&product_id="+productId+"&product_name="+$("#edit_product_name"+productId).val()+"&product_category="+$("#edit_product_category"+productId).val()+"&product_owner="+$("#edit_product_owner"+productId).val()+"&country_id="+$("#edit_product_country"+productId).val()+"&deadline_dt="+$("#edit_deadline_date"+productId).val()+"&therapeutic_id="+$("#edit_product_therapeutic"+productId).val();
 
 	    	let productUpdateResult = editProductData(updateData);
 	    	if(String(productUpdateResult).trim() != "1"){
@@ -416,23 +463,27 @@
 		}
     }
 
-    function updateProduct(productId,categoryId,userId,countryId,deadlineDt){
+    function updateProduct(productId,categoryId,userId,countryId,deadlineDt,therapeuticId){
 		$(".viewProductName"+productId).hide();
 		$(".viewProductCategory"+productId).hide();
         $(".viewProductOwner"+productId).hide();
         $(".viewProductCountry"+productId).hide();
         $(".viewDeadlineDate"+productId).hide();
+        $(".viewProductTherapeutic"+productId).hide();
+
         $(".editButton"+productId).hide();
         $(".editProductName"+productId).show();
     	$(".editProductCategory"+productId).show();
         $(".editProductOwner"+productId).show();
         $(".editProductCountry"+productId).show();
         $(".editDeadlineDate"+productId).show();
+        $(".editProductTherapeutic"+productId).show();
 
         $("#edit_product_category"+productId).val(categoryId);
         $("#edit_product_owner"+productId).val(userId);
         $("#edit_product_country"+productId).val(countryId);
         $("#edit_deadline_date"+productId).val(deadlineDt);
+        $("#edit_product_therapeutic"+productId).val(therapeuticId);
         
         $("#edit_deadline_date"+productId).datepicker(
                 "setDate", new Date(deadlineDt)
@@ -453,8 +504,9 @@
     	$("#product_name").val("");
         $("#product_category").val("");
         $("#product_owner").val("");
-        $("#product_country").val("");
+        $("#country_id").val("");
         $("#deadline_dt").val("");
+        $("#therapeutic_id").val("");
     }
 
     function deleteProduct(productId){

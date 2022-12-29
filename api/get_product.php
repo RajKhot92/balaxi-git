@@ -11,12 +11,13 @@
     
     /*  Getting user    */
     $get_product_sql = "SELECT a.`product_id`,a.`product_name`,a.`product_category`,
-                    a.`product_owner`,a.`country_id`,a.`deadline_dt`,a.`ent_by`,a.`ent_dt`,
-                    b.`category_name`,c.`user_name`,d.`country_name` 
+                    a.`product_owner`,a.`country_id`,a.`deadline_dt`,a.`therapeutic_id`,a.`ent_by`,a.`ent_dt`,
+                    b.`category_name`,c.`user_name`,d.`country_name`,e.`therapeutic_class` 
                     FROM product_master a 
                     INNER JOIN product_category b ON a.`product_category`=b.`category_id` 
                     INNER JOIN user_master c ON a.`product_owner`=c.`user_id`
                     INNER JOIN country_master d ON a.`country_id`=d.`country_id`
+                    LEFT JOIN therapeutic_class_master e ON a.`therapeutic_id`=e.`therapeutic_id` 
                     WHERE a.`del_by` IS NULL ";
 
     if($login_id != 0){
@@ -100,6 +101,8 @@
         $row_array['deadline_dt'] = $row['deadline_dt'] == null ? "" : $row['deadline_dt'];
         $row_array['user_name'] = $row['user_name'];
         $row_array['country_name'] = $row['country_name'];
+        $row_array['therapeutic_id'] = $row['therapeutic_id'];
+        $row_array['therapeutic_class'] = $row['therapeutic_class'] == null ? "" : $row['therapeutic_class'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];  
         array_push($json_response,$row_array);  
