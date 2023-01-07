@@ -1,0 +1,228 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Monogram</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            Monogram
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" method="post" id="frmMonogram" name="frmMonogram" enctype="multipart/form-data">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <input type="hidden" id="product_id" name="product_id">
+                        <div class="card-body">
+                            <!-- <h4 class="card-title text-center">Add Monogram Data</h4> -->
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >Monogram Remark <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="monogram_remark"
+                                        name="monogram_remark"
+                                        placeholder="Enter monogram remark"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >Monogram File <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-4">
+                                    <input
+                                        type="file"
+                                        class="form-control"
+                                        id="monogram"
+                                        name="monogram"
+                                        accept="application/pdf,
+                                        image/*"
+                                        placeholder="Enter monogram file"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-warning" onclick="loadSubPageContent('menu-finalization.html')">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                                <button type="button" onclick="saveMonogram()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetMonogram()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added Monogram</h4>
+                        <div class="card-body" id="divMonogram" class="table-responsive">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        $("#product_id").val(sessionStorage.getItem("sample_finalization_product_id"));
+        loadMonogram();
+    });
+
+    function loadMonogram(){
+        let monogramResult = getMonogram();
+        // console.log(monogramResult);
+        var jsonMonogramData = JSON.parse(monogramResult);
+        var monogramTbody = "";
+        if(jsonMonogramData.length > 0){
+            for(i=0; i<jsonMonogramData.length; i++){
+                var counter = jsonMonogramData[i];
+                var fileTypeIcon = "fas fa-file-pdf";
+                if(counter.file_type == "pdf"){
+                    fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+                }else{
+                    fileTypeIcon = "fas fa-file-image fa-lg text-info";
+                }
+                monogramTbody += "<tr>"+
+                                            "<td align=\"center\">"+(i+1)+"</td>"+
+                                            "<td align=\"center\">"+counter.monogram_remark+"</td>"+
+                                            "<td align=\"center\">"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"+
+                                            "</td>"+
+                                            "<td>"+counter.ent_dt+"</td>"+
+                                        "</tr>";
+            }
+        }else{
+            monogramTbody += "<tr>"+
+                            "<td colspan=\"4\" align=\"center\">No monogram details found.</td>"
+                        "</tr>";
+        }
+        $("#divMonogram").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"monogramTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>Monogram Remark</th>"+
+                                        "<th>Monogram File</th>"+
+                                        "<th>Entry Date</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    monogramTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonMonogramData.length > 0){
+            $("#monogramTable").DataTable();
+        }
+    }
+
+    function getMonogram(){
+    	return callAPIService("get_product_artwork_monogram.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&monogram_id=0");
+    }
+
+    function openFile(url){
+        downloadFileByURL(url);
+    }
+
+    function saveMonogram(){
+    	
+        if($("#monogram_remark").val() == ""){
+            alert("Please enter monogram remark.");
+            $("#monogram_remark").focus();
+            return false;
+        }
+
+        if($("#monogram").val() == ""){
+            alert("Please upload valid monogram file.");
+            $("#monogram").focus();
+            return false;
+        }
+        
+        // Create a FormData object.
+        var formData = new FormData();
+
+        let fileResp = fileValidation('monogram','monogram');
+        if(!fileResp){
+            return false;
+        }
+
+        var fileSelect = document.getElementById('monogram');
+        var files = fileSelect.files;
+        var file = files[0];
+        var fileType = "";
+
+        if(file.name.toUpperCase().endsWith("PDF")){
+            fileType = "pdf";
+        }else if(file.name.toUpperCase().endsWith("PNG")){
+            fileType = "png";
+        }else if(file.name.toUpperCase().endsWith("JPG")){
+            fileType = "jpg";
+        }else if(file.name.toUpperCase().endsWith("JPEG")){
+            fileType = "jpeg";
+        }else if(file.name.toUpperCase().endsWith("BMP")){
+            fileType = "bmp";
+        }else if(file.name.toUpperCase().endsWith("GIF")){
+            fileType = "gif";
+        }else if(file.name.toUpperCase().endsWith("SVG")){
+            fileType = "svg";
+        }else{
+            fileType = "";
+        }
+
+        if(fileType == ""){
+            alert("Kindly upload a pdf/jpg document file.");
+            return false;
+        }
+
+        formData.append('monogram', file, file.name);
+        formData.append('file_type',fileType);
+        formData.append("login_id", $("#login_id").val());
+        formData.append("product_id", $("#product_id").val());
+        formData.append("monogram_remark", $("#monogram_remark").val());
+
+    	let monogramSaveResult = saveMonogramData(formData);
+    	if(String(monogramSaveResult).trim() != "1"){
+    		alert(monogramSaveResult);
+    	}else{
+    		resetMonogram();
+    		alert("Monogram details has been saved successfully.");
+    		loadMonogram();
+    	}
+    }
+
+    function saveMonogramData(monogramData){
+    	return callAPIServicePost("save_product_artwork_monogram.php",monogramData);
+    }
+
+    function resetMonogram(){
+    	document.getElementById("frmMonogram").reset();
+    }
+</script>

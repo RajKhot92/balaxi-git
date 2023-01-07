@@ -1,0 +1,227 @@
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css"/>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">MSDS</h4>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                            MSDS
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form class="form-horizontal" method="post" id="frmMSDS" name="frmMSDS" enctype="multipart/form-data">
+                        <input type="hidden" id="login_id" name="login_id">
+                        <input type="hidden" id="product_id" name="product_id">
+                        <div class="card-body">
+                            <!-- <h4 class="card-title text-center">Add MSDS Data</h4> -->
+                            <div class="form-group row">
+                                <label
+                                    for="fname"
+                                    class="col-sm-3 text-end control-label col-form-label"
+                                  >MSDS Date <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control"
+                                        id="msds_dt"
+                                        name="msds_dt"
+                                        placeholder="Enter msds date"
+                                    />
+                                </div>
+                                <label
+                                    for="fname"
+                                    class="col-sm-2 text-end control-label col-form-label"
+                                  >MSDS File <span style="color: red;">*</span></label
+                                >
+                                <div class="col-sm-4">
+                                    <input
+                                        type="file"
+                                        class="form-control"
+                                        id="msds"
+                                        name="msds"
+                                        accept="application/pdf,
+                                        application/msword,
+                                        application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        placeholder="Enter msds file"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-warning" onclick="loadSubPageContent('menu-shipment-form.html')">
+                                    <i class="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </button>
+                                <button type="button" onclick="saveMSDS()" class="btn btn-primary">
+                                    <i class="fas fa-check-circle"></i>&nbsp;Submit
+                                </button>
+                                <button type="button" onclick="resetMSDS()" class="btn btn-danger">
+                                    <i class="fas fa-ban"></i>&nbsp;Reset
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">View Added MSDS</h4>
+                        <div class="card-body" id="divMSDS" class="table-responsive">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/extra-libs/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_id").val(localStorage.getItem("balaxi_user_id"));
+        $("#product_id").val(sessionStorage.getItem("data_shipment_id"));
+        $("#msds_dt").datepicker().on(
+            'changeDate', function(e){
+                $(this).datepicker('hide');
+            }
+        );
+        loadMSDS();
+    });
+
+    function loadMSDS(){
+        let msdsResult = getMSDS();
+        // console.log(msdsResult);
+        var jsonMSDSData = JSON.parse(msdsResult);
+        var msdsTbody = "";
+        if(jsonMSDSData.length > 0){
+            for(i=0; i<jsonMSDSData.length; i++){
+                var counter = jsonMSDSData[i];
+                var fileTypeIcon = "fas fa-file-pdf";
+                if(counter.file_type == "pdf"){
+                    fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
+                }else{
+                    fileTypeIcon = "fas fa-file-word fa-lg text-info";
+                }
+                msdsTbody += "<tr>"+
+                                            "<td align=\"center\">"+(i+1)+"</td>"+
+                                            "<td align=\"center\">"+counter.msds_dt+"</td>"+
+                                            "<td align=\"center\">"+
+                                                "<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"+
+                                            "</td>"+
+                                            "<td>"+counter.ent_dt+"</td>"+
+                                        "</tr>";
+            }
+        }else{
+            msdsTbody += "<tr>"+
+                            "<td colspan=\"4\" align=\"center\">No msds details found.</td>"
+                        "</tr>";
+        }
+        $("#divMSDS").html("<table class=\"table table-sm table-striped table-hover table-bordered\" id=\"msdsTable\" width=\"100%\" cellspacing=\"0\">"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>Sr.No.</th>"+
+                                        "<th>MSDS Date</th>"+
+                                        "<th>MSDS File</th>"+
+                                        "<th>Entry Date</th>"+
+                                    "</tr>"+
+                                "</thead>"+
+                                "<tbody>"+
+                                    msdsTbody+
+                                "</tbody>"+
+                            "</table>");
+        if(jsonMSDSData.length > 0){
+            $("#msdsTable").DataTable();
+        }
+    }
+
+    function getMSDS(){
+    	return callAPIService("get_product_shipment_msds.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&msds_id=0");
+    }
+
+    function openFile(url){
+        downloadFileByURL(url);
+    }
+
+    function saveMSDS(){
+    	
+        if($("#msds_dt").val() == ""){
+            alert("Please enter msds date.");
+            $("#msds_dt").focus();
+            return false;
+        }
+
+        if($("#msds").val() == ""){
+            alert("Please upload valid msds file.");
+            $("#msds").focus();
+            return false;
+        }
+        
+        // Create a FormData object.
+        var formData = new FormData();
+
+        let fileResp = fileValidation('msds','msds');
+        if(!fileResp){
+            return false;
+        }
+
+        var fileSelect = document.getElementById('msds');
+        var files = fileSelect.files;
+        var file = files[0];
+        var fileType = "";
+
+        if(file.name.toUpperCase().endsWith("PDF")){
+            fileType = "pdf";
+        }else if(file.name.toUpperCase().endsWith("DOC")){
+            fileType = "doc";
+        }else if(file.name.toUpperCase().endsWith("DOCX")){
+            fileType = "docx";
+        }else{
+            fileType = "";
+        }
+
+        if(fileType == ""){
+            alert("Kindly upload a pdf/word document file.");
+            return false;
+        }
+
+        formData.append('msds', file, file.name);
+        formData.append('file_type',fileType);
+        formData.append("login_id", $("#login_id").val());
+        formData.append("product_id", $("#product_id").val());
+        formData.append("msds_dt", $("#msds_dt").val());
+
+    	let msdsSaveResult = saveMSDSData(formData);
+    	if(String(msdsSaveResult).trim() != "1"){
+    		alert(msdsSaveResult);
+    	}else{
+    		resetMSDS();
+    		alert("MSDS details has been saved successfully.");
+    		loadMSDS();
+    	}
+    }
+
+    function saveMSDSData(msdsData){
+    	return callAPIServicePost("save_product_shipment_msds.php",msdsData);
+    }
+
+    function resetMSDS(){
+    	document.getElementById("frmMSDS").reset();
+    }
+</script>
