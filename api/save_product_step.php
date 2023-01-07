@@ -136,20 +136,20 @@
         exit();
     }else{
         $counter = 0;
-        $cc_mail = array('regulatory@balaxi.in','sandeep@balaxi.com');
-        for ($i = 0; $i < count($user_mail); $i++) {
-            $mail_to = $user_mail[$i];
-            $subject = 'Product step assigned ';
-            $content = 'Hello '.$user_name[$i].',<br/><br/>
-                        Your product owner has assigned <b>'.$user_step[$i].'</b> step to you for the product <b>'.$product_name[$i].'</b>.<br/><br/>
-                        Please do not reply to this mail.<br/><br/>
-                        Thanks,<br/>
-                        Team Balaxi';
-            $mail_retval = sendEmail($mail_to,$cc_mail,$subject,$content);
-            if($mail_retval == "1" || $mail_retval == 1){
-                $counter++;
-            }
-        }
+        // $cc_mail = array('regulatory@balaxi.in','sandeep@balaxi.com');
+        // for ($i = 0; $i < count($user_mail); $i++) {
+        //     $mail_to = $user_mail[$i];
+        //     $subject = 'Product step assigned ';
+        //     $content = 'Hello '.$user_name[$i].',<br/><br/>
+        //                 Your product owner has assigned <b>'.$user_step[$i].'</b> step to you for the product <b>'.$product_name[$i].'</b>.<br/><br/>
+        //                 Please do not reply to this mail.<br/><br/>
+        //                 Thanks,<br/>
+        //                 Team Balaxi';
+        //     $mail_retval = sendEmail($mail_to,$cc_mail,$subject,$content);
+        //     if($mail_retval == "1" || $mail_retval == 1){
+        //         $counter++;
+        //     }
+        // }
         $counter = count($user_mail);
         if($counter != count($user_mail)){
             echo "Some error occurred while sending mail to users.";
