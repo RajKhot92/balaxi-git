@@ -44,42 +44,61 @@
         array_push($user_id_arr,$user_id_data);
     }
 
+    $product_name = array();
     $product_id_selected = 0;
     // $isError = false;
     for ($i = 0; $i < count($product_id_arr); $i++) {
         /*  Checking product by product id already exists     */
-        $product_exist = "SELECT product_id FROM product_master 
+        $product_exist = "SELECT product_id,product_name FROM product_master 
                         WHERE product_id = ".$product_id_arr[$i]."
                         AND del_by IS NULL";
         $product_response = mysqli_query($conn, $product_exist);
         if (mysqli_num_rows($product_response) == 0){
             echo "Product details not found for given product id ".$product_id_arr[$i].".";
             exit();
+        }else{
+            while ($row_product = mysqli_fetch_array($product_response, MYSQLI_ASSOC)) {
+                array_push($product_name, $row_product['product_name']);
+            }
         }
 
         $product_id_selected = $product_id_arr[$i];
     }
 
+    $user_step = array();
     for ($i = 0; $i < count($menu_id_arr); $i++) {
         /*  Checking menu by menu id already exists     */
-        $menu_exist = "SELECT menu_id FROM menu_master 
+        $menu_exist = "SELECT menu_id,menu_name FROM menu_master 
                         WHERE menu_id = ".$menu_id_arr[$i];
         $menu_response = mysqli_query($conn, $menu_exist);
         if (mysqli_num_rows($menu_response) == 0){
             echo "Menu details not found for given menu id ".$menu_id_arr[$i].".";
             exit();
+        }else{
+            while ($row_menu = mysqli_fetch_array($menu_response, MYSQLI_ASSOC)) {
+                array_push($user_step, $row_menu['menu_name']);
+            }
         }
     }
 
+    /*  Sending email to users  */
+    $user_mail = array();
+    $user_name = array();
+
     for ($i = 0; $i < count($user_id_arr); $i++) {
         /*  Checking user by user id already exists     */
-        $user_exist = "SELECT user_id FROM user_master 
+        $user_exist = "SELECT `user_id`,`user_name`,`email_id` FROM user_master 
                         WHERE user_id = ".$user_id_arr[$i]."
                         AND del_by IS NULL";
         $user_response = mysqli_query($conn, $user_exist);
         if (mysqli_num_rows($user_response) == 0){
             echo "User details not found for given user id ".$user_id_arr[$i].".";
             exit();
+        }else{
+            while ($row_user = mysqli_fetch_array($user_response, MYSQLI_ASSOC)) {
+                array_push($user_mail, $row_user['email_id']);
+                array_push($user_name, $row_user['user_name']);
+            }
         }
     }
 
@@ -114,7 +133,29 @@
         echo "Some error occurred while assigning product steps. Please try again later.";
         exit();
     }else{
-        echo "1";
+        // $cc_mail = array();
+        // $counter = 0;
+        // for ($i = 0; $i < count($user_mail); $i++) {
+        //     array_push($cc_mail,'regulatory@balaxi.in','sandeep@balaxi.com');
+        //     $mail_to = $user_mail[$i];
+        //     $subject = 'Product step assigned ';
+        //     $content = 'Hello '.$user_name[$i].',<br/><br/>
+        //                 Your product owner has assigned '.$user_step[$i].' step to you for the product '.$product_name[$i].'.<br/><br/>
+        //                 Please do not reply to this mail.<br/><br/>
+        //                 Thanks,<br/>
+        //                 Team Balaxi';
+        //     $mail_retval = sendEmail($mail_to,$cc_mail,$subject,$content);
+        //     if($mail_retval == "1" || $mail_retval == 1){
+        //         $counter++;
+        //     }
+        // }
+        $counter = count($user_mail);
+        if($counter != count($user_mail)){
+            echo "Some error occurred while sending mail to users.";
+            exit();
+        }else{
+            echo "1";
+        }
     }
 
     $conn->close();
