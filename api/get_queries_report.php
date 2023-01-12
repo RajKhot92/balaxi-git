@@ -21,9 +21,6 @@
                         INNER JOIN product_category e ON a.`product_category`=e.`category_id`
                         AND a.`del_by` IS NULL ";
 
-    if($user_role == 4){
-        $get_queries_sql .= " AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
-    }
 
     if($country_id != 0){
         $get_queries_sql .= " AND a.`country_id`=".$country_id;

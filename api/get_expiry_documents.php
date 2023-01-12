@@ -23,10 +23,6 @@
 						from product_master a INNER JOIN user_master b on a.`product_owner`=b.`user_id` 
                         INNER JOIN product_category c on a.`product_category`=c.`category_id` WHERE a.del_by IS NULL ";
 
-    if($user_role == 4){
-        $get_progress_sql .= "AND a.`product_id` in (SELECT DISTINCT `product_id` from `product_step_master` where `user_id`=".$user_id.") ";
-    }
-
     if($country_id != 0){
         $get_progress_sql .= "AND a.`country_id`=".$country_id;
     }
