@@ -10,6 +10,7 @@
     $manufacture_name = mysqli_real_escape_string($conn, $_REQUEST['manufacture_name']);
     $validity = mysqli_real_escape_string($conn, $_REQUEST['validity']);
     $received_date = mysqli_real_escape_string($conn, $_REQUEST['received_date']);
+    $file_type = mysqli_real_escape_string($conn, $_REQUEST['file_type']);
     $file_content = '';
     if (!empty($_FILES['license']['name'])) {
         if ($_FILES['license']['error'] != 0) {
@@ -50,11 +51,30 @@
 
     $vldt = $validity === "" ? "null" : "STR_TO_DATE('".$validity."', '%m/%d/%Y')";
     $rcvd_dt = $received_date === "" ? "null" : "STR_TO_DATE('".$received_date."', '%m/%d/%Y')";
-    $fil_cntnt = $file_content === "" ? "null" : "'".$file_content."'";
+    $fil_typ = $file_type === "" ? "null" : "'".$file_type."'";
+    $fil_url = "null";
 
     /*  Adding license manufacture     */
-    $add_license_manufacture_sql = "INSERT INTO product_license_manufacture (`product_id`, `manufacture_name`, `validity`, `received_date`, `license`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$manufacture_name."',".$vldt.",".$rcvd_dt.",".$fil_cntnt.",".$login_id.",NOW())";
+    if ($file_type != "") {
+        $new_license_id = 0;
+        $license_id_result = mysqli_query($conn, "SELECT IFNULL(MAX(lm_id),0)+1 AS new_license_id FROM product_license_manufacture");
+        while ($row_lmid = mysqli_fetch_array($license_id_result, MYSQLI_ASSOC)) {
+            $new_license_id = $row_lmid["new_license_id"];
+        }
+        
+        $target_dir = "license-manufacture/";
+        $target_file = $target_dir . $new_license_id . "-" . basename($_FILES["license"]["name"]);
+        if(move_uploaded_file($_FILES["license"]["tmp_name"], $target_file)){
+            //File successfully uploaded
+            $fil_url = "'".$target_file."'";
+        }else{
+            echo "Some error occurred while uploading file.";
+            exit();
+        }
+    }
+
+    $add_license_manufacture_sql = "INSERT INTO product_license_manufacture (`product_id`, `manufacture_name`, `validity`, `received_date`, `file_type`, `file_url`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",'".$manufacture_name."',".$vldt.",".$rcvd_dt.",".$fil_typ.",".$fil_url.",".$login_id.",NOW())";
 
     if ($conn->query($add_license_manufacture_sql) !== TRUE) {
         echo "Some error occurred while adding license manufacture details. Please try again later.";
