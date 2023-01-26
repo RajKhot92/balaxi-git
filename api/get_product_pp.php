@@ -46,7 +46,8 @@
         $row_array['pharmacopeia_type'] = $row['pharmacopeia_type'];
         $row_array['validity'] = $row['validity'] == null ? "" : $row['validity'];
         $row_array['received_date'] = $row['received_date'] == null ? "" : $row['received_date'];
-        $row_array['pp'] = $row['pp'] == null ? "" : "pp";
+        $row_array['file_type'] = $row['file_type'];
+        $row_array['file_url'] = $row['file_url'] == null ? "" : $row['file_url'];
         $row_array['ent_by'] = $row['ent_by'];
         $row_array['ent_dt'] = $row['ent_dt'];        
         array_push($json_response,$row_array);

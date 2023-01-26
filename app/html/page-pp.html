@@ -186,6 +186,7 @@
         if(jsonPPData.length > 0){
             for(i=0; i<jsonPPData.length; i++){
                 var counter = jsonPPData[i];
+                var fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
                 pPTbody += "<tr>"+
                                             "<td align=\"center\">"+(i+1)+"</td>"+
                                             "<td align=\"center\">"+counter.strength+"</td>"+
@@ -194,8 +195,8 @@
                                             "<td align=\"center\">"+counter.validity+"</td>"+
                                             "<td align=\"center\">"+counter.received_date+"</td>"+
                                             "<td align=\"center\">"+
-                                                (counter.pp != "" ? 
-                                                ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.pp_id+"')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"):"")+
+                                                (counter.file_url != "" ?
+                                                ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"):"")+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                         "</tr>";
@@ -230,9 +231,9 @@
     function getPP(){
     	return callAPIService("get_product_pp.php","login_id="+$("#login_id").val()+"&product_id="+$("#product_id").val()+"&pp_id=0");
     }
-
-    function openFile(id){
-        downloadFile('product_pp','pp','pp_id',id,"pdf");
+    
+    function openFile(url){
+        downloadFileByURL(url);
     }
 
     function savePP(){
@@ -256,10 +257,26 @@
             var fileSelect = document.getElementById('pp');
             var files = fileSelect.files;
             var file = files[0];
+            var fileType = "";
+
+            if(file.name.toUpperCase().endsWith("PDF")){
+                fileType = "pdf";
+            }else{
+                fileType = "";
+            }
+
+            if(fileType == ""){
+                alert("Kindly upload a pdf document file.");
+                return false;
+            }
+
             formData.append('pp', file, file.name);
+            formData.append('file_type', fileType);
         }else{
-            formData.append('pp', null);
+            formData.append('pp', "");
+            formData.append('file_type', "");
         }
+        
         formData.append("login_id", $("#login_id").val());
         formData.append("product_id", $("#product_id").val());
         formData.append("strength", $("#strength").val());

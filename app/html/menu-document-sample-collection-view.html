@@ -410,6 +410,7 @@
         if(jsonPPData.length > 0){
             for(i=0; i<jsonPPData.length; i++){
                 var counter = jsonPPData[i];
+                var fileTypeIcon = "fas fa-file-pdf fa-lg text-danger";
                 pPTbody += "<tr>"+
                                             "<td align=\"center\">"+(i+1)+"</td>"+
                                             "<td align=\"center\">"+counter.strength+"</td>"+
@@ -418,8 +419,8 @@
                                             "<td align=\"center\">"+counter.validity+"</td>"+
                                             "<td align=\"center\">"+counter.received_date+"</td>"+
                                             "<td align=\"center\">"+
-                                                (counter.pp != "" ? 
-                                                ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFile('"+counter.pp_id+"','pp')\" class=\"fas fa-file-pdf fa-lg text-danger\"></i>"):"")+
+                                                (counter.file_url != "" ?
+                                                ("<i style=\"cursor: pointer;\" title=\"Click here to download this file\" onclick=\"openFileByURL('"+counter.file_url+"')\" class=\""+fileTypeIcon+"\"></i>"):"")+
                                             "</td>"+
                                             "<td>"+counter.ent_dt+"</td>"+
                                             "<td align=\"center\">"+

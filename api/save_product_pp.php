@@ -12,6 +12,7 @@
     $pharmacopeia_type = mysqli_real_escape_string($conn, $_REQUEST['pharmacopeia_type']);
     $validity = mysqli_real_escape_string($conn, $_REQUEST['validity']);
     $received_date = mysqli_real_escape_string($conn, $_REQUEST['received_date']);
+    $file_type = mysqli_real_escape_string($conn, $_REQUEST['file_type']);
     $file_content = "";
     if (!empty($_FILES['pp']['name'])) {
         if ($_FILES['pp']['error'] != 0) {
@@ -52,11 +53,30 @@
 
     $vldt = $validity === "" ? "null" : "STR_TO_DATE('".$validity."', '%m/%d/%Y')";
     $rcvd_dt = $received_date === "" ? "null" : "STR_TO_DATE('".$received_date."', '%m/%d/%Y')";
-    $fil_cntnt = $file_content === "" ? "null" : "'".$file_content."'";
+    $fil_typ = $file_type === "" ? "null" : "'".$file_type."'";
+    $fil_url = "null";
 
     /*  Adding market research     */
-    $add_pp_sql = "INSERT INTO product_pp (`product_id`, `strength`, `composition`, `pharmacopeia_type`, `validity`, `received_date`, `pp`, `ent_by`, `ent_dt`)
-                            VALUES (".$product_id.",'".$strength."','".$composition."','".$pharmacopeia_type."',".$vldt.",".$rcvd_dt.",".$fil_cntnt.",".$login_id.",NOW())";
+    if ($file_type != "") {
+        $new_pp_id = 0;
+        $pp_id_result = mysqli_query($conn, "SELECT IFNULL(MAX(pp_id),0)+1 AS new_pp_id FROM product_pp");
+        while ($row_lmid = mysqli_fetch_array($pp_id_result, MYSQLI_ASSOC)) {
+            $new_pp_id = $row_lmid["new_pp_id"];
+        }
+        
+        $target_dir = "pp/";
+        $target_file = $target_dir . $new_pp_id . "-" . basename($_FILES["pp"]["name"]);
+        if(move_uploaded_file($_FILES["pp"]["tmp_name"], $target_file)){
+            //File successfully uploaded
+            $fil_url = "'".$target_file."'";
+        }else{
+            echo "Some error occurred while uploading file.";
+            exit();
+        }
+    }
+
+    $add_pp_sql = "INSERT INTO product_pp (`product_id`, `strength`, `composition`, `pharmacopeia_type`, `validity`, `received_date`, `file_type`, `file_url`, `ent_by`, `ent_dt`)
+                            VALUES (".$product_id.",'".$strength."','".$composition."','".$pharmacopeia_type."',".$vldt.",".$rcvd_dt.",".$fil_typ.",".$fil_url.",".$login_id.",NOW())";
 
     if ($conn->query($add_pp_sql) !== TRUE) {
         echo "Some error occurred while adding pp details. Please try again later.";
