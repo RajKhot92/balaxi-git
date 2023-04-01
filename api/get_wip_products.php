@@ -20,7 +20,7 @@
                         FROM `product_master` a 
                         INNER JOIN `country_master` b ON a.`country_id`=b.`country_id`
                         INNER JOIN `user_master` c ON a.`product_owner`=c.`user_id`
-                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id`
+                        INNER JOIN `product_category` d ON a.`product_category`=d.`category_id` AND d.`category_NAME` NOT IN ('HOLD')
                         WHERE a.`product_id` IN (
                         SELECT `product_id` FROM product_step_master) 
                         AND a.`product_id` NOT IN (

@@ -14,7 +14,7 @@
                             DATEDIFF(c.`deadline_dt`,CURDATE()) due_dt,
                     (SELECT `vendor_name` from product_vendor_finalization 
                         WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id` AND del_by IS NULL)) supplier_name   
-                            from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id`
+                            from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id` AND b.`category_NAME` NOT IN ('HOLD')
                             INNER JOIN product_shipment_dispatch c ON a.`product_id`=c.`product_id`
                             WHERE c.`psd_id` IN (SELECT MAX(psd_id) from product_shipment_dispatch GROUP by product_id)
                             AND a.`product_id` NOT IN (

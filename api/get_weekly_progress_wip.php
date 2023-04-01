@@ -9,7 +9,7 @@
     $get_progress_sql = "SELECT a.`product_id`,a.`product_name`,d.`country_name`,
                         b.`category_name`,a.`deadline_dt`,c.`user_name` as product_owner,
     					IFNULL((SELECT ROUND(SUM(psm.progress)/7,2) FROM product_step_master psm WHERE psm.menu_id IN (9,10,11,12,13,14,15) and psm.product_id=a.product_id),0) progress
-    					from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id`
+    					from product_master a INNER JOIN product_category b ON a.`product_category`=b.`category_id` AND b.`category_NAME` NOT IN ('HOLD') 
     					INNER JOIN user_master c on a.`product_owner`=c.`user_id` 
                         INNER JOIN country_master d on a.`country_id`=d.`country_id` 
                         WHERE a.`del_by` IS NULL  ";

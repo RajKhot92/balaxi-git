@@ -18,6 +18,7 @@
                         WHERE `vf_id` = (SELECT max(vf_id) FROM product_vendor_finalization WHERE `product_id` = a.`product_id` AND del_by IS NULL)) supplier_name  
                         from product_master a INNER JOIN product_submission b ON a.`product_id`=b.`product_id` 
                         INNER JOIN `product_category` c ON a.`product_category`=c.`category_id` 
+                         AND c.`category_NAME` NOT IN ('HOLD') 
                         WHERE a.`product_id` NOT IN (
                         SELECT product_id FROM product_registration pr)
                         AND a.`del_by` IS NULL  ";
